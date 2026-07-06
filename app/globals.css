@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: #050505;
+  color: #f5f5f7;
+  overflow-x: hidden;
+}
+
+canvas {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Masonry utilities */
+.columns-2 {
+  columns: 2;
+}
+.columns-3 {
+  columns: 3;
+}
+.columns-4 {
+  columns: 4;
+}
+.break-inside-avoid {
+  break-inside: avoid;
+}
