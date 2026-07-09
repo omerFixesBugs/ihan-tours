@@ -1,5 +1,6 @@
 "use client";
 
+import { useLanguage } from "@/components/LanguageContext";
 
 function PlaneIcon() {
   return (
@@ -40,32 +41,34 @@ function ScrollChevrons() {
 }
 
 export default function HeroIntro() {
+  const { t } = useLanguage();
+
   return (
     <div className="relative h-full w-full">
       {/* Top-left headline */}
-      <h1 className="font-display absolute left-6 top-[22%] max-w-[min(85vw,480px)] text-display-sm font-bold uppercase text-foreground sm:text-display-md md:left-12 md:top-[28%] lg:top-[30%]">
-        Celebrate
+      <h1 className="font-display absolute left-6 top-[22%] max-w-[min(85vw,480px)] text-display-sm font-bold uppercase text-foreground sm:text-[70px] md:left-12 md:top-[28%] lg:top-[30%]">
+        {t("hero.celebrate")}
         <br />
-        the Journey
+        {t("hero.the_journey")}
       </h1>
 
       {/* Bottom-right headline */}
-      <h2 className="font-display absolute bottom-[38%] right-6 max-w-[min(85vw,480px)] text-right text-display-sm font-bold uppercase text-foreground sm:text-display-md md:right-12 md:bottom-[34%]">
-        Discover
+      <h2 className="font-display absolute bottom-[28%] right-6 max-w-[min(85vw,480px)] text-right text-display-sm font-bold uppercase text-foreground sm:text-[70px] md:right-12 md:bottom-[34%]">
+        {t("hero.discover")}
         <br />
-        Holidays
+        {t("hero.holidays")}
       </h2>
 
       {/* Bottom-left copy block */}
-      <div className="absolute bottom-28 left-6 max-w-xs md:bottom-32 md:left-12 md:max-w-sm">
+      <div className="absolute bottom-8 left-6 max-w-xs md:bottom-32 md:left-12 md:max-w-sm">
         <p className="font-display text-lg font-semibold uppercase leading-tight tracking-display text-foreground md:text-xl">
-          Expand your
+          {t("hero.expand")}
           <br />
-          travel horizons
+          {t("hero.travel_horizons")}
         </p>
         <div className="my-4 h-px w-16 bg-foreground/40" />
-        <p className="text-xs font-light leading-relaxed text-neutral-400 md:text-sm">
-          From curated group tours to private bespoke itineraries, we handle the details so you can focus on making unforgettable memories.
+        <p className="hidden md:block text-xs font-light leading-relaxed text-neutral-400 md:text-sm">
+          {t("hero.intro_body")}
         </p>
       </div>
 
@@ -73,15 +76,15 @@ export default function HeroIntro() {
       <div className="absolute bottom-8 right-6 hidden items-end gap-4 md:flex md:right-12 md:bottom-10">
         <div className="flex flex-col items-center gap-1">
           <span className="text-[9px] uppercase tracking-ultra text-neutral-500">
-            Scroll down
+            {t("hero.scroll_down")}
           </span>
           <ScrollChevrons />
         </div>
         <div className="mb-1 max-w-[140px] border-l border-neutral-700 pl-4">
           <span className="text-[9px] uppercase leading-relaxed tracking-superwide text-neutral-500">
-            To start
+            {t("hero.to_start")}
             <br />
-            the journey
+            {t("hero.the_journey_small")}
           </span>
         </div>
       </div>

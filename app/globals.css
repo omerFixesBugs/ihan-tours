@@ -6,6 +6,11 @@
   color-scheme: dark;
 }
 
+html[lang="bn"] {
+  --font-unbounded: var(--font-bengali), system-ui, sans-serif;
+  --font-inter: var(--font-bengali), system-ui, sans-serif;
+}
+
 body {
   background-color: #050505;
   color: #f5f5f7;

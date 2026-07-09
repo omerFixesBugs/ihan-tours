@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Unbounded } from "next/font/google";
+import { Inter, Unbounded, Hind_Siliguri } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import GlobalNav from "@/components/GlobalNav";
 import FloatingCTA from "@/components/FloatingCTA";
+import { LanguageProvider } from "@/components/LanguageContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,6 +16,12 @@ const unbounded = Unbounded({
   subsets: ["latin"],
   weight: ["400", "600", "700", "800"],
   variable: "--font-unbounded",
+});
+
+const hindSiliguri = Hind_Siliguri({
+  subsets: ["bengali"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-bengali",
 });
 
 export const metadata: Metadata = {
@@ -31,13 +38,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${unbounded.variable} scroll-smooth bg-background text-foreground`}
+      className={`${inter.variable} ${unbounded.variable} ${hindSiliguri.variable} scroll-smooth bg-background text-foreground`}
     >
       <body className="font-sans antialiased selection:bg-gold-500 selection:text-black">
-        <GlobalNav />
-        <FloatingCTA />
-        <SmoothScroll>{children}</SmoothScroll>
+        <LanguageProvider>
+          <GlobalNav />
+          <FloatingCTA />
+          <SmoothScroll>{children}</SmoothScroll>
+        </LanguageProvider>
       </body>
     </html>
   );
 }
+

@@ -1,5 +1,7 @@
 "use client";
 
+import { useLanguage } from "@/components/LanguageContext";
+
 function PlaneIcon() {
   return (
     <svg
@@ -15,26 +17,24 @@ function PlaneIcon() {
 }
 
 export default function LuxuryTransition() {
+  const { t } = useLanguage();
+
   return (
     <div className="relative h-full w-full text-ink">
       {/* Left block */}
       <div className="absolute left-6 top-1/2 max-w-[min(42vw,280px)] -translate-y-1/2 md:left-16 lg:left-24">
         <h2 className="font-display text-display-md font-bold leading-none">
-          Travel in
+          {t("luxuryTransition.travel_in")}
         </h2>
-        <p className="mt-4 text-sm font-light leading-relaxed text-ink/80 md:text-base">
-          Luxury
-          <br />
-          that moves
-          <br />
-          with you
+        <p className="mt-4 text-sm font-light leading-relaxed text-ink/80 md:text-base whitespace-pre-line">
+          {t("luxuryTransition.moves_with_you")}
         </p>
       </div>
 
       {/* Right block */}
       <div className="absolute right-6 top-1/2 max-w-[min(42vw,320px)] -translate-y-1/2 md:right-16 lg:right-24">
         <h2 className="font-display text-display-md text-right font-bold leading-none">
-          Luxury
+          {t("luxuryTransition.luxury")}
         </h2>
         <div className="my-5 h-px w-full bg-ink/25" />
         <div className="mb-3 flex items-baseline justify-between text-[10px] uppercase tracking-superwide text-ink/70 md:text-xs">
@@ -42,13 +42,9 @@ export default function LuxuryTransition() {
           <span>Premium</span>
         </div>
         <p className="text-left text-xs font-light leading-relaxed text-ink/75 md:text-sm">
-          Every journey is engineered for comfort and precision — bespoke
-          itineraries, private transfers, and handpicked destinations that let
-          you arrive refreshed, every time.
+          {t("luxuryTransition.description")}
         </p>
       </div>
-
-
     </div>
   );
 }

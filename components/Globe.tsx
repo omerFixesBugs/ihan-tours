@@ -3,9 +3,11 @@
 import { useRef } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 import SequenceOverlay from "./SequenceOverlay";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function Globe() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { t } = useLanguage();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -46,25 +48,24 @@ export default function Globe() {
           className="relative z-10 max-w-xl pt-8 md:pt-12"
         >
           <span className="mb-3 block text-xs uppercase tracking-ultra text-gold-400">
-            Global Destinations
+            {t("globe.global_destinations")}
           </span>
           <h2 className="text-4xl font-light uppercase leading-tight tracking-wide md:text-6xl">
-            Unrestricted Routing
+            {t("globe.unrestricted_routing")}
           </h2>
           <p className="mt-6 font-light leading-relaxed text-neutral-400">
-            From remote islands to cultural capitals — every path optimized for
-            discovery beyond the ordinary.
+            {t("globe.unrestricted_routing_desc")}
           </p>
         </SequenceOverlay>
 
         {/* Destination pills — appear one by one mid-scroll */}
         <div className="relative z-10 flex flex-wrap justify-center gap-3 px-4">
           {[
-            { label: "Maldives", enter: 0.45, visible: 0.55, exit: 1 },
-            { label: "Umrah", enter: 0.55, visible: 0.65, exit: 1 },
-            { label: "China", enter: 0.65, visible: 0.75, exit: 1 },
-            { label: "Thailand", enter: 0.75, visible: 0.85, exit: 1 },
-            { label: "Malaysia", enter: 0.85, visible: 0.95, exit: 1 },
+            { label: t("globe.destinations.maldives"), enter: 0.45, visible: 0.55, exit: 1 },
+            { label: t("globe.destinations.umrah"), enter: 0.55, visible: 0.65, exit: 1 },
+            { label: t("globe.destinations.china"), enter: 0.65, visible: 0.75, exit: 1 },
+            { label: t("globe.destinations.thailand"), enter: 0.75, visible: 0.85, exit: 1 },
+            { label: t("globe.destinations.malaysia"), enter: 0.85, visible: 0.95, exit: 1 },
           ].map((dest) => (
             <SequenceOverlay
               key={dest.label}
@@ -98,7 +99,7 @@ export default function Globe() {
           <div className="flex w-full flex-col items-start justify-between gap-6 border-t border-neutral-800 pt-8 md:flex-row md:items-end">
             <div>
               <span className="block text-[10px] uppercase tracking-ultra text-neutral-500">
-                Begin Your Journey
+                {t("globe.begin_journey")}
               </span>
               <a
                 href="mailto:bookings@ihantours.com"
@@ -118,8 +119,8 @@ export default function Globe() {
           {/* Top Section */}
           <div className="flex justify-between">
             <div className="flex flex-col leading-none">
-              <span className="text-6xl font-bold tracking-tighter md:text-[100px]">5K+</span>
-              <span className="text-5xl tracking-tighter md:text-[80px]">flights</span>
+              <span className="text-6xl font-bold tracking-tighter md:text-[100px]">{t("globe.flights_count")}</span>
+              <span className="text-5xl tracking-tighter md:text-[80px]">{t("globe.flights")}</span>
             </div>
             {/* Barcode */}
             <div className="flex w-8 flex-col items-end pt-2">
@@ -140,7 +141,7 @@ export default function Globe() {
           {/* Middle Section */}
           <div className="mt-20 md:mt-32">
             <p className="text-xs font-bold uppercase tracking-widest md:text-sm">
-              Successfully Arranged
+              {t("globe.successfully_arranged")}
             </p>
           </div>
 
@@ -154,7 +155,7 @@ export default function Globe() {
               </svg>
             </div>
             <p className="text-xs font-medium leading-relaxed md:text-base">
-              Each journey reflects years of expertise, precision, and trust. From last-minute charters to intercontinental business routes — Jesko Jets ensures safety, discretion, and excellence in every flight.
+              {t("globe.card_description")}
             </p>
           </div>
         </motion.div>

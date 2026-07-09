@@ -11,6 +11,7 @@ import {
 import { drawCoverFrame } from "@/lib/canvasDraw";
 import SequenceOverlay from "./SequenceOverlay";
 import LuxuryTransition from "./LuxuryTransition";
+import { useLanguage } from "@/components/LanguageContext";
 
 const ACCORDION_DATA = [
   {
@@ -89,7 +90,7 @@ const TOUR_CALLOUTS = [
     exit: 0.35,
     direction: "right" as const,
     className:
-      "absolute right-6 top-[28%] max-w-sm p-4 text-right md:right-16",
+      "absolute right-6 top-[22%] max-w-sm p-4 text-right md:right-16",
     eyebrow: "Southeast Asia",
     title: "Malaysia",
     body: "Known for its beaches, rainforests and mix of cultural influences.",
@@ -100,7 +101,7 @@ const TOUR_CALLOUTS = [
     exit: 0.42,
     direction: "left" as const,
     className:
-      "absolute left-6 top-[42%] max-w-sm p-4 text-left md:left-16",
+      "absolute left-6 top-[22%] max-w-sm p-4 text-left md:left-16",
     eyebrow: "Heritage",
     title: "China",
     body: "Walk the Great Wall and wander imperial palaces across iconic destinations.",
@@ -111,7 +112,7 @@ const TOUR_CALLOUTS = [
     exit: 0.49,
     direction: "right" as const,
     className:
-      "absolute right-6 top-[58%] max-w-sm p-4 text-right md:right-16",
+      "absolute right-6 top-[48%] max-w-sm p-4 text-right md:right-16",
     eyebrow: "Tropical Escape",
     title: "Thailand",
     body: "From golden temples in Bangkok to the turquoise islands of the south.",
@@ -143,7 +144,27 @@ const TOUR_CALLOUTS = [
 export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { t, language } = useLanguage();
+
+  // Localized Accordion Data
+  const localizedAccordionData = ACCORDION_DATA.map((item) => ({
+    ...item,
+    title: t(`tourShowcase.accordion.${item.id}.title`),
+    content: t(`tourShowcase.accordion.${item.id}.content`),
+  }));
+
   const [activeAccordionId, setActiveAccordionId] = useState(ACCORDION_DATA[0].id);
+
+  // Localized Callouts
+  const localizedTourCallouts = TOUR_CALLOUTS.map((item) => {
+    const slug = item.title.toLowerCase();
+    return {
+      ...item,
+      eyebrow: t(`tourShowcase.callouts.${slug}.eyebrow`),
+      title: t(`tourShowcase.callouts.${slug}.title`),
+      body: t(`tourShowcase.callouts.${slug}.body`),
+    };
+  });
 
   const { scrollYProgress: globalScrollYProgress } = useScroll({
     target: containerRef,
@@ -241,11 +262,12 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
 
   const { scrollYProgress: exitProgress } = useScroll({
     target: containerRef,
-    offset: ["end bottom", "end top"],
+    offset: ["end bottom", "end top"] as any,
   });
   const dividerPlaneX = useTransform(exitProgress, [0, 1], ["-20vw", "120vw"]);
 
-  const activeAccordionItem = ACCORDION_DATA.find((item) => item.id === activeAccordionId);
+  const activeAccordionItem = localizedAccordionData.find((item) => item.id === activeAccordionId);
+  const originalAccordionItem = ACCORDION_DATA.find((item) => item.id === activeAccordionId);
 
   /* ── Phase 4: Block 1 (Explore the World) ──────────────────── */
   const block1Opacity = useTransform(
@@ -282,6 +304,55 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
     [0.92, 0.95, 0.98, 1],
     ["15vh", "0vh", "0vh", "-25vh"]
   );
+
+  /* ── Photography Canvas Cards Transforms ────────────────────── */
+  // ── Block 1: Explore the World (Staggered Entrance) ──
+  // Card 1A (Left): Enters 0.73 to 0.76, exits 0.83 to 0.87
+  const card1AOpacity = useTransform(scrollYProgress, [0.73, 0.76, 0.83, 0.87], [0, 1, 1, 0]);
+  const card1AY = useTransform(scrollYProgress, [0.73, 0.76, 0.83, 0.84, 0.85, 0.86, 0.87], ["80vh", "-2vh", "-2vh", "3vh", "18vh", "58vh", "120vh"]);
+  const card1ARotate = useTransform(scrollYProgress, [0.73, 0.76, 0.83, 0.84, 0.85, 0.86, 0.87], [-10, -10, -10, -6, 2, 12, 29]);
+
+  // Card 1B (Center): Enters 0.74 to 0.77, exits 0.83 to 0.87
+  const card1BOpacity = useTransform(scrollYProgress, [0.74, 0.77, 0.83, 0.87], [0, 1, 1, 0]);
+  const card1BY = useTransform(scrollYProgress, [0.74, 0.77, 0.83, 0.84, 0.85, 0.86, 0.87], ["80vh", "0vh", "0vh", "5vh", "20vh", "60vh", "120vh"]);
+  const card1BRotate = useTransform(scrollYProgress, [0.74, 0.77, 0.83, 0.84, 0.85, 0.86, 0.87], [-4, -4, -4, 0, 8, 18, 35]);
+
+  // Card 1C (Right): Enters 0.75 to 0.78, exits 0.83 to 0.87
+  const card1COpacity = useTransform(scrollYProgress, [0.75, 0.78, 0.83, 0.87], [0, 1, 1, 0]);
+  const card1CY = useTransform(scrollYProgress, [0.75, 0.78, 0.83, 0.84, 0.85, 0.86, 0.87], ["80vh", "2vh", "2vh", "7vh", "22vh", "62vh", "120vh"]);
+  const card1CRotate = useTransform(scrollYProgress, [0.75, 0.78, 0.83, 0.84, 0.85, 0.86, 0.87], [8, 8, 8, 12, 20, 30, 46]);
+
+  // ── Block 2: Curated Discoveries (Staggered Entrance) ──
+  // Card 2A (Left): Enters 0.83 to 0.85, exits 0.92 to 0.96
+  const card2AOpacity = useTransform(scrollYProgress, [0.83, 0.85, 0.92, 0.96], [0, 1, 1, 0]);
+  const card2AY = useTransform(scrollYProgress, [0.83, 0.85, 0.92, 0.93, 0.94, 0.95, 0.96], ["80vh", "-2vh", "-2vh", "3vh", "18vh", "58vh", "120vh"]);
+  const card2ARotate = useTransform(scrollYProgress, [0.83, 0.85, 0.92, 0.93, 0.94, 0.95, 0.96], [-3, -3, -3, -6, -14, -24, -41]);
+
+  // Card 2B (Center): Enters 0.84 to 0.86, exits 0.92 to 0.96
+  const card2BOpacity = useTransform(scrollYProgress, [0.84, 0.86, 0.92, 0.96], [0, 1, 1, 0]);
+  const card2BY = useTransform(scrollYProgress, [0.84, 0.86, 0.92, 0.93, 0.94, 0.95, 0.96], ["80vh", "0vh", "0vh", "5vh", "20vh", "60vh", "120vh"]);
+  const card2BRotate = useTransform(scrollYProgress, [0.84, 0.86, 0.92, 0.93, 0.94, 0.95, 0.96], [3, 3, 3, 0, -8, -18, -35]);
+
+  // Card 2C (Right): Enters 0.85 to 0.87, exits 0.92 to 0.96
+  const card2COpacity = useTransform(scrollYProgress, [0.85, 0.87, 0.92, 0.96], [0, 1, 1, 0]);
+  const card2CY = useTransform(scrollYProgress, [0.85, 0.87, 0.92, 0.93, 0.94, 0.95, 0.96], ["80vh", "2vh", "2vh", "7vh", "22vh", "62vh", "120vh"]);
+  const card2CRotate = useTransform(scrollYProgress, [0.85, 0.87, 0.92, 0.93, 0.94, 0.95, 0.96], [9, 9, 9, 3, -5, -15, -29]);
+
+  // ── Block 3: Seamless Travel (Staggered Entrance) ──
+  // Card 3A (Left): Enters 0.92 to 0.94, exits 0.98 to 1.0
+  const card3AOpacity = useTransform(scrollYProgress, [0.92, 0.94, 0.98, 1.0], [0, 1, 1, 0]);
+  const card3AY = useTransform(scrollYProgress, [0.92, 0.94, 0.98, 0.985, 0.99, 0.995, 1.0], ["80vh", "-2vh", "-2vh", "3vh", "18vh", "58vh", "120vh"]);
+  const card3ARotate = useTransform(scrollYProgress, [0.92, 0.94, 0.98, 0.985, 0.99, 0.995, 1.0], [-7, -7, -7, -5, 1, 9, 20]);
+
+  // Card 3B (Center): Enters 0.93 to 0.95, exits 0.98 to 1.0
+  const card3BOpacity = useTransform(scrollYProgress, [0.93, 0.95, 0.98, 1.0], [0, 1, 1, 0]);
+  const card3BY = useTransform(scrollYProgress, [0.93, 0.95, 0.98, 0.985, 0.99, 0.995, 1.0], ["80vh", "0vh", "0vh", "5vh", "20vh", "60vh", "120vh"]);
+  const card3BRotate = useTransform(scrollYProgress, [0.93, 0.95, 0.98, 0.985, 0.99, 0.995, 1.0], [-2, -2, -2, 0, 6, 14, 25]);
+
+  // Card 3C (Right): Enters 0.94 to 0.96, exits 0.98 to 1.0
+  const card3COpacity = useTransform(scrollYProgress, [0.94, 0.96, 0.98, 1.0], [0, 1, 1, 0]);
+  const card3CY = useTransform(scrollYProgress, [0.94, 0.96, 0.98, 0.985, 0.99, 0.995, 1.0], ["80vh", "2vh", "2vh", "7vh", "22vh", "62vh", "120vh"]);
+  const card3CRotate = useTransform(scrollYProgress, [0.94, 0.96, 0.98, 0.985, 0.99, 0.995, 1.0], [3, 3, 3, 5, 11, 19, 30]);
 
   const renderFrame = useCallback(
     (index: number) => {
@@ -325,12 +396,28 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
     }
   }, [isLoading, images, renderFrame]);
 
+  const leftFlightText = language === "bn" ? "প্রত্যাশাকে" : "Elevate Your";
+  const rightFlightText = language === "bn" ? "নতুন উচ্চতায় নিয়ে যান" : "Expectations";
+
   return (
     <div
       ref={containerRef}
       className="relative w-full bg-background"
       style={{ height: "1000vh" }}
     >
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes floatPlane {
+          0%, 100% {
+            transform: translateY(0px) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-15px) rotate(1.2deg);
+          }
+        }
+        .floating-plane {
+          animation: floatPlane 6s ease-in-out infinite;
+        }
+      ` }} />
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {/* ═══ Layer 0: try.jpg background ═══ */}
         <motion.img
@@ -354,7 +441,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
           className="pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 md:left-24"
         >
           <span className="font-display text-2xl font-bold uppercase tracking-widest text-ink/80 md:text-5xl">
-            Elevate Your
+            {leftFlightText}
           </span>
         </motion.div>
         
@@ -367,7 +454,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
           className="pointer-events-none absolute right-8 top-1/2 -translate-y-1/2 md:right-24"
         >
           <span className="font-display text-2xl font-bold uppercase tracking-widest text-ink/80 md:text-5xl">
-            Expectations
+            {rightFlightText}
           </span>
         </motion.div>
 
@@ -424,9 +511,198 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
           <img
             src="/out_0118.png"
             alt=""
-            className="h-full w-full object-cover drop-shadow-[0_30px_40px_rgba(0,0,0,0.3)]"
+            className="h-full w-full object-cover drop-shadow-[0_30px_40px_rgba(0,0,0,0.3)] floating-plane"
           />
         </motion.div>
+
+        {/* ═══ Scroll-Linked Photography Canvas Cards (Behind Planet) ═══ */}
+        <div className="absolute right-[8vw] md:right-[12vw] top-[48%] -translate-y-1/2 w-[240px] md:w-[320px] h-[340px] md:h-[420px] flex items-center justify-center pointer-events-none hidden md:block" style={{ zIndex: 2 }}>
+          {/* ── Block 1: Explore the World ── */}
+          {/* Card 1A */}
+          <motion.div
+            style={{
+              opacity: card1AOpacity,
+              y: card1AY,
+              rotate: card1ARotate,
+              x: "-14vw",
+            }}
+            className="absolute bg-white p-2 pb-6 md:p-3 md:pb-8 shadow-[0_10px_25px_rgba(0,0,0,0.3)] rounded-sm border border-neutral-100/50"
+          >
+            <div className="relative w-[140px] md:w-[190px] h-[140px] md:h-[190px] overflow-hidden bg-neutral-900">
+              <img
+                src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=400"
+                alt="Travel Boat"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </motion.div>
+
+          {/* Card 1C */}
+          <motion.div
+            style={{
+              opacity: card1COpacity,
+              y: card1CY,
+              rotate: card1CRotate,
+              x: "14vw",
+            }}
+            className="absolute bg-white p-2 pb-6 md:p-3 md:pb-8 shadow-[0_10px_25px_rgba(0,0,0,0.3)] rounded-sm border border-neutral-100/50"
+          >
+            <div className="relative w-[140px] md:w-[190px] h-[140px] md:h-[190px] overflow-hidden bg-neutral-900">
+              <img
+                src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=400"
+                alt="Tropical beach"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </motion.div>
+
+          {/* Card 1B (Center, on top) */}
+          <motion.div
+            style={{
+              opacity: card1BOpacity,
+              y: card1BY,
+              rotate: card1BRotate,
+              x: "0vw",
+              zIndex: 3,
+            }}
+            className="absolute bg-white p-3 pb-8 md:p-4 md:pb-10 shadow-[0_15px_35px_rgba(0,0,0,0.4)] rounded-sm border border-neutral-100/50"
+          >
+            <div className="relative w-[160px] md:w-[210px] h-[160px] md:h-[210px] overflow-hidden bg-neutral-900">
+              <img
+                src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=400"
+                alt="Explore the World"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="mt-3 text-center font-sans tracking-wide text-neutral-800 text-[10px] md:text-xs font-semibold uppercase">
+              {language === "bn" ? "পৃথিবী অন্বেষণ" : "Explore the World"}
+            </div>
+          </motion.div>
+
+          {/* ── Block 2: Curated Discoveries ── */}
+          {/* Card 2A */}
+          <motion.div
+            style={{
+              opacity: card2AOpacity,
+              y: card2AY,
+              rotate: card2ARotate,
+              x: "-14vw",
+            }}
+            className="absolute bg-white p-2 pb-6 md:p-3 md:pb-8 shadow-[0_10px_25px_rgba(0,0,0,0.3)] rounded-sm border border-neutral-100/50"
+          >
+            <div className="relative w-[140px] md:w-[190px] h-[140px] md:h-[190px] overflow-hidden bg-neutral-900">
+              <img
+                src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=400"
+                alt="Yosemite"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </motion.div>
+
+          {/* Card 2C */}
+          <motion.div
+            style={{
+              opacity: card2COpacity,
+              y: card2CY,
+              rotate: card2CRotate,
+              x: "14vw",
+            }}
+            className="absolute bg-white p-2 pb-6 md:p-3 md:pb-8 shadow-[0_10px_25px_rgba(0,0,0,0.3)] rounded-sm border border-neutral-100/50"
+          >
+            <div className="relative w-[140px] md:w-[190px] h-[140px] md:h-[190px] overflow-hidden bg-neutral-900">
+              <img
+                src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&q=80&w=400"
+                alt="Santorini"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </motion.div>
+
+          {/* Card 2B (Center, on top) */}
+          <motion.div
+            style={{
+              opacity: card2BOpacity,
+              y: card2BY,
+              rotate: card2BRotate,
+              x: "0vw",
+              zIndex: 3,
+            }}
+            className="absolute bg-white p-3 pb-8 md:p-4 md:pb-10 shadow-[0_15px_35px_rgba(0,0,0,0.4)] rounded-sm border border-neutral-100/50"
+          >
+            <div className="relative w-[160px] md:w-[210px] h-[160px] md:h-[210px] overflow-hidden bg-neutral-900">
+              <img
+                src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&q=80&w=400"
+                alt="Curated Discoveries"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="mt-3 text-center font-sans tracking-wide text-neutral-800 text-[10px] md:text-xs font-semibold uppercase">
+              {language === "bn" ? "বিশেষ আবিষ্কার" : "Curated Discoveries"}
+            </div>
+          </motion.div>
+
+          {/* ── Block 3: Seamless Travel ── */}
+          {/* Card 3A */}
+          <motion.div
+            style={{
+              opacity: card3AOpacity,
+              y: card3AY,
+              rotate: card3ARotate,
+              x: "-14vw",
+            }}
+            className="absolute bg-white p-2 pb-6 md:p-3 md:pb-8 shadow-[0_10px_25px_rgba(0,0,0,0.3)] rounded-sm border border-neutral-100/50"
+          >
+            <div className="relative w-[140px] md:w-[190px] h-[140px] md:h-[190px] overflow-hidden bg-neutral-900">
+              <img
+                src="https://images.unsplash.com/photo-1483450388369-9ed95738483c?auto=format&fit=crop&q=80&w=400"
+                alt="Airport lounge"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </motion.div>
+
+          {/* Card 3C */}
+          <motion.div
+            style={{
+              opacity: card3COpacity,
+              y: card3CY,
+              rotate: card3CRotate,
+              x: "14vw",
+            }}
+            className="absolute bg-white p-2 pb-6 md:p-3 md:pb-8 shadow-[0_10px_25px_rgba(0,0,0,0.3)] rounded-sm border border-neutral-100/50"
+          >
+            <div className="relative w-[140px] md:w-[190px] h-[140px] md:h-[190px] overflow-hidden bg-neutral-900">
+              <img
+                src="https://images.unsplash.com/photo-1499591934245-40b55745b905?auto=format&fit=crop&q=80&w=400"
+                alt="Resort pool"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </motion.div>
+
+          {/* Card 3B (Center, on top) */}
+          <motion.div
+            style={{
+              opacity: card3BOpacity,
+              y: card3BY,
+              rotate: card3BRotate,
+              x: "0vw",
+              zIndex: 3,
+            }}
+            className="absolute bg-white p-3 pb-8 md:p-4 md:pb-10 shadow-[0_15px_35px_rgba(0,0,0,0.4)] rounded-sm border border-neutral-100/50"
+          >
+            <div className="relative w-[160px] md:w-[210px] h-[160px] md:h-[210px] overflow-hidden bg-neutral-900">
+              <img
+                src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?auto=format&fit=crop&q=80&w=400"
+                alt="Seamless Travel"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="mt-3 text-center font-sans tracking-wide text-neutral-800 text-[10px] md:text-xs font-semibold uppercase">
+              {language === "bn" ? "সহজ যাত্রা" : "Seamless Travel"}
+            </div>
+          </motion.div>
+        </div>
 
         {/* ═══ Phase 4: Left-side content (Block 1) ═══ */}
         <motion.div
@@ -435,16 +711,16 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
             y: block1Y,
             zIndex: 5,
           }}
-          className="absolute left-8 top-1/2 flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left md:left-16 lg:left-24"
+          className="absolute left-8 top-[38%] flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left md:left-16 lg:left-24"
         >
           <span className="mb-2 block text-xs uppercase tracking-superwide text-ink/60">
-            Your Journey Continues
+            {t("tourShowcase.journey_continues")}
           </span>
           <h2 className="font-display mb-4 text-4xl font-bold uppercase leading-tight tracking-display text-ink md:text-5xl">
-            Explore the World
+            {t("tourShowcase.explore_world")}
           </h2>
           <p className="mb-6 text-sm font-light leading-relaxed text-ink/75 md:text-base">
-            From hidden coastlines to mountain retreats — every destination crafted to transform the way you travel.
+            {t("tourShowcase.explore_world_desc")}
           </p>
         </motion.div>
 
@@ -455,16 +731,16 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
             y: block2Y,
             zIndex: 5,
           }}
-          className="absolute left-8 top-1/2 flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left md:left-16 lg:left-24"
+          className="absolute left-8 top-[38%] flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left md:left-16 lg:left-24"
         >
           <span className="mb-2 block text-xs uppercase tracking-superwide text-ink/60">
-            Immersive Experiences
+            {t("tourShowcase.immersive_exp")}
           </span>
           <h2 className="font-display mb-4 text-4xl font-bold uppercase leading-tight tracking-display text-ink md:text-5xl">
-            Curated Discoveries
+            {t("tourShowcase.curated_discoveries")}
           </h2>
           <p className="mb-6 text-sm font-light leading-relaxed text-ink/75 md:text-base">
-            Go beyond the guidebooks. We weave authentic cultural encounters and exclusive access into every itinerary we design.
+            {t("tourShowcase.curated_discoveries_desc")}
           </p>
         </motion.div>
 
@@ -475,16 +751,16 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
             y: block3Y,
             zIndex: 5,
           }}
-          className="absolute left-8 top-1/2 flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left md:left-16 lg:left-24 pointer-events-none"
+          className="absolute left-8 top-[38%] flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left md:left-16 lg:left-24 pointer-events-none"
         >
           <span className="mb-2 block text-xs uppercase tracking-superwide text-ink/60">
-            End-to-End Service
+            {t("tourShowcase.end_to_end")}
           </span>
           <h2 className="font-display mb-4 text-4xl font-bold uppercase leading-tight tracking-display text-ink md:text-5xl">
-            Seamless Travel
+            {t("tourShowcase.seamless_travel")}
           </h2>
           <p className="mb-6 text-sm font-light leading-relaxed text-ink/75 md:text-base">
-            From the moment you depart to your safe return, our global partners ensure a frictionless and luxurious journey.
+            {t("tourShowcase.seamless_travel_desc")}
           </p>
         </motion.div>
 
@@ -497,11 +773,11 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
             {/* Left Column: Accordion */}
             <div className="flex h-full w-full flex-col justify-center px-6 py-16 md:w-1/2 md:px-16 lg:px-24 bg-transparent">
               <h2 className="mb-16 text-xs font-bold uppercase tracking-widest text-ink/75">
-                A BETTER WAY TO FLY
+                {t("tourShowcase.better_way")}
               </h2>
 
               <div className="flex w-full max-w-xl flex-col">
-                {ACCORDION_DATA.map((item) => {
+                {localizedAccordionData.map((item) => {
                   const isActive = activeAccordionId === item.id;
                   return (
                     <div
@@ -546,7 +822,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
                   href="mailto:bookings@ihantours.com"
                   className="inline-flex items-center rounded-full bg-white px-6 py-4 text-sm font-semibold text-ink shadow-sm transition-transform hover:scale-105"
                 >
-                  Book the Flight
+                  {t("tourShowcase.book_flight")}
                   <svg
                     className="ml-3 h-4 w-4"
                     viewBox="0 0 24 24"
@@ -563,7 +839,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
               <AnimatePresence mode="popLayout">
                 <motion.img
                   key={activeAccordionItem?.id}
-                  src={activeAccordionItem?.image}
+                  src={originalAccordionItem?.image}
                   alt={activeAccordionItem?.title}
                   initial={{ opacity: 0, scale: 1.05 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -592,7 +868,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
 
         {/* ═══ Tour callouts — during Phase 2 ═══ */}
         <div className="pointer-events-none absolute inset-0 z-10">
-          {TOUR_CALLOUTS.map((item) => (
+          {localizedTourCallouts.map((item) => (
             <div key={item.title}>
               {/* Mobile version: Exits normally to prevent clutter */}
               <SequenceOverlay
@@ -642,3 +918,4 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
     </div>
   );
 }
+

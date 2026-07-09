@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/components/LanguageContext";
 
 interface LoaderProps {
   progress: number;
@@ -8,6 +9,16 @@ interface LoaderProps {
 }
 
 export default function Loader({ progress, visible }: LoaderProps) {
+  const { language } = useLanguage();
+
+  const getProgressText = () => {
+    if (language === "bn") {
+      const bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+      return progress.toString().replace(/[0-9]/g, (w) => bnDigits[parseInt(w)]) + "%";
+    }
+    return progress + "%";
+  };
+
   return (
     <AnimatePresence>
       {visible && (
@@ -21,7 +32,7 @@ export default function Loader({ progress, visible }: LoaderProps) {
             Ihan Tours
           </span>
           <h1 className="mb-12 text-3xl font-light uppercase tracking-wide text-foreground md:text-5xl">
-            Curated Journeys
+            {language === "bn" ? "পরিকল্পিত ভ্রমণ" : "Curated Journeys"}
           </h1>
           <div className="h-px w-48 overflow-hidden bg-neutral-800">
             <motion.div
@@ -32,7 +43,7 @@ export default function Loader({ progress, visible }: LoaderProps) {
             />
           </div>
           <span className="mt-4 text-xs font-light tracking-superwide text-neutral-500">
-            {progress}%
+            {getProgressText()}
           </span>
         </motion.div>
       )}

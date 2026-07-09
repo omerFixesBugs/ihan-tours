@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/components/LanguageContext";
 
 function PlaneIcon() {
   return (
@@ -31,6 +32,7 @@ function CloseIcon() {
 
 export default function FloatingCTA() {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <>
@@ -41,10 +43,10 @@ export default function FloatingCTA() {
         >
           <span className="relative flex overflow-hidden rounded-full bg-white">
             <span className="block px-5 py-2.5 text-sm font-semibold text-neutral-900 transition-transform duration-300 ease-out group-hover:-translate-y-full md:px-7 md:py-3 md:text-base">
-              Book Your Tour
+              {t("common.book_tour")}
             </span>
             <span className="absolute inset-0 flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-neutral-900 transition-transform duration-300 ease-out translate-y-full group-hover:translate-y-0 md:px-7 md:py-3 md:text-base">
-              Book Your Tour
+              {t("common.book_tour")}
             </span>
           </span>
           <span className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white text-neutral-900 md:h-12 md:w-12">
@@ -90,7 +92,7 @@ export default function FloatingCTA() {
                 <form className="flex flex-col gap-6 md:flex-row md:items-start md:gap-0" onSubmit={(e) => { e.preventDefault(); setIsOpen(false); }}>
                   <div className="flex shrink-0 items-center md:w-[220px]">
                     <h2 className="font-sans text-3xl font-medium tracking-tight text-neutral-900 md:text-5xl">
-                      Contact
+                      {t("common.contact_us")}
                     </h2>
                   </div>
 
@@ -98,13 +100,13 @@ export default function FloatingCTA() {
                     {/* NAME */}
                     <div className="flex-1 md:border-l md:border-neutral-200 md:pl-6">
                       <label className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-neutral-900">
-                        Name
+                        {t("contact.form.name")}
                       </label>
-                      <input type="text" placeholder="Type..." className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none" required />
+                      <input type="text" placeholder={t("contact.form.name_placeholder")} className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none" required />
                       <div className="mt-4 flex items-center gap-2 md:mt-8">
                         <input type="checkbox" id="privacy" className="h-3.5 w-3.5 rounded-full border-neutral-300 text-neutral-900 focus:ring-neutral-900" required />
                         <label htmlFor="privacy" className="text-[9px] font-semibold uppercase tracking-wider text-neutral-400">
-                          By submitting, you agree<br className="hidden md:block" />to our <span className="underline">Privacy Policy</span>
+                          {t("contact.form.checkbox_agreement")}
                         </label>
                       </div>
                     </div>
@@ -112,26 +114,26 @@ export default function FloatingCTA() {
                     {/* EMAIL */}
                     <div className="flex-1 md:border-l md:border-neutral-200 md:pl-6">
                       <label className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-neutral-900">
-                        Email
+                        {t("contact.form.email")}
                       </label>
-                      <input type="email" placeholder="Email..." className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none" required />
+                      <input type="email" placeholder={t("contact.form.email_placeholder")} className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none" required />
                     </div>
 
                     {/* PHONE */}
                     <div className="flex-1 md:border-l md:border-neutral-200 md:pl-6">
                       <label className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-neutral-900">
-                        Phone
+                        {t("contact.form.phone")}
                       </label>
-                      <input type="tel" placeholder="Phone..." className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none" />
+                      <input type="tel" placeholder={t("contact.form.phone_placeholder")} className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none" />
                     </div>
 
                     {/* DESTINATION */}
                     <div className="flex-1 md:border-l md:border-neutral-200 md:pl-6">
                       <label className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-neutral-900">
-                        Destination
+                        {t("contact.form.destination")}
                       </label>
                       <div className="flex items-center gap-4">
-                        <input type="text" placeholder="City, Country..." className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none" required />
+                        <input type="text" placeholder={t("contact.form.destination_placeholder")} className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none" required />
                         <button type="submit" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#2a2522] text-white transition-transform hover:scale-105">
                           <PlaneIcon />
                         </button>

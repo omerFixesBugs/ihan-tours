@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { POPULAR_PACKAGES } from "@/lib/packages";
+import { useLanguage } from "@/components/LanguageContext";
 
 function ChevronIcon({ direction }: { direction: "left" | "right" }) {
   return (
@@ -45,29 +47,117 @@ function MapPinIcon() {
 
 export default function PremiumPackages() {
   const [activeIndex, setActiveIndex] = useState(2);
+  const [isDeckVisible, setIsDeckVisible] = useState(false);
+  const [isSpread, setIsSpread] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const { t, language } = useLanguage();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsDeckVisible(true);
+          setTimeout(() => {
+            setIsSpread(true);
+          }, 600);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const prev = () =>
     setActiveIndex((i) => (i === 0 ? POPULAR_PACKAGES.length - 1 : i - 1));
   const next = () =>
     setActiveIndex((i) => (i === POPULAR_PACKAGES.length - 1 ? 0 : i + 1));
 
+  const getRatingStr = (ratingVal: number) => {
+    if (!ratingVal) return "";
+    const formatted = ratingVal % 1 === 0 ? `${ratingVal}.0` : `${ratingVal}`;
+    if (language === "bn") {
+      const bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+      return formatted.replace(/[0-9]/g, (w) => bnDigits[parseInt(w)]);
+    }
+    return formatted;
+  };
+
+  const getPaxText = (min: number, max: number) => {
+    if (language === "bn") {
+      const bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+      const minStr = min.toString().replace(/[0-9]/g, (w) => bnDigits[parseInt(w)]);
+      const maxStr = max.toString().replace(/[0-9]/g, (w) => bnDigits[parseInt(w)]);
+      return `${minStr}-${maxStr} জন`;
+    }
+    return `${min}-${max} Pax`;
+  };
+
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-luxury-cream via-white to-luxury-sky py-16 md:py-24">
+    <section ref={sectionRef} className="relative overflow-hidden bg-gradient-to-b from-luxury-cream via-white to-luxury-sky py-16 md:py-24">
       {/* Soft blend from hero above */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-luxury-cream to-transparent" />
 
-      <div className="relative mx-auto max-w-6xl px-4 md:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 md:px-8">
+        <style dangerouslySetInnerHTML={{ __html: `
+          .slider-container {
+            --active-width: min(340px, 82vw);
+            --inactive-width: min(240px, 62vw);
+            --slider-height: 440px;
+            
+            --card-pos-0: 0px;
+            --card-pos-1: 180px;
+            --card-pos-2: 320px;
+            --card-pos-3: 450px;
+            
+            --card-scale-0: 1;
+            --card-scale-1: 0.85;
+            --card-scale-2: 0.72;
+            --card-scale-3: 0.6;
+          }
+          @media (min-width: 768px) {
+            .slider-container {
+              --active-width: 380px;
+              --inactive-width: 280px;
+              --slider-height: 540px;
+              
+              --card-pos-0: 0px;
+              --card-pos-1: 250px;
+              --card-pos-2: 440px;
+              --card-pos-3: 610px;
+              
+              --card-scale-0: 1;
+              --card-scale-1: 0.88;
+              --card-scale-2: 0.76;
+              --card-scale-3: 0.65;
+            }
+          }
+          .shuffle-card {
+            transition: transform 900ms cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        opacity 700ms ease-out, 
+                        width 600ms ease-out, 
+                        filter 500ms ease-out;
+          }
+        ` }} />
+
         <header className="mb-10 text-center md:mb-14">
           <h2 className="text-3xl font-bold text-neutral-900 md:text-4xl">
-            Best-Selling Packages
+            {language === "bn" ? "সবচেয়ে জনপ্রিয় প্যাকেজগুলো" : "Best-Selling Packages"}
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-neutral-500 md:text-base">
-            Expand your travel horizons with new facets! Explore the world by
-            choosing your ideal travel destinations with Ihan Tours and Travels.
+            {language === "bn" 
+              ? "ইহান ট্যুরস অ্যান্ড ট্রাভেলসের সাথে আপনার পছন্দের গন্তব্যটি বেছে নিয়ে ভ্রমণের দিগন্ত প্রসারিত করুন!" 
+              : "Expand your travel horizons with new facets! Explore the world by choosing your ideal travel destinations with Ihan Tours and Travels."
+            }
           </p>
         </header>
 
-        <div className="relative flex items-center justify-center">
+        <div className="slider-container relative flex items-center justify-center">
           <button
             type="button"
             onClick={prev}
@@ -77,25 +167,63 @@ export default function PremiumPackages() {
             <ChevronIcon direction="left" />
           </button>
 
-          <div className="relative flex h-[420px] w-full max-w-4xl items-center justify-center md:h-[460px]">
+          <div 
+            className="relative flex w-full max-w-5xl md:max-w-6xl items-center justify-center"
+            style={{ height: "var(--slider-height)" }}
+          >
             {POPULAR_PACKAGES.map((pkg, index) => {
-              const offset = index - activeIndex;
+              let offset = index - activeIndex;
+              const N = POPULAR_PACKAGES.length;
+              if (offset > N / 2) {
+                offset -= N;
+              } else if (offset < -N / 2) {
+                offset += N;
+              }
               const isActive = offset === 0;
-              const isVisible = Math.abs(offset) <= 2;
+              const absOffset = Math.abs(offset);
+              const isVisible = absOffset <= 3;
 
               if (!isVisible) return null;
 
-              const xOffset = offset * 200;
+              const pkgTrans = t(`popularPackages.${pkg.id}`) || {};
+              const title = pkgTrans.title || pkg.title;
+              const location = pkgTrans.location || pkg.location;
+              const description = pkgTrans.description || pkg.description;
+              const duration = pkgTrans.duration || pkg.duration;
+              const price = pkgTrans.price || pkg.price;
+              const accommodation = pkgTrans.accommodation || pkg.accommodation_type;
+
+              // Shuffle state machine
+              const transformTranslation = isSpread 
+                ? `calc(${offset < 0 ? -1 : 1} * var(--card-pos-${absOffset}))` 
+                : "0px";
+              const transformScale = isSpread
+                ? `var(--card-scale-${absOffset})`
+                : (isActive ? "1" : "0.9");
+              const rotation = isSpread ? "0deg" : `${offset * 3}deg`;
+
+              let opacity = 0;
+              if (!isDeckVisible) {
+                opacity = 0;
+              } else if (!isSpread) {
+                if (isActive) opacity = 1;
+                else if (absOffset === 1) opacity = 0.5;
+                else opacity = 0;
+              } else {
+                if (isActive) opacity = 1;
+                else if (absOffset === 1) opacity = 0.6;
+                else if (absOffset === 2) opacity = 0.25;
+              }
 
               return (
                 <article
                   key={pkg.id}
-                  className="absolute transition-all duration-500 ease-out"
+                  className={`absolute shuffle-card ${absOffset > 2 ? "pointer-events-none" : ""}`}
                   style={{
-                    width: isActive ? "min(320px, 82vw)" : "min(220px, 62vw)",
-                    zIndex: 10 - Math.abs(offset),
-                    transform: `translateX(${xOffset}px) scale(${isActive ? 1 : 0.82})`,
-                    opacity: isActive ? 1 : 0.6,
+                    width: isActive ? "var(--active-width)" : "var(--inactive-width)",
+                    zIndex: 10 - absOffset,
+                    transform: `translateX(${transformTranslation}) scale(${transformScale}) rotate(${rotation})`,
+                    opacity: opacity,
                     filter: isActive ? "none" : "grayscale(100%)",
                   }}
                 >
@@ -104,11 +232,11 @@ export default function PremiumPackages() {
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={pkg.image}
-                        alt={pkg.title}
+                        alt={title}
                         className="h-full w-full object-cover"
                       />
                       <span className="absolute right-3 top-3 rounded-md bg-neutral-900 px-2.5 py-1 text-[10px] font-medium text-white md:text-xs">
-                        {pkg.duration}
+                        {duration}
                       </span>
                     </div>
 
@@ -116,45 +244,45 @@ export default function PremiumPackages() {
                       <div className="mb-1 flex items-center justify-between text-xs text-neutral-400">
                         <div className="flex items-center gap-1.5">
                           <MapPinIcon />
-                          <span>{pkg.location}</span>
+                          <span>{location}</span>
                         </div>
                         {pkg.star_rating && (
                           <div className="flex items-center gap-1 text-[#f59e0b]">
                             <span>★</span>
-                            <span className="text-neutral-600">{pkg.review_rating || pkg.star_rating}.0</span>
+                            <span className="text-neutral-600">{getRatingStr(pkg.review_rating || pkg.star_rating)}</span>
                           </div>
                         )}
                       </div>
                       <h3 className="text-base font-bold text-neutral-900 md:text-lg">
-                        {pkg.title}
+                        {title}
                       </h3>
                       <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-neutral-500 md:text-sm">
-                        {pkg.description}
+                        {description}
                       </p>
                       
                       <div className="mt-3 flex flex-wrap gap-2 text-[10px] text-neutral-500 md:text-xs">
-                        {pkg.accommodation_type && (
+                        {accommodation && (
                           <span className="rounded-md bg-neutral-100 px-2 py-1">
-                            {pkg.accommodation_type}
+                            {accommodation}
                           </span>
                         )}
                         {pkg.pax_min && pkg.pax_max && (
                           <span className="rounded-md bg-neutral-100 px-2 py-1">
-                            {pkg.pax_min}-{pkg.pax_max} Pax
+                            {getPaxText(pkg.pax_min, pkg.pax_max)}
                           </span>
                         )}
                       </div>
 
                       <div className="mt-4 flex items-center justify-between border-t border-neutral-100 pt-3">
                         <span className="text-sm font-bold text-[#e8192c] md:text-base">
-                          {pkg.price}
+                          {price}
                         </span>
-                        <a
-                          href="mailto:bookings@ihantours.com"
+                        <Link
+                          href={`/packages/${pkg.id}`}
                           className="text-sm font-semibold text-neutral-900 transition-colors hover:text-[#e8192c]"
                         >
-                          View Package
-                        </a>
+                          {t("common.view_details")}
+                        </Link>
                       </div>
                     </div>
                   </div>

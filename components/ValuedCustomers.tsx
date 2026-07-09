@@ -1,13 +1,16 @@
 "use client";
 
 import { TEAM_ORGS } from "@/lib/siteData";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function ValuedCustomers() {
+  const { language } = useLanguage();
+
   return (
     <section className="bg-background py-16 overflow-hidden border-t border-white/10">
       <div className="mx-auto max-w-7xl px-4 md:px-8 mb-10 text-center">
         <h2 className="text-2xl font-light uppercase tracking-wide text-white">
-          Our Valued Customers
+          {language === "bn" ? "আমাদের সম্মানিত গ্রাহক" : "Our Valued Customers"}
         </h2>
         <div className="mx-auto mt-4 h-px w-24 bg-brand-red/50" />
       </div>

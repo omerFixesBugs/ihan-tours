@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
+import { useLanguage } from "@/components/LanguageContext";
 
 const CITIES = [
   "Paris",
@@ -25,6 +26,7 @@ export default function FlyAnywhere() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [itemHeight, setItemHeight] = useState(0);
   const itemRef = useRef<HTMLSpanElement>(null);
+  const { t } = useLanguage();
 
   // Measure item height for responsive translation
   useEffect(() => {
@@ -46,6 +48,11 @@ export default function FlyAnywhere() {
     return () => clearInterval(interval);
   }, []);
 
+  const getCityTranslation = (city: string) => {
+    const key = city.toLowerCase().replace(" ", "_");
+    return t(`flyAnywhere.cities.${key}`);
+  };
+
   return (
     <section className="relative z-30 h-[200vh] w-full">
       <div className="sticky top-0 flex h-screen w-full flex-col items-center justify-center bg-transparent">
@@ -53,7 +60,7 @@ export default function FlyAnywhere() {
       {/* ── Giant Background Text ── */}
       <div className="pointer-events-none absolute bottom-0 left-0 flex w-full translate-y-[20%] items-end justify-center leading-none">
         <span className="font-display text-[28vw] font-bold tracking-tighter text-white/[0.04] select-none">
-          Global
+          {t("flyAnywhere.global")}
         </span>
       </div>
 
@@ -63,7 +70,7 @@ export default function FlyAnywhere() {
         {/* Left Side */}
         <div className="flex w-1/3 justify-end pr-4 md:w-2/5 md:pr-12">
           <h2 className="font-display text-2xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl">
-            Fly anywhere
+            {t("flyAnywhere.title")}
           </h2>
         </div>
 
@@ -115,7 +122,7 @@ export default function FlyAnywhere() {
                     isHighlighted ? "text-white" : "text-white/20"
                   }`}
                 >
-                  {city}
+                  {getCityTranslation(city)}
                 </span>
               );
             })}
@@ -129,7 +136,7 @@ export default function FlyAnywhere() {
           href="mailto:bookings@ihantours.com"
           className="inline-flex items-center rounded-full bg-white px-6 py-4 text-xs font-semibold text-ink shadow-sm transition-transform hover:scale-105 md:text-sm"
         >
-          Book the Flight
+          {t("flyAnywhere.book_flight")}
           <span className="ml-3 flex h-6 w-6 rotate-45 items-center justify-center rounded-full bg-ink text-white">
             <svg
               width="10"

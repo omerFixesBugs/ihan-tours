@@ -3,10 +3,12 @@
 import { WHY_CHOOSE_US } from "@/lib/siteData";
 import { useScroll, motion, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function WhyChooseUs() {
   const data = WHY_CHOOSE_US[0];
   const containerRef = useRef<HTMLDivElement>(null);
+  const { t } = useLanguage();
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -23,7 +25,7 @@ export default function WhyChooseUs() {
           <div className="relative aspect-square md:aspect-[4/5] rounded-3xl overflow-hidden bg-white/5">
             <img 
               src={data.image_url} 
-              alt={data.subtitle} 
+              alt={t("whyChooseUs.subtitle")} 
               className="w-full h-full object-cover opacity-80"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
@@ -31,20 +33,20 @@ export default function WhyChooseUs() {
           
           <div className="flex flex-col items-start">
             <span className="text-brand-red text-xs uppercase tracking-superwide font-medium mb-4">
-              {data.subtitle}
+              {t("whyChooseUs.subtitle")}
             </span>
             <h2 
               className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
-              dangerouslySetInnerHTML={{ __html: data.title }}
+              dangerouslySetInnerHTML={{ __html: t("whyChooseUs.title") }}
             />
             <p className="text-neutral-400 font-light leading-relaxed mb-10 max-w-lg md:text-lg">
-              {data.description}
+              {t("whyChooseUs.description")}
             </p>
             <a 
               href={data.primary_btn_url}
               className="inline-flex items-center px-8 py-4 rounded-full bg-white text-background font-medium text-sm transition-colors hover:bg-brand-red hover:text-white"
             >
-              {data.primary_btn_text}
+              {t("whyChooseUs.btn_text")}
             </a>
           </div>
         </motion.div>

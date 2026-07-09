@@ -3,6 +3,7 @@
 import { TRUST_STATS } from "@/lib/siteData";
 import { useScroll, motion, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { useLanguage } from "@/components/LanguageContext";
 
 function getIcon(name: string) {
   switch (name) {
@@ -37,6 +38,8 @@ function getIcon(name: string) {
 
 export default function TrustStats() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { t, language } = useLanguage();
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "center center"],
@@ -45,6 +48,33 @@ export default function TrustStats() {
   const y = useTransform(scrollYProgress, [0, 1], [40, 0]);
   const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
+  const getStatTranslation = (id: number) => {
+    switch (id) {
+      case 1:
+        return {
+          title: language === "bn" ? "৪.৯৯" : "4.99",
+          subtitle: t("trustStats.rating")
+        };
+      case 2:
+        return {
+          title: language === "bn" ? "১৫,০০০+" : "15,000+",
+          subtitle: t("trustStats.travelers")
+        };
+      case 3:
+        return {
+          title: language === "bn" ? "৮০+" : "80+",
+          subtitle: t("trustStats.destinations")
+        };
+      case 4:
+        return {
+          title: language === "bn" ? "২৪/৭" : "24/7",
+          subtitle: t("trustStats.support")
+        };
+      default:
+        return { title: "", subtitle: "" };
+    }
+  };
+
   return (
     <section ref={containerRef} className="relative bg-background py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
@@ -52,15 +82,18 @@ export default function TrustStats() {
           style={{ y, opacity }}
           className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8"
         >
-          {TRUST_STATS.map((stat) => (
-            <div key={stat.id} className="flex flex-col items-center justify-center text-center p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-              <div className="mb-4 rounded-full bg-white/5 p-3">
-                {getIcon(stat.icon)}
+          {TRUST_STATS.map((stat) => {
+            const trans = getStatTranslation(stat.id);
+            return (
+              <div key={stat.id} className="flex flex-col items-center justify-center text-center p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                <div className="mb-4 rounded-full bg-white/5 p-3">
+                  {getIcon(stat.icon)}
+                </div>
+                <h3 className="text-3xl font-display font-bold text-white mb-2">{trans.title}</h3>
+                <p className="text-sm text-neutral-400 font-light">{trans.subtitle}</p>
               </div>
-              <h3 className="text-3xl font-display font-bold text-white mb-2">{stat.title}</h3>
-              <p className="text-sm text-neutral-400 font-light">{stat.subtitle}</p>
-            </div>
-          ))}
+            );
+          })}
         </motion.div>
       </div>
     </section>

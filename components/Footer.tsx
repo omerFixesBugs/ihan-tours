@@ -1,9 +1,11 @@
 "use client";
 
 import { SITE_SETTINGS } from "@/lib/siteData";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
 
   return (
     <footer className="bg-black pt-20 pb-10 border-t border-white/10 relative overflow-hidden">
@@ -20,7 +22,7 @@ export default function Footer() {
               <span className="block text-[10px] text-brand-red tracking-superwide font-medium mt-1">And Travels</span>
             </h2>
             <p className="text-neutral-400 text-sm font-light mt-6 leading-relaxed">
-              {SITE_SETTINGS.tagline}. Curated experiences and local expertise for the modern explorer. Your gateway to authentic adventures.
+              {t("footer.about_description")}
             </p>
             
             <div className="flex gap-4 mt-8">
@@ -45,14 +47,14 @@ export default function Footer() {
 
           {/* Links Col 1 */}
           <div>
-            <h3 className="text-white font-medium mb-6 text-sm tracking-wider uppercase">Our Services</h3>
+            <h3 className="text-white font-medium mb-6 text-sm tracking-wider uppercase">{t("footer.our_services")}</h3>
             <ul className="space-y-4">
               {[
-                { name: "Umrah Packages", href: "#" },
-                { name: "Holiday Tours", href: "#" },
-                { name: "Air Ticketing", href: "#" },
-                { name: "Visa Processing", href: "#" },
-                { name: "Corporate Travel", href: "#" },
+                { name: t("footer.services_list.umrah"), href: "/umrah" },
+                { name: t("footer.services_list.holiday"), href: "/packages" },
+                { name: t("footer.services_list.ticketing"), href: "/visa" },
+                { name: t("footer.services_list.visa"), href: "/visa" },
+                { name: t("footer.services_list.corporate"), href: "/#contact" },
               ].map((link) => (
                 <li key={link.name}>
                   <a href={link.href} className="text-neutral-400 text-sm font-light hover:text-brand-red transition-colors flex items-center gap-2 group">
@@ -66,14 +68,14 @@ export default function Footer() {
 
           {/* Links Col 2 */}
           <div>
-            <h3 className="text-white font-medium mb-6 text-sm tracking-wider uppercase">Quick Links</h3>
+            <h3 className="text-white font-medium mb-6 text-sm tracking-wider uppercase">{t("footer.quick_links")}</h3>
             <ul className="space-y-4">
               {[
-                { name: "About Us", href: "#" },
-                { name: "Destinations", href: "#" },
-                { name: "Travel Blog", href: "#" },
-                { name: "Contact Us", href: "#contact" },
-                { name: "Terms & Conditions", href: "#" },
+                { name: t("footer.links_list.about"), href: "/about-us" },
+                { name: t("footer.links_list.destinations"), href: "/#destinations" },
+                { name: t("footer.links_list.blog"), href: "#" },
+                { name: t("footer.links_list.contact"), href: "#contact" },
+                { name: t("footer.links_list.terms"), href: "#" },
               ].map((link) => (
                 <li key={link.name}>
                   <a href={link.href} className="text-neutral-400 text-sm font-light hover:text-brand-red transition-colors flex items-center gap-2 group">
@@ -87,15 +89,15 @@ export default function Footer() {
 
           {/* Contact Col */}
           <div>
-            <h3 className="text-white font-medium mb-6 text-sm tracking-wider uppercase">Get in Touch</h3>
+            <h3 className="text-white font-medium mb-6 text-sm tracking-wider uppercase">{t("footer.get_in_touch")}</h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-neutral-400 text-sm font-light">
                 <svg className="w-5 h-5 text-brand-red shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                <span>{SITE_SETTINGS.address}</span>
+                <span>{t("footer.address_val")}</span>
               </li>
               <li className="flex items-center gap-3 text-neutral-400 text-sm font-light">
                 <svg className="w-5 h-5 text-brand-red shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                <a href={`tel:${SITE_SETTINGS.phone.replace(/[^0-9+]/g, '')}`} className="hover:text-white transition-colors">{SITE_SETTINGS.phone}</a>
+                <a href={`tel:${SITE_SETTINGS.phone.replace(/[^0-9+]/g, '')}`} className="hover:text-white transition-colors">{t("footer.phone_val")}</a>
               </li>
               <li className="flex items-center gap-3 text-neutral-400 text-sm font-light">
                 <svg className="w-5 h-5 text-brand-red shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
@@ -108,11 +110,11 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-8 mt-12 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-neutral-500 text-xs font-light text-center md:text-left">
-            &copy; {currentYear} {SITE_SETTINGS.site_name}. All rights reserved.
+            &copy; {currentYear} {SITE_SETTINGS.site_name}. {t("footer.rights_reserved")}
           </p>
           <div className="flex items-center gap-6 text-xs text-neutral-500 font-light">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-white transition-colors">{t("footer.privacy_policy")}</a>
+            <a href="#" className="hover:text-white transition-colors">{t("footer.terms_of_service")}</a>
           </div>
         </div>
       </div>
