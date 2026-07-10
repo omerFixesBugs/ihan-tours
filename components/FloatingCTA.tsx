@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
 
 function PlaneIcon() {
   return (
@@ -24,7 +24,16 @@ function PlaneIcon() {
 
 function CloseIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M18 6L6 18M6 6l12 12" />
     </svg>
   );
@@ -70,7 +79,7 @@ export default function FloatingCTA() {
               className="absolute inset-0 bg-black/40 backdrop-blur-sm"
               onClick={() => setIsOpen(false)}
             />
-            
+
             <div className="relative w-[95vw] max-w-[1400px] pb-6 md:pb-10">
               <motion.button
                 initial={{ opacity: 0, y: 20 }}
@@ -81,7 +90,7 @@ export default function FloatingCTA() {
               >
                 <CloseIcon />
               </motion.button>
-              
+
               <motion.div
                 initial={{ y: "100%", opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -89,7 +98,13 @@ export default function FloatingCTA() {
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
                 className="w-full max-h-[85vh] overflow-y-auto rounded-[1.5rem] bg-white p-6 shadow-2xl md:max-h-none md:overflow-visible md:rounded-[2rem] md:p-10"
               >
-                <form className="flex flex-col gap-6 md:flex-row md:items-start md:gap-0" onSubmit={(e) => { e.preventDefault(); setIsOpen(false); }}>
+                <form
+                  className="flex flex-col gap-6 md:flex-row md:items-start md:gap-0"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setIsOpen(false);
+                  }}
+                >
                   <div className="flex shrink-0 items-center md:w-[220px]">
                     <h2 className="font-sans text-3xl font-medium tracking-tight text-neutral-900 md:text-5xl">
                       {t("common.contact_us")}
@@ -102,10 +117,23 @@ export default function FloatingCTA() {
                       <label className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-neutral-900">
                         {t("contact.form.name")}
                       </label>
-                      <input type="text" placeholder={t("contact.form.name_placeholder")} className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none" required />
+                      <input
+                        type="text"
+                        placeholder={t("contact.form.name_placeholder")}
+                        className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
+                        required
+                      />
                       <div className="mt-4 flex items-center gap-2 md:mt-8">
-                        <input type="checkbox" id="privacy" className="h-3.5 w-3.5 rounded-full border-neutral-300 text-neutral-900 focus:ring-neutral-900" required />
-                        <label htmlFor="privacy" className="text-[9px] font-semibold uppercase tracking-wider text-neutral-400">
+                        <input
+                          type="checkbox"
+                          id="privacy"
+                          className="h-3.5 w-3.5 rounded-full border-neutral-300 text-neutral-900 focus:ring-neutral-900"
+                          required
+                        />
+                        <label
+                          htmlFor="privacy"
+                          className="text-[9px] font-semibold uppercase tracking-wider text-neutral-400"
+                        >
                           {t("contact.form.checkbox_agreement")}
                         </label>
                       </div>
@@ -116,7 +144,12 @@ export default function FloatingCTA() {
                       <label className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-neutral-900">
                         {t("contact.form.email")}
                       </label>
-                      <input type="email" placeholder={t("contact.form.email_placeholder")} className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none" required />
+                      <input
+                        type="email"
+                        placeholder={t("contact.form.email_placeholder")}
+                        className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
+                        required
+                      />
                     </div>
 
                     {/* PHONE */}
@@ -124,7 +157,11 @@ export default function FloatingCTA() {
                       <label className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-neutral-900">
                         {t("contact.form.phone")}
                       </label>
-                      <input type="tel" placeholder={t("contact.form.phone_placeholder")} className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none" />
+                      <input
+                        type="tel"
+                        placeholder={t("contact.form.phone_placeholder")}
+                        className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
+                      />
                     </div>
 
                     {/* DESTINATION */}
@@ -133,8 +170,18 @@ export default function FloatingCTA() {
                         {t("contact.form.destination")}
                       </label>
                       <div className="flex items-center gap-4">
-                        <input type="text" placeholder={t("contact.form.destination_placeholder")} className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none" required />
-                        <button type="submit" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#2a2522] text-white transition-transform hover:scale-105">
+                        <input
+                          type="text"
+                          placeholder={t(
+                            "contact.form.destination_placeholder",
+                          )}
+                          className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
+                          required
+                        />
+                        <button
+                          type="submit"
+                          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#2a2522] text-white transition-transform hover:scale-105"
+                        >
                           <PlaneIcon />
                         </button>
                       </div>
