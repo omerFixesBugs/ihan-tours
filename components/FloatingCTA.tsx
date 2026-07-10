@@ -39,9 +39,42 @@ function CloseIcon() {
   );
 }
 
+const EMPTY_FORM = { name: "", email: "", phone: "", destination: "" };
+
 export default function FloatingCTA() {
   const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState(EMPTY_FORM);
+  const [formStatus, setFormStatus] = useState<
+    "idle" | "submitting" | "success"
+  >("idle");
   const { t } = useLanguage();
+
+  const handleClose = () => {
+    setIsOpen(false);
+    // Reset after exit animation completes
+    setTimeout(() => {
+      setFormData(EMPTY_FORM);
+      setFormStatus("idle");
+    }, 400);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // setFormStatus("submitting");
+    console.log("Form submitted:", formData);
+    // Fake API call
+    setTimeout(() => {
+      setFormStatus("success");
+      setTimeout(() => {
+        handleClose();
+      }, 2500);
+    }, 1200);
+  };
+
+  const set =
+    (field: keyof typeof EMPTY_FORM) =>
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      setFormData((prev) => ({ ...prev, [field]: e.target.value }));
 
   return (
     <>
@@ -71,21 +104,21 @@ export default function FloatingCTA() {
 
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-[100] flex flex-col items-center justify-end p-4 md:p-8">
+          <div className="fixed inset-0 z-[100] flex flex-col items-center justify-end p-3 md:p-8">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-              onClick={() => setIsOpen(false)}
+              onClick={handleClose}
             />
 
-            <div className="relative w-[95vw] max-w-[1400px] pb-6 md:pb-10">
+            <div className="relative w-full max-w-[1400px] pb-6 md:pb-10">
               <motion.button
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
-                onClick={() => setIsOpen(false)}
+                onClick={handleClose}
                 className="absolute -top-12 left-1/2 flex h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full bg-white text-black shadow-lg transition-transform hover:scale-110"
               >
                 <CloseIcon />
@@ -96,95 +129,166 @@ export default function FloatingCTA() {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: "100%", opacity: 0 }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="w-full max-h-[85vh] overflow-y-auto rounded-[1.5rem] bg-white p-6 shadow-2xl md:max-h-none md:overflow-visible md:rounded-[2rem] md:p-10"
+                className="relative w-full rounded-[1.5rem] bg-white shadow-2xl overflow-hidden md:rounded-[2rem]"
               >
+                {/* Success Overlay */}
+                <AnimatePresence>
+                  {formStatus === "success" && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-white p-8 text-center"
+                    >
+                      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-100">
+                        <svg
+                          className="h-7 w-7 text-green-600"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </div>
+                      <h3 className="text-xl font-semibold text-neutral-900">
+                        Request Received!
+                      </h3>
+                      <p className="text-sm text-neutral-500 max-w-xs">
+                        Thank you,{" "}
+                        <span className="font-medium text-neutral-800">
+                          {formData.name || "traveler"}
+                        </span>
+                        . Our team will reach out to you shortly.
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
                 <form
-                  className="flex flex-col gap-6 md:flex-row md:items-start md:gap-0"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setIsOpen(false);
-                  }}
+                  onSubmit={handleSubmit}
+                  className="flex flex-col gap-5 p-5 md:flex-row md:items-start md:gap-0 md:p-10"
                 >
+                  {/* Title */}
                   <div className="flex shrink-0 items-center md:w-[220px]">
-                    <h2 className="font-sans text-3xl font-medium tracking-tight text-neutral-900 md:text-5xl">
+                    <h2 className="font-sans text-2xl font-medium tracking-tight text-neutral-900 md:text-5xl">
                       {t("common.contact_us")}
                     </h2>
                   </div>
 
-                  <div className="flex w-full flex-col gap-4 md:flex-row md:gap-0">
-                    {/* NAME */}
-                    <div className="flex-1 md:border-l md:border-neutral-200 md:pl-6">
-                      <label className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-neutral-900">
-                        {t("contact.form.name")}
-                      </label>
-                      <input
-                        type="text"
-                        placeholder={t("contact.form.name_placeholder")}
-                        className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
-                        required
-                      />
-                      <div className="mt-4 flex items-center gap-2 md:mt-8">
-                        <input
-                          type="checkbox"
-                          id="privacy"
-                          className="h-3.5 w-3.5 rounded-full border-neutral-300 text-neutral-900 focus:ring-neutral-900"
-                          required
-                        />
-                        <label
-                          htmlFor="privacy"
-                          className="text-[9px] font-semibold uppercase tracking-wider text-neutral-400"
-                        >
-                          {t("contact.form.checkbox_agreement")}
+                  {/* Fields + Checkbox wrapper */}
+                  <div className="flex flex-col gap-5 w-full">
+                    {/* 4 input fields — stacked on mobile, row on desktop */}
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-4 md:gap-0">
+                      {/* NAME */}
+                      <div className="flex flex-col gap-1 md:border-l md:border-neutral-200 md:pl-6">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-500">
+                          Full Name
                         </label>
-                      </div>
-                    </div>
-
-                    {/* EMAIL */}
-                    <div className="flex-1 md:border-l md:border-neutral-200 md:pl-6">
-                      <label className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-neutral-900">
-                        {t("contact.form.email")}
-                      </label>
-                      <input
-                        type="email"
-                        placeholder={t("contact.form.email_placeholder")}
-                        className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
-                        required
-                      />
-                    </div>
-
-                    {/* PHONE */}
-                    <div className="flex-1 md:border-l md:border-neutral-200 md:pl-6">
-                      <label className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-neutral-900">
-                        {t("contact.form.phone")}
-                      </label>
-                      <input
-                        type="tel"
-                        placeholder={t("contact.form.phone_placeholder")}
-                        className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
-                      />
-                    </div>
-
-                    {/* DESTINATION */}
-                    <div className="flex-1 md:border-l md:border-neutral-200 md:pl-6">
-                      <label className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-neutral-900">
-                        {t("contact.form.destination")}
-                      </label>
-                      <div className="flex items-center gap-4">
                         <input
                           type="text"
-                          placeholder={t(
-                            "contact.form.destination_placeholder",
-                          )}
-                          className="w-full bg-transparent text-lg text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
                           required
+                          value={formData.name}
+                          onChange={set("name")}
+                          placeholder="e.g. Ahmed Hossain"
+                          className="w-full bg-transparent text-base text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
                         />
-                        <button
-                          type="submit"
-                          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#2a2522] text-white transition-transform hover:scale-105"
-                        >
-                          <PlaneIcon />
-                        </button>
                       </div>
+
+                      {/* EMAIL */}
+                      <div className="flex flex-col gap-1 md:border-l md:border-neutral-200 md:pl-6">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-500">
+                          Email Address
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          value={formData.email}
+                          onChange={set("email")}
+                          placeholder="e.g. ahmed@company.com"
+                          className="w-full bg-transparent text-base text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
+                        />
+                      </div>
+
+                      {/* PHONE */}
+                      <div className="flex flex-col gap-1 md:border-l md:border-neutral-200 md:pl-6">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-500">
+                          Phone Number
+                        </label>
+                        <input
+                          type="tel"
+                          value={formData.phone}
+                          onChange={set("phone")}
+                          placeholder="e.g. +880 17XX XXX XXX"
+                          className="w-full bg-transparent text-base text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
+                        />
+                      </div>
+
+                      {/* DESTINATION + Submit */}
+                      <div className="flex flex-col gap-1 md:border-l md:border-neutral-200 md:pl-6">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-neutral-500">
+                          Destination / Service
+                        </label>
+                        <div className="flex items-center gap-3">
+                          <input
+                            type="text"
+                            required
+                            value={formData.destination}
+                            onChange={set("destination")}
+                            placeholder="e.g. Malaysia, Umrah, Visa..."
+                            className="w-full bg-transparent text-base text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
+                          />
+                          <button
+                            type="submit"
+                            disabled={formStatus === "submitting"}
+                            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#2a2522] text-white transition-transform hover:scale-105 disabled:opacity-60"
+                          >
+                            {formStatus === "submitting" ? (
+                              <svg
+                                className="h-4 w-4 animate-spin"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                              >
+                                <circle
+                                  className="opacity-25"
+                                  cx="12"
+                                  cy="12"
+                                  r="10"
+                                  stroke="currentColor"
+                                  strokeWidth="4"
+                                />
+                                <path
+                                  className="opacity-75"
+                                  fill="currentColor"
+                                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                />
+                              </svg>
+                            ) : (
+                              <PlaneIcon />
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Privacy Checkbox — always at bottom-left, never floating */}
+                    <div className="flex items-start gap-2">
+                      <input
+                        type="checkbox"
+                        id="privacy-cta"
+                        required
+                        className="mt-0.5 h-3.5 w-3.5 shrink-0 rounded border-neutral-300 text-neutral-900 focus:ring-neutral-900"
+                      />
+                      <label
+                        htmlFor="privacy-cta"
+                        className="text-[9px] font-semibold uppercase leading-tight tracking-wider text-neutral-400"
+                      >
+                        By submitting, I agree to the Privacy Policy.
+                      </label>
                     </div>
                   </div>
                 </form>
