@@ -10,7 +10,7 @@ export default function HeroBrandMark() {
     <div className="pointer-events-none absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2 text-center">
       <p
         className={`font-display text-[clamp(1.25rem,3.5vw,2.25rem)] font-extrabold uppercase leading-none text-foreground ${
-          isBn ? "tracking-normal" : "tracking-[0.28em]"
+          isBn ? "tracking-normal" : "tracking-[0.18em]"
         }`}
         style={{
           textShadow:
@@ -21,7 +21,7 @@ export default function HeroBrandMark() {
       </p>
       <p
         className={`font-display mt-3 text-[clamp(0.65rem,1.8vw,1rem)] font-bold uppercase text-foreground/95 ${
-          isBn ? "tracking-normal" : "tracking-[0.55em]"
+          isBn ? "tracking-normal" : "tracking-[0.35em]"
         }`}
         style={{
           textShadow: "0 1px 16px rgba(0,0,0,0.4)",
