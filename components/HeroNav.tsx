@@ -22,8 +22,8 @@ export default function HeroNav() {
         ))}
       </ul>
       <div className="hidden text-right text-[11px] font-light leading-relaxed tracking-wide text-foreground/80 sm:block md:text-xs">
-        <a href="tel:+8801977242403" className="block hover:text-brand-red">
-          +8801977242403
+        <a href="tel:+8801713224948" className="block hover:text-brand-red">
+          +8801713224948
         </a>
         <a
           href="mailto:bookings@ihantours.com"

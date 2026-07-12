@@ -90,7 +90,7 @@ export default function PackageDetailPageClient({ pkg }: { pkg: TravelPackage })
         `Please let me know the availability and next steps. Thank you!`;
         
     const encodedText = encodeURIComponent(messageText);
-    window.open(`https://wa.me/8801977242403?text=${encodedText}`, "_blank");
+    window.open(`https://wa.me/8801713224948?text=${encodedText}`, "_blank");
   };
 
   return (
