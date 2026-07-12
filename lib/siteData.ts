@@ -2,7 +2,7 @@ export const SITE_SETTINGS = {
   site_name: "Ihan Tours and Travels",
   tagline: "Celebrate the Journey",
   email: "bookings@ihantours.com",
-  phone: "+8801977242403",
+  phone: "+8801713224948",
   address: "Ihan Tours and Travels — Dhaka, Bangladesh",
   facebook_url: "#",
   instagram_url: "#",
@@ -311,7 +311,7 @@ export const WHATSAPP_NUMBERS = [
   {
     id: 1,
     label: "Umrah & Hajj",
-    number: "+8801977242403",
+    number: "+8801713224948",
     context: "umrah",
     is_default: true,
     is_featured: true,
@@ -319,7 +319,7 @@ export const WHATSAPP_NUMBERS = [
   {
     id: 2,
     label: "Holiday Packages",
-    number: "+8801977242404",
+    number: "+8801713224948",
     context: "package",
     is_default: true,
     is_featured: true,
@@ -327,7 +327,7 @@ export const WHATSAPP_NUMBERS = [
   {
     id: 3,
     label: "Visa & Ticketing",
-    number: "+8801977242405",
+    number: "+8801713224948",
     context: "visa",
     is_default: true,
     is_featured: true,

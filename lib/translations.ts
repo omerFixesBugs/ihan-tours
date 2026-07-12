@@ -39,7 +39,7 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
       email_us: "Email Us",
       office_address: "Office Address",
       address_val: "Ihan Tours and Travels — Dhaka, Bangladesh",
-      phone_val: "+8801977242403",
+      phone_val: "+8801713224948",
       about_description:
         "Celebrate the Journey. Curated experiences and local expertise for the modern explorer. Your gateway to authentic adventures.",
       services_list: {

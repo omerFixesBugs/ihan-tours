@@ -187,15 +187,15 @@ export default function HeroScroll({ images, isLoading }: HeroScrollProps) {
         exit={0.78}
         direction="left"
         distance={56}
-        className="absolute left-8 top-1/3 max-w-sm p-4 md:left-20"
+        className="absolute left-4 right-4 top-[15%] lg:left-20 lg:top-1/3 lg:right-auto lg:translate-x-0 mx-auto lg:mx-0 max-w-[85vw] lg:max-w-sm p-4 text-center lg:text-left"
       >
         <span className="mb-2 block text-xs uppercase tracking-superwide text-white/70">
           {t("heroScroll.what_we_offer")}
         </span>
-        <h2 className="font-display mb-3 text-2xl font-bold uppercase tracking-display text-white md:text-3xl">
+        <h2 className="font-display mb-1 lg:mb-3 text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold uppercase tracking-display text-white">
           {t("heroScroll.private_group_tours")}
         </h2>
-        <p className="text-sm font-light leading-relaxed text-white/80">
+        <p className="hidden lg:block text-sm font-light leading-relaxed text-white/80">
           {t("heroScroll.what_we_offer_desc")}
         </p>
       </SequenceOverlay>
@@ -208,15 +208,15 @@ export default function HeroScroll({ images, isLoading }: HeroScrollProps) {
         exit={0.78}
         direction="right"
         distance={56}
-        className="absolute right-8 top-1/3 max-w-sm p-4 text-right md:right-20"
+        className="absolute left-4 right-4 bottom-[20%] lg:right-20 lg:top-1/3 lg:left-auto lg:bottom-auto lg:mx-0 mx-auto max-w-[85vw] lg:max-w-sm p-4 text-center lg:text-right"
       >
         <span className="mb-2 block text-xs uppercase tracking-superwide text-white/70">
           {t("heroScroll.why_choose_us")}
         </span>
-        <h2 className="font-display mb-3 text-2xl font-bold uppercase tracking-display text-white md:text-3xl">
+        <h2 className="font-display mb-1 lg:mb-3 text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold uppercase tracking-display text-white">
           {t("heroScroll.travel_with_confidence")}
         </h2>
-        <p className="text-sm font-light leading-relaxed text-white/80">
+        <p className="hidden lg:block text-sm font-light leading-relaxed text-white/80">
           {t("heroScroll.why_choose_us_desc")}
         </p>
       </SequenceOverlay>
@@ -230,7 +230,7 @@ export default function HeroScroll({ images, isLoading }: HeroScrollProps) {
         hold={true}
         direction="right"
         distance={56}
-        className="absolute right-8 top-1/2 max-w-sm p-4 text-right md:right-20 z-20"
+        className="absolute right-4 top-[38%] lg:right-20 lg:top-1/2 lg:max-w-sm max-w-[150px] sm:max-w-[200px] p-2 lg:p-4 text-right z-20"
       >
         <motion.span
           style={{ color: transcendPColor }}
@@ -240,13 +240,13 @@ export default function HeroScroll({ images, isLoading }: HeroScrollProps) {
         </motion.span>
         <motion.h2
           style={{ color: transcendColor }}
-          className="font-display mb-3 text-2xl font-bold uppercase tracking-display md:text-3xl"
+          className="font-display mb-1 lg:mb-3 text-base sm:text-lg lg:text-2xl xl:text-3xl font-bold uppercase tracking-display"
         >
           {t("heroScroll.expert_guides")}
         </motion.h2>
         <motion.p
           style={{ color: transcendPColor }}
-          className="text-sm font-light leading-relaxed"
+          className="hidden lg:block text-sm font-light leading-relaxed"
         >
           {t("heroScroll.local_expertise_desc")}
         </motion.p>
@@ -261,7 +261,7 @@ export default function HeroScroll({ images, isLoading }: HeroScrollProps) {
         hold={true}
         direction="left"
         distance={56}
-        className="absolute left-8 top-[40%] max-w-sm p-4 md:left-20 z-20"
+        className="absolute left-4 top-[38%] lg:left-20 lg:top-[40%] lg:max-w-sm max-w-[150px] sm:max-w-[200px] p-2 lg:p-4 text-left z-20"
       >
         <motion.span
           style={{ color: transcendPColor }}
@@ -271,13 +271,13 @@ export default function HeroScroll({ images, isLoading }: HeroScrollProps) {
         </motion.span>
         <motion.h2
           style={{ color: transcendColor }}
-          className="font-display mb-3 text-2xl font-bold uppercase tracking-display md:text-3xl"
+          className="font-display mb-1 lg:mb-3 text-base sm:text-lg lg:text-2xl xl:text-3xl font-bold uppercase tracking-display"
         >
           {t("heroScroll.vip_experiences")}
         </motion.h2>
         <motion.p
           style={{ color: transcendPColor }}
-          className="text-sm font-light leading-relaxed"
+          className="hidden lg:block text-sm font-light leading-relaxed"
         >
           {t("heroScroll.unmatched_comfort_desc")}
         </motion.p>
@@ -292,7 +292,7 @@ export default function HeroScroll({ images, isLoading }: HeroScrollProps) {
         hold={true}
         direction="down"
         distance={40}
-        className="absolute inset-x-0 top-[20%] mx-auto flex max-w-md flex-col items-center p-4 text-center z-20"
+        className="absolute inset-x-0 top-[18%] lg:top-[20%] mx-auto flex max-w-[280px] sm:max-w-md flex-col items-center p-2 lg:p-4 text-center z-20"
       >
         <motion.span
           style={{ color: transcendPColor }}
@@ -302,13 +302,13 @@ export default function HeroScroll({ images, isLoading }: HeroScrollProps) {
         </motion.span>
         <motion.h2
           style={{ color: transcendColor }}
-          className="font-display mb-3 text-2xl font-bold uppercase tracking-display md:text-3xl"
+          className="font-display mb-1 lg:mb-3 text-base sm:text-lg lg:text-2xl xl:text-3xl font-bold uppercase tracking-display"
         >
           {t("heroScroll.destinations_count")}
         </motion.h2>
         <motion.p
           style={{ color: transcendPColor }}
-          className="text-sm font-light leading-relaxed"
+          className="hidden lg:block text-sm font-light leading-relaxed"
         >
           {t("heroScroll.global_reach_desc")}
         </motion.p>
@@ -323,13 +323,13 @@ export default function HeroScroll({ images, isLoading }: HeroScrollProps) {
         hold={true}
         direction="up"
         distance={48}
-        className="absolute inset-x-0 bottom-16 z-20 flex flex-col items-center px-6 text-center md:bottom-24"
+        className="absolute inset-x-0 bottom-[12%] lg:bottom-16 xl:bottom-24 z-20 flex flex-col items-center px-6 text-center"
       >
         <motion.div style={{ color: transcendColor }}>
-          <h2 className="font-display mb-4 text-3xl font-bold uppercase tracking-display md:text-5xl">
+          <h2 className="font-display mb-2 lg:mb-4 text-2xl lg:text-3xl xl:text-5xl font-bold uppercase tracking-display">
             {t("heroScroll.transcend_boundaries")}
           </h2>
-          <motion.p style={{ color: transcendPColor }} className="max-w-xl font-light leading-relaxed">
+          <motion.p style={{ color: transcendPColor }} className="hidden lg:block max-w-xl font-light leading-relaxed">
             {t("heroScroll.transcend_boundaries_desc")}
           </motion.p>
         </motion.div>
