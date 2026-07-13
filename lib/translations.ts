@@ -203,25 +203,25 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
       seamless_travel_desc:
         "Enjoy complete peace of mind with our end-to-end luxury concierge team. From custom private jet charters and chauffeur transfers to luxury villa bookings and local guides, we ensure a seamless and frictionless global journey.",
       accordion: {
-        pets: {
-          title: "Pets",
+        documentation: {
+          title: "Visa & Documentation",
           content:
-            "Traveling with pets on a private jet means comfort and peace of mind for both owners and their companions. Our dedicated team ensures seamless arrangements, from documentation and safety to onboard care, so that your pet enjoys the same level of attention and luxury as you do.",
+            "From visa applications to travel documentation, our expert team handles every step of the process. We prepare and verify your paperwork with precision, so you can travel with complete confidence and without unnecessary delays.",
         },
         availability: {
-          title: "24/7 Availability",
+          title: "24/7 Support",
           content:
-            "Our global concierge team is ready at a moment's notice to arrange your charter. Whether it's a last-minute business trip or a sudden weekend getaway, we ensure an aircraft is prepared and waiting for you anywhere in the world.",
+            "Our travel specialists are on call around the clock to help with bookings, itinerary changes, or last-minute needs. Wherever you are on your journey, expert support is always just a message away.",
         },
         services: {
-          title: "Onboard Services",
+          title: "Tailored Packages",
           content:
-            "Experience Michelin-star dining, premium beverages, and bespoke entertainment options tailored entirely to your preferences. Every flight is curated to your exact tastes by our dedicated cabin crew.",
+            "Every traveler is different, so we design custom tour packages built around your interests, budget, and schedule — from spiritual journeys and family holidays to corporate trips.",
         },
         efficient: {
-          title: "Efficient",
+          title: "Best Price Guarantee",
           content:
-            "Skip the lines, security queues, and layovers. Private travel minimizes your transit time, allowing you to fly direct to thousands of executive airports worldwide, getting you closer to your final destination faster.",
+            "We work directly with airlines, hotels, and trusted local partners to secure the best possible rates, passing the savings on to you without compromising on comfort or service.",
         },
       },
       callouts: {
@@ -662,25 +662,25 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
       seamless_travel_desc:
         "আমাদের শুরু থেকে শেষ পর্যন্ত সেবা দেওয়ার মাধ্যমে সম্পূর্ণ মানসিক শান্তি উপভোগ করুন। কাস্টম প্রাইভেট জেট চার্টার এবং পেশাদার ড্রাইভার স্থানান্তর থেকে শুরু করে বিলাসবহুল ভিলা বুকিং এবং স্থানীয় গাইড সেবা সহ, আমরা একটি ঝামেলাহীন এবং নিরাপদ বৈশ্বিক যাত্রা নিশ্চিত করি।",
       accordion: {
-        pets: {
-          title: "পোষা প্রাণী",
+        documentation: {
+          title: "ভিসা ও কাগজপত্র",
           content:
-            "ব্যক্তিগত জেটে পোষা প্রাণীদের সাথে ভ্রমণের অর্থ হলো মালিক এবং তাদের সঙ্গী উভয়ের জন্যই আরাম এবং মানসিক শান্তি। আমাদের ডেডিকেটেড টিম প্রয়োজনীয় কাগজপত্র ও নিরাপত্তা থেকে শুরু করে অনবোর্ড কেয়ার পর্যন্ত নিখুঁত ব্যবস্থা নিশ্চিত করে, যাতে আপনার প্রিয় পোষা প্রাণীটিও আপনার মতোই মনোযোগ এবং বিলাসিতা উপভোগ করতে পারে।",
+            "আমরা নিখুঁতভাবে আপনার সব কাগজপত্র প্রস্তুত ও যাচাই করি, যাতে আপনি নিশ্চিন্তে এবং কোনো অপ্রয়োজনীয় বিলম্ব ছাড়াই ভ্রমণ করতে পারেন।",
         },
         availability: {
-          title: "২৪/৭ উপলব্ধতা",
+          title: "২৪/৭ সহায়তা",
           content:
-            "আমাদের বিশ্বব্যাপী সহায়তা দল আপনার বিমান বুকিংয়ের জন্য সর্বদা প্রস্তুত। এটি কোনো শেষ মুহূর্তের ব্যবসায়িক ট্রিপ হোক বা হঠাৎ ছুটির দিনের ভ্রমণ হোক, আমরা বিমানের প্রস্তুতি নিশ্চিত করি এবং বিশ্বের যেকোনো স্থানে আপনার জন্য বিমান প্রস্তুত রাখি।",
+            "আমাদের ভ্রমণ বিশেষজ্ঞরা বুকিং, সময়সূচি পরিবর্তন কিংবা শেষ মুহূর্তের প্রয়োজনে সাহায্য করতে সবসময় প্রস্তুত। আপনার যাত্রার যেকোনো পর্যায়ে, বিশেষজ্ঞ সহায়তা সবসময় হাতের নাগালে।",
         },
         services: {
-          title: "উড়োজাহাজে প্রিমিয়াম সেবা",
+          title: "কাস্টমাইজড প্যাকেজ",
           content:
-            "আপনার পছন্দ অনুযায়ী মিশেলিন-স্টার ডাইনিং, প্রিমিয়াম পানীয় এবং বিশেষ বিনোদন সুবিধার অভিজ্ঞতা নিন। প্রতিটি ফ্লাইট আমাদের ডেডিকেটেড ক্রু দ্বারা আপনার রুচি অনুযায়ী কাস্টমাইজ করা হয়।",
+            "প্রতিটি ভ্রমণকারী ভিন্ন, তাই আমরা আপনার আগ্রহ, বাজেট এবং সময়সূচি অনুযায়ী কাস্টম ট্যুর প্যাকেজ তৈরি করি, যেমন ওমরাহ থেকে শুরু করে পারিবারিক ছুটি এবং কর্পোরেট ভ্রমণ পর্যন্ত।",
         },
         efficient: {
-          title: "দক্ষ ও দ্রুত",
+          title: "সর্বনিম্ন মূল্যের নিশ্চয়তা",
           content:
-            "লাইন, সিকিউরিটি কিউ এবং ট্রানজিট এড়িয়ে চলুন। ব্যক্তিগত ভ্রমণ আপনার যাতায়াতের সময় কমিয়ে দেয়, যা আপনাকে সরাসরি বিশ্বজুড়ে হাজার হাজার বিমানবন্দরে পৌঁছাতে সাহায্য করে এবং আপনার চূড়ান্ত গন্তব্যে দ্রুত নিয়ে যায়।",
+            "আমরা এয়ারলাইন্স, হোটেল এবং বিশ্বস্ত স্থানীয় অংশীদারদের সাথে সরাসরি কাজ করি যাতে সেরা মূল্য নিশ্চিত করা যায় এবং মান বা সেবায় কোনো আপস ছাড়াই সেই সাশ্রয় আপনার কাছে পৌঁছে দিই।",
         },
       },
       callouts: {

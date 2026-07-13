@@ -15,36 +15,36 @@ import { useLanguage } from "@/components/LanguageContext";
 
 const ACCORDION_DATA = [
   {
-    id: "pets",
-    title: "Pets",
+    id: "documentation",
+    title: "Visa & Documentation",
     content:
-      "Traveling with pets on a private jet means comfort and peace of mind for both owners and their companions. Our dedicated team ensures seamless arrangements, from documentation and safety to onboard care, so that your pet enjoys the same level of attention and luxury as you do. Every detail is managed to create a stress-free and enjoyable journey for everyone on board.",
+      "From visa applications to travel documentation, our expert team handles every step of the process. We prepare and verify your paperwork with precision, so you can travel with complete confidence and without unnecessary delays.",
     image:
-      "https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&q=80&w=1600",
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=1600",
   },
   {
     id: "availability",
-    title: "24/7 availability",
+    title: "24/7 Support",
     content:
-      "Our global concierge team is ready at a moment's notice to arrange your charter. Whether it's a last-minute business trip or a sudden weekend getaway, we ensure an aircraft is prepared and waiting for you anywhere in the world.",
+      "Our travel specialists are on call around the clock to help with bookings, itinerary changes, or last-minute needs. Wherever you are on your journey, expert support is always just a message away.",
     image:
-      "https://images.unsplash.com/photo-1540962351504-03099e0a754b?auto=format&fit=crop&q=80&w=1600",
+      "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80&w=1600",
   },
   {
     id: "services",
-    title: "Onboard services",
+    title: "Tailored Packages",
     content:
-      "Experience Michelin-star dining, premium beverages, and bespoke entertainment options tailored entirely to your preferences. Every flight is curated to your exact tastes by our dedicated cabin crew.",
+      "Every traveler is different, so we design custom tour packages built around your interests, budget, and schedule — from spiritual journeys and family holidays to corporate trips.",
     image:
-      "https://images.unsplash.com/photo-1583428751336-d7681329c017?auto=format&fit=crop&q=80&w=1600",
+      "https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&q=80&w=1600",
   },
   {
     id: "efficient",
-    title: "Efficient",
+    title: "Best Price Guarantee",
     content:
-      "Skip the lines, security queues, and layovers. Private travel minimizes your transit time, allowing you to fly direct to thousands of executive airports worldwide, getting you closer to your final destination faster.",
+      "We work directly with airlines, hotels, and trusted local partners to secure the best possible rates, passing the savings on to you without compromising on comfort or service.",
     image:
-      "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&q=80&w=1600",
+      "https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&q=80&w=1600",
   },
 ];
 
@@ -259,6 +259,11 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
     [0.9, 1.0],
     ["100vh", "0vh"]
   );
+  const betterWayOpacity = useTransform(
+    globalScrollYProgress,
+    [0.89, 0.9],
+    [0, 1]
+  );
 
   const { scrollYProgress: exitProgress } = useScroll({
     target: containerRef,
@@ -438,7 +443,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
             y: flightTextY,
             zIndex: 1,
           }}
-          className="pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 md:left-24"
+          className="pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 2xl:left-24"
         >
           <span className="font-display text-2xl font-bold uppercase tracking-widest text-ink/80 md:text-5xl">
             {leftFlightText}
@@ -451,9 +456,9 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
             y: flightTextY,
             zIndex: 1,
           }}
-          className="pointer-events-none absolute right-8 top-1/2 -translate-y-1/2 md:right-24"
+          className="pointer-events-none absolute right-8 top-1/2 -translate-y-1/2  2xl:right-24"
         >
-          <span className="font-display text-2xl font-bold uppercase tracking-widest text-ink/80 md:text-5xl">
+          <span className="font-display text-2xl font-bold uppercase tracking-widest text-ink/80 xl:text-5xl">
             {rightFlightText}
           </span>
         </motion.div>
@@ -766,8 +771,8 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
 
         {/* ═══ Phase 8: Better Way to Fly ═══ */}
         <motion.div
-          style={{ y: betterWayY, zIndex: 10 }}
-          className="absolute inset-0 flex h-full w-full bg-transparent pointer-events-auto"
+          style={{ y: betterWayY, opacity: betterWayOpacity, zIndex: 10 }}
+          className="absolute inset-0 flex h-full w-full overflow-hidden bg-transparent pointer-events-auto"
         >
           <div className="flex h-full w-full flex-col md:flex-row">
             {/* Left Column: Accordion */}
