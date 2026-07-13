@@ -71,6 +71,14 @@ const PHASE3_START = 0.67;
 const PHASE4_START = 0.69;
 const PHASE4_END = 0.77;
 
+// Mobile-only: no canvas sequence. The entry plane persists through the
+// callouts (shrinking/drifting down) then exits upward; the outro plane
+// slides in from the right at its final floating size right after.
+const MOBILE_ENTRY_SHRINK_END = 0.62; // matches the last callout's exit (Bangladesh)
+const MOBILE_ENTRY_EXIT_END = PHASE3_START;
+const MOBILE_OUTRO_ENTER_START = 0.62;
+const MOBILE_OUTRO_ENTER_END = PHASE3_START;
+
 /* ── Tour callouts (mapped within Phase 2 range) ────────────────── */
 const TOUR_CALLOUTS = [
   {
@@ -79,10 +87,10 @@ const TOUR_CALLOUTS = [
     exit: 0.28,
     direction: "down" as const,
     className:
-      "absolute left-1/2 top-12 max-w-sm -translate-x-1/2 p-4 text-center md:top-16",
+      "absolute inset-x-0 top-12 mx-auto max-w-sm p-4 text-center md:top-16",
     eyebrow: "Spiritual Journey",
     title: "Umrah",
-    body: "Umrah is not just a physical journey; it is a divine summons.",
+    body: "Umrah is not just a physical journey. It is a divine summons.",
   },
   {
     enter: 0.21,
@@ -101,7 +109,7 @@ const TOUR_CALLOUTS = [
     exit: 0.42,
     direction: "left" as const,
     className:
-      "absolute left-6 top-[22%] max-w-sm p-4 text-left md:left-16",
+      "absolute left-6 top-[34%] md:top-[22%] max-w-sm p-4 text-left md:left-16",
     eyebrow: "Heritage",
     title: "China",
     body: "Walk the Great Wall and wander imperial palaces across iconic destinations.",
@@ -154,6 +162,24 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
   }));
 
   const [activeAccordionId, setActiveAccordionId] = useState(ACCORDION_DATA[0].id);
+
+  // Once the outro plane shrinks into its Phase 4 corner position, object-cover
+  // crops it down to a tiny zoomed fragment on narrow/tall mobile viewports
+  // (whatever doesn't fit the aspect ratio gets clipped at the screen edge).
+  // Switching to object-contain there keeps the whole plane on-screen.
+  const [isOutroPlaneShrunk, setIsOutroPlaneShrunk] = useState(false);
+
+  // Mobile and tablet (below lg) skip the canvas frame-sequence entirely (see
+  // mobile-only intro/outro blocks below) — this just prevents wasted
+  // per-frame canvas draws there.
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   // Localized Callouts
   const localizedTourCallouts = TOUR_CALLOUTS.map((item) => {
@@ -251,6 +277,52 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
     globalScrollYProgress,
     [0.9 * PHASE4_START, 0.9 * PHASE4_END, 0.9, 1.0],
     ["0%", "25%", "25%", "-150vw"]
+  );
+
+  /* ── Mobile-only: entry plane persists, shrinks/drifts up, exits off the top ── */
+  const mobileEntryOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.06, MOBILE_ENTRY_EXIT_END - 0.02, MOBILE_ENTRY_EXIT_END],
+    [0, 1, 1, 0]
+  );
+  const mobileEntryY = useTransform(
+    scrollYProgress,
+    [0, PHASE1_END, MOBILE_ENTRY_SHRINK_END, MOBILE_ENTRY_EXIT_END],
+    ["100vh", "0%", "-25%", "-100%"]
+  );
+  // The box's aspect-ratio matches the source photo (16:9) and is wider than
+  // the screen (150vw), so object-contain fits the full image with no
+  // internal crop/letterbox — only the outer ~16% on each side falls outside
+  // the viewport and gets clipped by the sticky container's overflow-hidden,
+  // a deliberate, symmetric, moderate crop rather than object-cover's severe
+  // one. Animating real width (not a transform: scale) keeps this smooth.
+  const mobileEntryWidth = useTransform(
+    scrollYProgress,
+    [0, PHASE2_START, MOBILE_ENTRY_SHRINK_END],
+    ["150vw", "150vw", "105vw"]
+  );
+
+  /* ── Mobile-only: outro plane slides in from right, settles centered ── */
+  const mobileOutroOpacity = useTransform(
+    scrollYProgress,
+    [MOBILE_OUTRO_ENTER_START, MOBILE_OUTRO_ENTER_END],
+    [0, 1]
+  );
+  // Centering (-50%) is applied separately via a static wrapper class so this
+  // motion value only ever mixes two unit types per keyframe pair (matching
+  // the desktop outroPlaneX pattern) — a calc() combining "%" and "vw" in one
+  // keyframe broke Framer's interpolation and made the exit snap away early.
+  const mobileOutroX = useTransform(
+    globalScrollYProgress,
+    [0.9 * MOBILE_OUTRO_ENTER_START, 0.9 * MOBILE_OUTRO_ENTER_END, 0.9, 1.0],
+    ["100%", "0%", "0%", "-150vw"]
+  );
+  // Drifts down after settling, same as the desktop version, so the exit at
+  // the very end (x above) reads as flying off down-left, not straight left.
+  const mobileOutroY = useTransform(
+    scrollYProgress,
+    [MOBILE_OUTRO_ENTER_END, MOBILE_OUTRO_ENTER_END + 0.08],
+    ["0%", "15%"]
   );
 
   /* ── Phase 8: Better Way to Fly (climbs up) ────────────────── */
@@ -386,7 +458,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
   }, []);
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (images.length === 0 || isLoading) return;
+    if (!isDesktop || images.length === 0 || isLoading) return;
     if (latest < PHASE2_START - 0.02 || latest > PHASE2_END + 0.02) return;
 
     const totalFrames = images.length;
@@ -396,10 +468,14 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
   });
 
   useEffect(() => {
-    if (!isLoading && images.length > 0) {
+    if (isDesktop && !isLoading && images.length > 0) {
       renderFrame(0);
     }
-  }, [isLoading, images, renderFrame]);
+  }, [isDesktop, isLoading, images, renderFrame]);
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    setIsOutroPlaneShrunk(latest >= PHASE4_START);
+  });
 
   const leftFlightText = language === "bn" ? "প্রত্যাশাকে" : "Elevate Your";
   const rightFlightText = language === "bn" ? "নতুন উচ্চতায় নিয়ে যান" : "Expectations";
@@ -443,9 +519,9 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
             y: flightTextY,
             zIndex: 1,
           }}
-          className="pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 2xl:left-24"
+          className="pointer-events-none absolute left-2 top-1/4 md:top-1/2 -translate-y-1/2 2xl:left-24"
         >
-          <span className="font-display text-2xl font-bold uppercase tracking-widest text-ink/80 md:text-5xl">
+          <span className="font-display text-xl font-bold uppercase tracking-widest text-ink/80 md:text-3xl xl:text-5xl">
             {leftFlightText}
           </span>
         </motion.div>
@@ -456,9 +532,9 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
             y: flightTextY,
             zIndex: 1,
           }}
-          className="pointer-events-none absolute right-8 top-1/2 -translate-y-1/2  2xl:right-24"
+          className="pointer-events-none absolute right-2 top-2/4 md:top-1/2 -translate-y-1/2  2xl:right-24"
         >
-          <span className="font-display text-2xl font-bold uppercase tracking-widest text-ink/80 xl:text-5xl">
+          <span className="font-display text-xl font-bold uppercase tracking-widest text-ink/80 md:text-3xl xl:text-5xl">
             {rightFlightText}
           </span>
         </motion.div>
@@ -471,14 +547,14 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
           <LuxuryTransition />
         </motion.div>
 
-        {/* ═══ Phase 1: Plane intro (out_0001.png flies up) ═══ */}
+        {/* ═══ Phase 1: Plane intro (out_0001.png flies up) — desktop only ═══ */}
         <motion.div
           style={{
             opacity: planeIntroCombinedOpacity,
             y: planeIntroY,
             zIndex: 1,
           }}
-          className="absolute inset-0 flex items-center justify-center"
+          className="absolute inset-0 hidden items-center justify-center lg:flex"
         >
           <img
             src="/out_0001.png"
@@ -487,13 +563,34 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
           />
         </motion.div>
 
-        {/* ═══ Phase 2: Zet-sequence canvas ═══ */}
+        {/* ═══ Mobile/tablet only: entry plane persists through callouts, shrinks/drifts up, exits up ═══ */}
+        <motion.div
+          style={{
+            opacity: mobileEntryOpacity,
+            y: mobileEntryY,
+            zIndex: 1,
+          }}
+          className="absolute inset-0 flex items-center justify-center lg:hidden"
+        >
+          <motion.div
+            style={{ width: mobileEntryWidth, aspectRatio: "16 / 9" }}
+            className="relative shrink-0"
+          >
+            <img
+              src="/out_0001.png"
+              alt=""
+              className="h-full w-full object-contain drop-shadow-[0_30px_40px_rgba(0,0,0,0.3)]"
+            />
+          </motion.div>
+        </motion.div>
+
+        {/* ═══ Phase 2: Zet-sequence canvas — desktop only ═══ */}
         <motion.div
           style={{
             opacity: canvasCombinedOpacity,
             zIndex: 2,
           }}
-          className="absolute inset-0"
+          className="absolute inset-0 hidden lg:block"
         >
           <canvas
             ref={canvasRef}
@@ -501,7 +598,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
           />
         </motion.div>
 
-        {/* ═══ Phase 3–4: Outro plane (out_0118.png) shrinks to right ═══ */}
+        {/* ═══ Phase 3–4: Outro plane (out_0118.png) shrinks to right — desktop only ═══ */}
         <motion.div
           style={{
             opacity: outroPlaneOpacity,
@@ -511,17 +608,138 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
             zIndex: 3,
             transformOrigin: "center center",
           }}
-          className="absolute inset-0"
+          className="absolute inset-0 hidden lg:block"
         >
           <img
             src="/out_0118.png"
             alt=""
-            className="h-full w-full object-cover drop-shadow-[0_30px_40px_rgba(0,0,0,0.3)] floating-plane"
+            className={`h-full w-full drop-shadow-[0_30px_40px_rgba(0,0,0,0.3)] floating-plane ${
+              isOutroPlaneShrunk ? "object-contain" : "object-cover"
+            }`}
           />
         </motion.div>
 
+        {/* ═══ Mobile/tablet only: outro plane slides in from right, floats below the card stack ═══ */}
+        <div
+          className="absolute top-[24%] left-1/2 -translate-x-1/2 w-[60vw] max-w-[260px] md:w-[45vw] md:max-w-[480px] lg:hidden"
+          style={{ zIndex: 3 }}
+        >
+          <motion.div
+            style={{
+              opacity: mobileOutroOpacity,
+              x: mobileOutroX,
+              y: mobileOutroY,
+            }}
+          >
+            <img
+              src="/out_0118.png"
+              alt=""
+              className="h-auto w-full object-contain drop-shadow-[0_30px_40px_rgba(0,0,0,0.3)] floating-plane"
+            />
+          </motion.div>
+        </div>
+
+        {/* ═══ Mobile/tablet only: photo card stack at the top, plane overlapping below ═══ */}
+        <div
+          className="pointer-events-none absolute top-[9%] left-1/2 flex h-[220px] w-[220px] -translate-x-1/2 items-center justify-center md:h-[420px] md:w-[320px] lg:hidden"
+          style={{ zIndex: 2 }}
+        >
+          {/* Card 1A */}
+          <motion.div
+            style={{ opacity: card1AOpacity, y: card1AY, rotate: card1ARotate, x: "-22vw" }}
+            className="absolute bg-white p-1.5 pb-4 shadow-[0_10px_25px_rgba(0,0,0,0.3)] rounded-sm border border-neutral-100/50 md:p-3 md:pb-8"
+          >
+            <div className="relative h-[80px] w-[80px] overflow-hidden bg-neutral-900 md:h-[190px] md:w-[190px]">
+              <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=400" alt="Travel Boat" className="h-full w-full object-cover" />
+            </div>
+          </motion.div>
+          {/* Card 1C */}
+          <motion.div
+            style={{ opacity: card1COpacity, y: card1CY, rotate: card1CRotate, x: "22vw" }}
+            className="absolute bg-white p-1.5 pb-4 shadow-[0_10px_25px_rgba(0,0,0,0.3)] rounded-sm border border-neutral-100/50 md:p-3 md:pb-8"
+          >
+            <div className="relative h-[80px] w-[80px] overflow-hidden bg-neutral-900 md:h-[190px] md:w-[190px]">
+              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=400" alt="Tropical beach" className="h-full w-full object-cover" />
+            </div>
+          </motion.div>
+          {/* Card 1B (center, on top) */}
+          <motion.div
+            style={{ opacity: card1BOpacity, y: card1BY, rotate: card1BRotate, x: "0vw", zIndex: 3 }}
+            className="absolute bg-white p-2 pb-5 shadow-[0_15px_35px_rgba(0,0,0,0.4)] rounded-sm border border-neutral-100/50 md:p-4 md:pb-10"
+          >
+            <div className="relative h-[92px] w-[92px] overflow-hidden bg-neutral-900 md:h-[210px] md:w-[210px]">
+              <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=400" alt="Explore the World" className="h-full w-full object-cover" />
+            </div>
+            <div className="mt-2 text-center font-sans text-[9px] font-semibold uppercase tracking-wide text-neutral-800 md:mt-3 md:text-xs">
+              {language === "bn" ? "পৃথিবী অন্বেষণ" : "Explore the World"}
+            </div>
+          </motion.div>
+
+          {/* Card 2A */}
+          <motion.div
+            style={{ opacity: card2AOpacity, y: card2AY, rotate: card2ARotate, x: "-22vw" }}
+            className="absolute bg-white p-1.5 pb-4 shadow-[0_10px_25px_rgba(0,0,0,0.3)] rounded-sm border border-neutral-100/50 md:p-3 md:pb-8"
+          >
+            <div className="relative h-[80px] w-[80px] overflow-hidden bg-neutral-900 md:h-[190px] md:w-[190px]">
+              <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=400" alt="Yosemite" className="h-full w-full object-cover" />
+            </div>
+          </motion.div>
+          {/* Card 2C */}
+          <motion.div
+            style={{ opacity: card2COpacity, y: card2CY, rotate: card2CRotate, x: "22vw" }}
+            className="absolute bg-white p-1.5 pb-4 shadow-[0_10px_25px_rgba(0,0,0,0.3)] rounded-sm border border-neutral-100/50 md:p-3 md:pb-8"
+          >
+            <div className="relative h-[80px] w-[80px] overflow-hidden bg-neutral-900 md:h-[190px] md:w-[190px]">
+              <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&q=80&w=400" alt="Santorini" className="h-full w-full object-cover" />
+            </div>
+          </motion.div>
+          {/* Card 2B (center, on top) */}
+          <motion.div
+            style={{ opacity: card2BOpacity, y: card2BY, rotate: card2BRotate, x: "0vw", zIndex: 3 }}
+            className="absolute bg-white p-2 pb-5 shadow-[0_15px_35px_rgba(0,0,0,0.4)] rounded-sm border border-neutral-100/50 md:p-4 md:pb-10"
+          >
+            <div className="relative h-[92px] w-[92px] overflow-hidden bg-neutral-900 md:h-[210px] md:w-[210px]">
+              <img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&q=80&w=400" alt="Curated Discoveries" className="h-full w-full object-cover" />
+            </div>
+            <div className="mt-2 text-center font-sans text-[9px] font-semibold uppercase tracking-wide text-neutral-800 md:mt-3 md:text-xs">
+              {language === "bn" ? "বিশেষ আবিষ্কার" : "Curated Discoveries"}
+            </div>
+          </motion.div>
+
+          {/* Card 3A */}
+          <motion.div
+            style={{ opacity: card3AOpacity, y: card3AY, rotate: card3ARotate, x: "-22vw" }}
+            className="absolute bg-white p-1.5 pb-4 shadow-[0_10px_25px_rgba(0,0,0,0.3)] rounded-sm border border-neutral-100/50 md:p-3 md:pb-8"
+          >
+            <div className="relative h-[80px] w-[80px] overflow-hidden bg-neutral-900 md:h-[190px] md:w-[190px]">
+              <img src="https://images.unsplash.com/photo-1483450388369-9ed95738483c?auto=format&fit=crop&q=80&w=400" alt="Airport lounge" className="h-full w-full object-cover" />
+            </div>
+          </motion.div>
+          {/* Card 3C */}
+          <motion.div
+            style={{ opacity: card3COpacity, y: card3CY, rotate: card3CRotate, x: "22vw" }}
+            className="absolute bg-white p-1.5 pb-4 shadow-[0_10px_25px_rgba(0,0,0,0.3)] rounded-sm border border-neutral-100/50 md:p-3 md:pb-8"
+          >
+            <div className="relative h-[80px] w-[80px] overflow-hidden bg-neutral-900 md:h-[190px] md:w-[190px]">
+              <img src="https://images.unsplash.com/photo-1499591934245-40b55745b905?auto=format&fit=crop&q=80&w=400" alt="Resort pool" className="h-full w-full object-cover" />
+            </div>
+          </motion.div>
+          {/* Card 3B (center, on top) */}
+          <motion.div
+            style={{ opacity: card3BOpacity, y: card3BY, rotate: card3BRotate, x: "0vw", zIndex: 3 }}
+            className="absolute bg-white p-2 pb-5 shadow-[0_15px_35px_rgba(0,0,0,0.4)] rounded-sm border border-neutral-100/50 md:p-4 md:pb-10"
+          >
+            <div className="relative h-[92px] w-[92px] overflow-hidden bg-neutral-900 md:h-[210px] md:w-[210px]">
+              <img src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?auto=format&fit=crop&q=80&w=400" alt="Seamless Travel" className="h-full w-full object-cover" />
+            </div>
+            <div className="mt-2 text-center font-sans text-[9px] font-semibold uppercase tracking-wide text-neutral-800 md:mt-3 md:text-xs">
+              {language === "bn" ? "সহজ যাত্রা" : "Seamless Travel"}
+            </div>
+          </motion.div>
+        </div>
+
         {/* ═══ Scroll-Linked Photography Canvas Cards (Behind Planet) ═══ */}
-        <div className="absolute right-[8vw] md:right-[12vw] top-[48%] -translate-y-1/2 w-[240px] md:w-[320px] h-[340px] md:h-[420px] flex items-center justify-center pointer-events-none hidden md:block" style={{ zIndex: 2 }}>
+        <div className="absolute right-[8vw] md:right-[12vw] top-[48%] -translate-y-1/2 w-[240px] md:w-[320px] h-[340px] md:h-[420px] flex items-center justify-center pointer-events-none hidden lg:block" style={{ zIndex: 2 }}>
           {/* ── Block 1: Explore the World ── */}
           {/* Card 1A */}
           <motion.div
@@ -716,7 +934,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
             y: block1Y,
             zIndex: 5,
           }}
-          className="absolute left-8 top-[38%] flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left md:left-16 lg:left-24"
+          className="absolute left-2 top-[52%] flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left lg:left-0 xl:left-16 lg:top-[38%] lg:left-24"
         >
           <span className="mb-2 block text-xs uppercase tracking-superwide text-ink/60">
             {t("tourShowcase.journey_continues")}
@@ -736,7 +954,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
             y: block2Y,
             zIndex: 5,
           }}
-          className="absolute left-8 top-[38%] flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left md:left-16 lg:left-24"
+          className="absolute left-2 top-[52%] flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left lg:left-0 xl:left-16 lg:top-[38%] lg:left-24"
         >
           <span className="mb-2 block text-xs uppercase tracking-superwide text-ink/60">
             {t("tourShowcase.immersive_exp")}
@@ -756,7 +974,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
             y: block3Y,
             zIndex: 5,
           }}
-          className="absolute left-8 top-[38%] flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left md:left-16 lg:left-24 pointer-events-none"
+          className="absolute left-2 top-[52%] flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left lg:left-0 xl:left-16 lg:top-[38%] lg:left-24 pointer-events-none"
         >
           <span className="mb-2 block text-xs uppercase tracking-superwide text-ink/60">
             {t("tourShowcase.end_to_end")}
@@ -776,7 +994,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
         >
           <div className="flex h-full w-full flex-col md:flex-row">
             {/* Left Column: Accordion */}
-            <div className="flex h-full w-full flex-col justify-center px-6 py-16 md:w-1/2 md:px-16 lg:px-24 bg-transparent">
+            <div className="flex h-full w-full flex-col justify-center px-2 py-16 md:w-1/2 md:px-2 lg:px-4 bg-transparent">
               <h2 className="mb-16 text-xs font-bold uppercase tracking-widest text-ink/75">
                 {t("tourShowcase.better_way")}
               </h2>
@@ -822,7 +1040,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
               </div>
 
               {/* Floating CTA */}
-              <div className="mt-12 flex justify-start">
+              {/* <div className="mt-12 flex justify-start">
                 <a
                   href="mailto:bookings@ihantours.com"
                   className="inline-flex items-center rounded-full bg-white px-6 py-4 text-sm font-semibold text-ink shadow-sm transition-transform hover:scale-105"
@@ -836,11 +1054,11 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
                     <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
                   </svg>
                 </a>
-              </div>
+              </div> */}
             </div>
 
             {/* Right Column: Image */}
-            <div className="relative h-1/2 w-full md:h-full md:w-1/2">
+            <div className="relative h-full w-full md:h-full md:w-1/2">
               <AnimatePresence mode="popLayout">
                 <motion.img
                   key={activeAccordionItem?.id}
@@ -883,7 +1101,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
                 exit={item.exit}
                 direction={item.direction}
                 distance={44}
-                className={`${item.className} md:hidden`}
+                className={`${item.className} lg:hidden`}
               >
                 <span className="mb-2 block text-[10px] uppercase tracking-superwide text-ink/60 md:text-xs">
                   {item.eyebrow}
@@ -904,7 +1122,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
                 exit={0.65}
                 direction={item.direction}
                 distance={44}
-                className={`${item.className} hidden md:block`}
+                className={`${item.className} hidden lg:block`}
               >
                 <span className="mb-2 block text-[10px] uppercase tracking-superwide text-ink/60 md:text-xs">
                   {item.eyebrow}
