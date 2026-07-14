@@ -14,10 +14,10 @@ export default function PackagesPageClient() {
 
   return (
     <main className="min-h-screen bg-background text-foreground flex flex-col">
-      <PageHeader 
-        title={t("packagesPage.title")} 
-        subtitle={t("packagesPage.subtitle")} 
-        image="/packages/world-tour-3.jpg" 
+      <PageHeader
+        title={t("packagesPage.title")}
+        subtitle={t("packagesPage.subtitle")}
+        video="/packages/world-tour.mp4"
       />
       
       <div className="relative w-full flex-grow">

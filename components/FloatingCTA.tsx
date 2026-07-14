@@ -17,6 +17,18 @@ function PlaneIcon() {
   );
 }
 
+function PlaneIconWhite() {
+  return (
+    <Image
+      src="/logo/airplane-white.png"
+      alt=""
+      width={26}
+      height={26}
+      aria-hidden
+    />
+  );
+}
+
 function CloseIcon() {
   return (
     <svg
@@ -170,7 +182,7 @@ export default function FloatingCTA() {
                 >
                   {/* Title */}
                   <div className="flex shrink-0 items-center md:w-[220px]">
-                    <h2 className="font-sans text-2xl font-medium tracking-tight text-neutral-900 md:text-5xl">
+                    <h2 className="font-sans text-2xl font-medium tracking-tight text-neutral-900 md:text-4xl">
                       {t("common.contact_us")}
                     </h2>
                   </div>
@@ -190,7 +202,7 @@ export default function FloatingCTA() {
                           value={formData.name}
                           onChange={set("name")}
                           placeholder="e.g. Ahmed Hossain"
-                          className="w-full bg-transparent text-base text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
+                          className="w-full bg-transparent text-sm text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
                         />
                       </div>
 
@@ -205,7 +217,7 @@ export default function FloatingCTA() {
                           value={formData.email}
                           onChange={set("email")}
                           placeholder="e.g. ahmed@company.com"
-                          className="w-full bg-transparent text-base text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
+                          className="w-full bg-transparent text-sm text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
                         />
                       </div>
 
@@ -219,7 +231,7 @@ export default function FloatingCTA() {
                           value={formData.phone}
                           onChange={set("phone")}
                           placeholder="e.g. +880 17XX XXX XXX"
-                          className="w-full bg-transparent text-base text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
+                          className="w-full bg-transparent text-sm text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
                         />
                       </div>
 
@@ -235,7 +247,7 @@ export default function FloatingCTA() {
                             value={formData.destination}
                             onChange={set("destination")}
                             placeholder="e.g. Malaysia, Umrah, Visa..."
-                            className="w-full bg-transparent text-base text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
+                            className="w-full bg-transparent text-sm text-neutral-900 placeholder:text-neutral-300 focus:outline-none"
                           />
                           <button
                             type="submit"
@@ -263,7 +275,7 @@ export default function FloatingCTA() {
                                 />
                               </svg>
                             ) : (
-                              <PlaneIcon />
+                              <PlaneIconWhite />
                             )}
                           </button>
                         </div>
