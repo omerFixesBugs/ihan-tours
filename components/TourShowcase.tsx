@@ -109,7 +109,7 @@ const TOUR_CALLOUTS = [
     exit: 0.42,
     direction: "left" as const,
     className:
-      "absolute left-6 top-[34%] md:top-[22%] max-w-sm p-4 text-left md:left-16",
+      "absolute left-6 top-[34%] lg:top-[22%] max-w-sm p-4 text-left md:left-16",
     eyebrow: "Heritage",
     title: "China",
     body: "Walk the Great Wall and wander imperial palaces across iconic destinations.",
@@ -934,7 +934,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
             y: block1Y,
             zIndex: 5,
           }}
-          className="absolute left-2 top-[52%] flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left lg:left-0 xl:left-16 lg:top-[38%] lg:left-24"
+          className="absolute left-2 top-[52%] flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left lg:left-0 xl:left-16 lg:top-[38%] xl:left-24"
         >
           <span className="mb-2 block text-xs uppercase tracking-superwide text-ink/60">
             {t("tourShowcase.journey_continues")}
@@ -954,7 +954,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
             y: block2Y,
             zIndex: 5,
           }}
-          className="absolute left-2 top-[52%] flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left lg:left-0 xl:left-16 lg:top-[38%] lg:left-24"
+          className="absolute left-2 top-[52%] flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left lg:left-0 xl:left-16 lg:top-[38%] xl:left-24"
         >
           <span className="mb-2 block text-xs uppercase tracking-superwide text-ink/60">
             {t("tourShowcase.immersive_exp")}
@@ -974,7 +974,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
             y: block3Y,
             zIndex: 5,
           }}
-          className="absolute left-2 top-[52%] flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left lg:left-0 xl:left-16 lg:top-[38%] lg:left-24 pointer-events-none"
+          className="absolute left-2 top-[52%] flex w-full max-w-xl -translate-y-1/2 flex-col items-start justify-center px-6 text-left lg:left-0 xl:left-16 lg:top-[38%] xl:left-24 pointer-events-none"
         >
           <span className="mb-2 block text-xs uppercase tracking-superwide text-ink/60">
             {t("tourShowcase.end_to_end")}
@@ -1093,28 +1093,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
         <div className="pointer-events-none absolute inset-0 z-10">
           {localizedTourCallouts.map((item) => (
             <div key={item.title}>
-              {/* Mobile version: Exits normally to prevent clutter */}
-              <SequenceOverlay
-                scrollYProgress={scrollYProgress}
-                enter={item.enter}
-                visible={item.visible}
-                exit={item.exit}
-                direction={item.direction}
-                distance={44}
-                className={`${item.className} lg:hidden`}
-              >
-                <span className="mb-2 block text-[10px] uppercase tracking-superwide text-ink/60 md:text-xs">
-                  {item.eyebrow}
-                </span>
-                <p className="font-display mb-2 text-xl font-bold uppercase leading-tight text-ink md:text-3xl">
-                  {item.title}
-                </p>
-                <p className="text-sm font-light leading-relaxed text-ink/75 md:text-base">
-                  {item.body}
-                </p>
-              </SequenceOverlay>
-
-              {/* Desktop version: Stays on screen to fill empty space */}
+              {/* Stays on screen (rather than exiting early) on every breakpoint now */}
               <SequenceOverlay
                 scrollYProgress={scrollYProgress}
                 enter={item.enter}
@@ -1122,7 +1101,7 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
                 exit={0.65}
                 direction={item.direction}
                 distance={44}
-                className={`${item.className} hidden lg:block`}
+                className={item.className}
               >
                 <span className="mb-2 block text-[10px] uppercase tracking-superwide text-ink/60 md:text-xs">
                   {item.eyebrow}
