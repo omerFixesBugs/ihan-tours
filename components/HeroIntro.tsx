@@ -46,14 +46,14 @@ export default function HeroIntro() {
   return (
     <div className="relative h-full w-full">
       {/* Top-left headline */}
-      <h1 className="font-display absolute left-4 top-[22%] max-w-[220px] text-2xl font-bold uppercase text-foreground leading-tight md:left-8 md:top-[28%] md:text-3xl md:max-w-[280px] lg:left-12 lg:top-[30%] lg:text-4xl lg:max-w-[320px] xl:left-16 xl:text-[52px] xl:max-w-[380px] 2xl:left-24 2xl:text-[70px] 2xl:max-w-[480px]">
+      <h1 className="font-display absolute left-4 top-[22%] max-w-[220px] text-2xl font-bold uppercase text-foreground leading-tight md:left-8 md:top-[28%] md:text-3xl md:max-w-[280px] lg:left-12 lg:top-[30%] lg:text-4xl lg:max-w-[340px] xl:left-16 xl:text-[52px] xl:max-w-[520px] xl:leading-tight 2xl:left-24 2xl:text-[70px] 2xl:max-w-[680px] 2xl:leading-tight">
         {t("hero.celebrate")}
         <br />
         {t("hero.the_journey")}
       </h1>
 
       {/* Bottom-right headline */}
-      <h2 className="font-display absolute bottom-[28%] right-4 max-w-[220px] text-right text-2xl font-bold uppercase text-foreground leading-tight md:right-8 md:bottom-[34%] md:text-3xl md:max-w-[280px] lg:right-12 lg:text-4xl lg:max-w-[320px] xl:right-16 xl:text-[52px] xl:max-w-[380px] 2xl:right-24 2xl:text-[70px] 2xl:max-w-[480px]">
+      <h2 className="font-display absolute bottom-[28%] right-4 max-w-[220px] text-right text-2xl font-bold uppercase text-foreground leading-tight md:right-8 md:bottom-[34%] md:text-3xl md:max-w-[280px] lg:right-12 lg:text-4xl lg:max-w-[340px] xl:right-16 xl:text-[52px] xl:max-w-[520px] xl:leading-tight 2xl:right-24 2xl:text-[70px] 2xl:max-w-[680px] 2xl:leading-tight">
         {t("hero.discover")}
         <br />
         {t("hero.holidays")}

@@ -55,6 +55,21 @@ export default function PageClient() {
     }
   });
 
+  const destinationsSectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: destinationsSectionProgress } = useScroll({
+    target: destinationsSectionRef,
+    offset: ["start start", "end start"]
+  });
+
+  const lastDestinationsTheme = useRef<"dark" | "light">("dark");
+  useMotionValueEvent(destinationsSectionProgress, "change", (latest) => {
+    const theme = (latest > 0.01 && latest < 0.99) ? "light" : "dark";
+    if (lastDestinationsTheme.current !== theme) {
+      lastDestinationsTheme.current = theme;
+      window.dispatchEvent(new CustomEvent("nav-theme-change", { detail: theme }));
+    }
+  });
+
   const heroImages = useMemo(
     () => images.slice(0, WINDOW_SEQUENCE_COUNT),
     [images]
@@ -104,9 +119,11 @@ export default function PageClient() {
           <ValuedCustomers />
           <WhyChooseUs />
           <ExpertSolutions />
-          <FeaturedDestinations />
-          <Gallery />
-          <TravelPartners />
+          <div ref={destinationsSectionRef}>
+            <FeaturedDestinations />
+            <Gallery />
+            <TravelPartners />
+          </div>
           <Testimonials />
           <ExclusiveOffers />
           <ContactSection />

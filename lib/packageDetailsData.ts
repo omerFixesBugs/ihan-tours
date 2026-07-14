@@ -338,6 +338,40 @@ const detailsData: Record<"en" | "bn", Record<string, PackageDetails>> = {
         type: "Chalet / City Room",
         details: "Charming historic hotels right in the city centers next to train stations, with stunning views of lake or city."
       }
+    },
+    "corporate-tour": {
+      overview: "A fully managed corporate retreat program designed to bring teams together — combining a professional offsite venue, structured team-building activities, and downtime, with every logistical detail handled by our team.",
+      highlights: [
+        "Dedicated conference & meeting venue with AV setup",
+        "Team-building activities led by professional facilitators",
+        "Group airport transfers and private ground transport",
+        "Custom itineraries for incentive trips and annual offsites"
+      ],
+      itinerary: [
+        { day: 1, title: "Arrival & Welcome Dinner", description: "Group arrival and transfer to the venue. Check in, followed by an evening welcome dinner and icebreaker session for the team." },
+        { day: 2, title: "Conference & Team Building", description: "Morning conference sessions in a fully equipped meeting space, followed by an afternoon of guided team-building activities." },
+        { day: 3, title: "Excursion & Leisure", description: "A day trip to a nearby attraction or leisure activity of the group's choice, giving the team time to relax and bond outside the venue." },
+        { day: 4, title: "Departure", description: "Final breakfast, checkout, and group transfer to the airport or office." }
+      ],
+      inclusions: [
+        "3 Nights Business Hotel Accommodation",
+        "Daily Breakfast and one Group Dinner",
+        "Meeting Room / Conference Hall with AV Equipment",
+        "Professional Team-Building Facilitator",
+        "Group Airport Transfers & Local Transport"
+      ],
+      exclusions: [
+        "Airfare (for outbound corporate trips)",
+        "Lunches outside the scheduled program",
+        "Personal expenses and incidentals",
+        "Optional add-on activities"
+      ],
+      accommodation: {
+        name: "Partner Business Hotel (venue selected per group size & destination)",
+        rating: "4-Star Business",
+        type: "Business Hotel",
+        details: "A business-grade hotel with on-site conference facilities, chosen to match your team's size, budget, and destination."
+      }
     }
   },
   bn: {
@@ -656,6 +690,40 @@ const detailsData: Record<"en" | "bn", Record<string, PackageDetails>> = {
         rating: "৪.৫-স্টার লাক্সারি",
         type: "আলপাইন চ্যালেট / সিটি রুম",
         details: "লুসার্ন এবং জুরিখের কেন্দ্রবিন্দুতে অবস্থিত প্রিমিয়াম মানের ঐতিহাসিক হোটেল।"
+      }
+    },
+    "corporate-tour": {
+      overview: "আপনার টিমকে একত্রিত করার জন্য একটি সম্পূর্ণ পরিচালিত কর্পোরেট রিট্রিট প্রোগ্রাম — পেশাদার অফসাইট ভেন্যু, পরিকল্পিত টিম-বিল্ডিং কার্যক্রম এবং অবসর সময়ের সমন্বয়ে, প্রতিটি লজিস্টিক বিষয় আমাদের টিম দ্বারা পরিচালিত।",
+      highlights: [
+        "AV সেটআপসহ ডেডিকেটেড কনফারেন্স ও মিটিং ভেন্যু",
+        "পেশাদার ফ্যাসিলিটেটরদের নেতৃত্বে টিম-বিল্ডিং কার্যক্রম",
+        "গ্রুপ এয়ারপোর্ট ট্রান্সফার ও প্রাইভেট গ্রাউন্ড ট্রান্সপোর্ট",
+        "ইনসেন্টিভ ট্রিপ ও বার্ষিক অফসাইটের জন্য কাস্টম ইটিনেরারি"
+      ],
+      itinerary: [
+        { day: 1, title: "আগমন ও ওয়েলকাম ডিনার", description: "গ্রুপ আগমন এবং ভেন্যুতে স্থানান্তর। চেক-ইন করার পর সন্ধ্যায় ওয়েলকাম ডিনার এবং টিমের জন্য আইসব্রেকার সেশন।" },
+        { day: 2, title: "কনফারেন্স ও টিম বিল্ডিং", description: "সম্পূর্ণ সুসজ্জিত মিটিং স্পেসে সকালের কনফারেন্স সেশন, এরপর বিকেলে গাইডেড টিম-বিল্ডিং কার্যক্রম।" },
+        { day: 3, title: "ভ্রমণ ও অবসর", description: "গ্রুপের পছন্দ অনুযায়ী কাছাকাছি কোনো আকর্ষণীয় স্থানে দিনব্যাপী ভ্রমণ বা অবসর কার্যক্রম, যা টিমকে ভেন্যুর বাইরে বিশ্রাম ও বন্ধন গড়ার সুযোগ দেয়।" },
+        { day: 4, title: "প্রস্থান", description: "শেষ সকালের নাস্তা, চেকআউট এবং এয়ারপোর্ট বা অফিসে গ্রুপ ট্রান্সফার।" }
+      ],
+      inclusions: [
+        "৩ রাত বিজনেস হোটেল আবাসন",
+        "প্রতিদিনের সকালের নাস্তা এবং একটি গ্রুপ ডিনার",
+        "AV সরঞ্জামসহ মিটিং রুম / কনফারেন্স হল",
+        "পেশাদার টিম-বিল্ডিং ফ্যাসিলিটেটর",
+        "গ্রুপ এয়ারপোর্ট ট্রান্সফার ও স্থানীয় পরিবহন"
+      ],
+      exclusions: [
+        "বিমান টিকিট (আন্তর্জাতিক কর্পোরেট ট্রিপের ক্ষেত্রে)",
+        "নির্ধারিত প্রোগ্রামের বাইরের দুপুরের খাবার",
+        "ব্যক্তিগত খরচ",
+        "ঐচ্ছিক অ্যাড-অন কার্যক্রম"
+      ],
+      accommodation: {
+        name: "পার্টনার বিজনেস হোটেল (গ্রুপের আকার ও গন্তব্য অনুযায়ী নির্বাচিত)",
+        rating: "৪-স্টার বিজনেস",
+        type: "বিজনেস হোটেল",
+        details: "অন-সাইট কনফারেন্স সুবিধাসহ একটি বিজনেস-গ্রেড হোটেল, যা আপনার টিমের আকার, বাজেট এবং গন্তব্য অনুযায়ী নির্বাচন করা হয়।"
       }
     }
   }

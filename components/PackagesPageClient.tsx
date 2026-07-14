@@ -10,7 +10,7 @@ import { useLanguage } from "@/components/LanguageContext";
 
 export default function PackagesPageClient() {
   const { t } = useLanguage();
-  const internationalPackages = POPULAR_PACKAGES.filter(p => p.type === "international");
+  const internationalPackages = POPULAR_PACKAGES.filter(p => p.type === "international" || p.type === "corporate");
 
   return (
     <main className="min-h-screen bg-background text-foreground flex flex-col">

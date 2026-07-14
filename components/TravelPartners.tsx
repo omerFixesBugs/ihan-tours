@@ -7,7 +7,7 @@ export default function TravelPartners() {
   const { language } = useLanguage();
 
   return (
-    <section className="bg-gradient-to-b from-[#E8A598] to-[#1E293B] py-16 overflow-hidden border-t border-black/5">
+    <section className="bg-gradient-to-b bg-[#E8A598]  py-16 overflow-hidden border-t border-black/5">
       <div className="mx-auto max-w-7xl px-4 md:px-8 mb-10 text-center">
         <h2 className="text-2xl font-light uppercase tracking-wide text-white drop-shadow-md">
           {language === "bn" ? "আমাদের ভ্রমণ সহযোগী" : "Our Travel Partners"}
@@ -22,7 +22,7 @@ export default function TravelPartners() {
               key={`${partner.id}-${idx}`}
               src={partner.logo_url}
               alt={partner.name}
-              className="h-10 w-auto max-w-[120px] object-contain opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+              className="h-10 w-auto max-w-[120px] object-contain opacity-80 transition-opacity duration-300 hover:opacity-100"
               title={partner.name}
             />
           ))}

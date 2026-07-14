@@ -11,7 +11,15 @@ export const SITE_SETTINGS = {
   twitter_url: "#",
 };
 
-export const FEATURED_DESTINATIONS = [
+export const FEATURED_DESTINATIONS: Array<{
+  id: number;
+  name: string;
+  slug: string;
+  image_url: string;
+  description: string;
+  star_rating: number;
+  href?: string;
+}> = [
   {
     id: 3,
     name: "Umrah",
@@ -27,7 +35,7 @@ export const FEATURED_DESTINATIONS = [
     name: "Malaysia",
     slug: "malaysia",
     image_url:
-      "https://images.unsplash.com/photo-1596422846543-75c6fc197f0a?w=800&q=80",
+      "/malaysia/malaysia.jpg",
     description:
       "Experience the vibrant blend of cultures, lush rainforests, and modern cityscapes in the heart of Southeast Asia.",
     star_rating: 5,
@@ -37,7 +45,7 @@ export const FEATURED_DESTINATIONS = [
     name: "China",
     slug: "china",
     image_url:
-      "https://images.unsplash.com/photo-1508804185872-d83badbd8833?w=800&q=80",
+      "/china/china.jpg",
     description:
       "Walk through history along the Great Wall and explore the majestic palaces of ancient dynasties in our curated group tours.",
     star_rating: 5,
@@ -61,6 +69,17 @@ export const FEATURED_DESTINATIONS = [
     description:
       "Escape to private luxury villas suspended over crystal-clear waters. The ultimate island retreat for relaxation and romance.",
     star_rating: 5,
+  },
+  {
+    id: 6,
+    name: "Corporate Tours",
+    slug: "corporate-tour",
+    image_url:
+      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80",
+    description:
+      "Purpose-built retreats, incentive trips, and offsites for teams — from venue and logistics to activities, all handled end-to-end.",
+    star_rating: 4,
+    href: "/packages/corporate-tour",
   },
 ];
 
@@ -120,17 +139,17 @@ export const EXPERT_SOLUTIONS = [
     secondary_btn_text: "Contact Advisor",
     secondary_btn_url: "/#contact",
     image_url:
-      "https://images.unsplash.com/photo-1565552643983-6c8ea394d13e?w=800&q=80",
+      "/umrah/mecca.jpg",
   },
   {
     id: 2,
     title: "Corporate Retreats & Groups",
     paragraph:
       "Elevate your team's experience with our expertly curated corporate travel and bespoke group tour packages.",
-    primary_btn_text: "Get a Quote",
-    primary_btn_url: "/#contact",
-    secondary_btn_text: null,
-    secondary_btn_url: null,
+    primary_btn_text: "View Package",
+    primary_btn_url: "/packages/corporate-tour",
+    secondary_btn_text: "Contact Advisor",
+    secondary_btn_url: "/#contact",
     image_url:
       "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80",
   },
@@ -144,7 +163,7 @@ export const EXPERT_SOLUTIONS = [
     secondary_btn_text: null,
     secondary_btn_url: null,
     image_url:
-      "https://images.unsplash.com/photo-1608958435020-e8531a8924b6?w=800&q=80",
+      "/inbound/sylhet.jpg",
   },
 ];
 
@@ -200,42 +219,14 @@ export const GALLERY_ITEMS = [
 ];
 
 export const TRAVEL_PARTNERS = [
-  {
-    id: 1,
-    name: "Global Airlines",
-    logo_url:
-      "https://ui-avatars.com/api/?name=Global+Airlines&background=ffffff&color=050505&size=256&font-size=0.3",
-  },
-  {
-    id: 2,
-    name: "Sky Connect",
-    logo_url:
-      "https://ui-avatars.com/api/?name=Sky+Connect&background=ffffff&color=050505&size=256&font-size=0.3",
-  },
-  {
-    id: 3,
-    name: "Aero World",
-    logo_url:
-      "https://ui-avatars.com/api/?name=Aero+World&background=ffffff&color=050505&size=256&font-size=0.3",
-  },
-  {
-    id: 4,
-    name: "Travel Wings",
-    logo_url:
-      "https://ui-avatars.com/api/?name=Travel+Wings&background=ffffff&color=050505&size=256&font-size=0.3",
-  },
-  {
-    id: 5,
-    name: "Ocean Air",
-    logo_url:
-      "https://ui-avatars.com/api/?name=Ocean+Air&background=ffffff&color=050505&size=256&font-size=0.3",
-  },
-  {
-    id: 6,
-    name: "Horizon Flight",
-    logo_url:
-      "https://ui-avatars.com/api/?name=Horizon+Flight&background=ffffff&color=050505&size=256&font-size=0.3",
-  },
+  { id: 1, name: "Biman Bangladesh Airlines", logo_url: "/partners/biman.svg" },
+  { id: 2, name: "Air Astra", logo_url: "/partners/air-astra.svg" },
+  { id: 3, name: "Jazeera Airways", logo_url: "/partners/jazeera.svg" },
+  { id: 4, name: "Emirates", logo_url: "/partners/emirates.svg" },
+  { id: 5, name: "Qatar Airways", logo_url: "/partners/qatar-airways.svg" },
+  { id: 6, name: "Turkish Airlines", logo_url: "/partners/turkish-airlines.svg" },
+  { id: 7, name: "AirAsia", logo_url: "/partners/airasia.svg" },
+  { id: 8, name: "IndiGo", logo_url: "/partners/indigo.svg" },
 ];
 
 export const TESTIMONIALS = [
@@ -293,7 +284,7 @@ export const OFFERS = [
     badge_text: "Special Rate",
     cta_link: "/umrah",
     image_url:
-      "https://images.unsplash.com/photo-1565552643983-6c8ea394d13e?w=800&q=80",
+      "/umrah/family-umrah.jpg",
   },
   {
     id: 3,
@@ -301,7 +292,7 @@ export const OFFERS = [
     description:
       "Book a group of 10 or more and receive complimentary airport lounge access and private transfers.",
     badge_text: "Corporate",
-    cta_link: "/#contact",
+    cta_link: "/packages/corporate-tour",
     image_url:
       "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80",
   },

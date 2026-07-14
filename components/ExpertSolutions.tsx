@@ -31,7 +31,7 @@ export default function ExpertSolutions() {
           title: t("expertSolutions.corporate"),
           paragraph: t("expertSolutions.corporate_body"),
           primary_btn_text: t("expertSolutions.get_quote"),
-          secondary_btn_text: null
+          secondary_btn_text: t("expertSolutions.contact_advisor")
         };
       case 3:
         return {

@@ -60,7 +60,7 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
     hero: {
       celebrate: "Celebrate",
       the_journey: "the Journey",
-      discover: "Discover",
+      discover: "Enjoy Your",
       holidays: "Holidays",
       expand: "Expand your",
       travel_horizons: "travel horizons",
@@ -119,7 +119,7 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
         "Discover the hidden gems, rich heritage, and vibrant culture of Bangladesh through our guided local experiences.",
       view_packages: "View Packages",
       contact_advisor: "Contact Advisor",
-      get_quote: "Get a Quote",
+      get_quote: "View Package",
       explore_bangladesh: "Explore Bangladesh",
     },
     featuredDestinations: {
@@ -137,6 +137,8 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
           "From the bustling streets of Bangkok to the serene turquoise waters of Phuket, immerse yourself in the Land of Smiles.",
         maldives:
           "Escape to private luxury villas suspended over crystal-clear waters. The ultimate island retreat for relaxation and romance.",
+        "corporate-tour":
+          "Purpose-built retreats, incentive trips, and offsites for teams — from venue and logistics to activities, all handled end-to-end.",
       },
     },
     flyAnywhere: {
@@ -405,6 +407,15 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
         price: "৳ 210,000",
         accommodation: "Lodge",
       },
+      "corporate-tour": {
+        title: "Corporate Tour Package",
+        location: "Worldwide",
+        description:
+          "Purpose-built retreats, incentive trips, and offsites for teams — from venue and logistics to activities, all handled end-to-end.",
+        duration: "3 Nights 4 Days",
+        price: "৳ 45,000",
+        accommodation: "Business Hotel",
+      },
     },
     heroScroll: {
       about_text:
@@ -449,7 +460,7 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
         "From remote islands to cultural capitals — every path optimized for discovery beyond the ordinary.",
       begin_journey: "Begin Your Journey",
       flights_count: "5K+",
-      flights: "flights",
+      flights: "Events",
       successfully_arranged: "Successfully Arranged",
       card_description:
         "Each journey reflects years of expertise, precision, and trust. From last-minute charters to intercontinental business routes — Ihan Tours ensures safety, discretion, and excellence in every flight.",
@@ -519,8 +530,8 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
     hero: {
       celebrate: "উদযাপন করুন",
       the_journey: "ভ্রমণের আনন্দ",
-      discover: "আবিষ্কার করুন",
-      holidays: "ছুটির দিন",
+      discover: "আপনার ছুটি",
+      holidays: "উপভোগ করুন",
       expand: "দিগন্ত প্রসারিত করুন",
       travel_horizons: "আপনার ভ্রমণের",
       intro_body:
@@ -578,7 +589,7 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
         "আমাদের গাইডেড লোকাল ট্যুরের মাধ্যমে বাংলাদেশের অপরূপ সৌন্দর্য, সমৃদ্ধ ঐতিহ্য এবং প্রাণবন্ত সংস্কৃতি নতুন করে আবিষ্কার করুন।",
       view_packages: "প্যাকেজ দেখুন",
       contact_advisor: "পরামর্শদাতার সাথে যোগাযোগ",
-      get_quote: "বুকিং কোটেশন নিন",
+      get_quote: "প্যাকেজ দেখুন",
       explore_bangladesh: "বাংলাদেশ ঘুরে দেখুন",
     },
     featuredDestinations: {
@@ -596,6 +607,8 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
           "ব্যাংককের ব্যস্ত রাস্তা থেকে শুরু করে ফুকেট ও ক্রাবির শান্ত নীল জলরাশি পর্যন্ত, হাসির দেশে নিজেকে নিমজ্জিত করুন।",
         maldives:
           "স্ফটিকের মতো স্বচ্ছ পানির ওপরে ঝুলন্ত ব্যক্তিগত বিলাসবহুল ভিলায় হারিয়ে যান। আরাম এবং রোম্যান্সের জন্য এক অনন্য দ্বীপের অনুভূতি।",
+        "corporate-tour":
+          "টিমের জন্য বিশেষভাবে পরিকল্পিত রিট্রিট, ইনসেন্টিভ ট্রিপ এবং অফসাইট — ভেন্যু ও লজিস্টিক থেকে শুরু করে কার্যক্রম পর্যন্ত, সবকিছু আমরাই সামলাই।",
       },
     },
     flyAnywhere: {
@@ -864,6 +877,15 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
         price: "৳ ২,১০,০০০",
         accommodation: "লজ",
       },
+      "corporate-tour": {
+        title: "কর্পোরেট ট্যুর প্যাকেজ",
+        location: "বিশ্বব্যাপী",
+        description:
+          "টিমের জন্য বিশেষভাবে পরিকল্পিত রিট্রিট, ইনসেন্টিভ ট্রিপ এবং অফসাইট — ভেন্যু ও লজিস্টিক থেকে শুরু করে কার্যক্রম পর্যন্ত, সবকিছু আমরাই সামলাই।",
+        duration: "৩ রাত ৪ দিন",
+        price: "৳ ৪৫,০০০",
+        accommodation: "বিজনেস হোটেল",
+      },
     },
     heroScroll: {
       about_text:
@@ -908,7 +930,7 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
         "নির্জন দ্বীপ, ঐতিহ্যবাহী শহর এবং বিশ্বের সেরা গন্তব্যগুলোতে আপনার জন্য পরিকল্পিত ভ্রমণ। প্রতিটি যাত্রা সাজানো হয় নতুন অভিজ্ঞতা, স্বাচ্ছন্দ্য এবং স্মরণীয় মুহূর্তের নিশ্চয়তায়।",
       begin_journey: "আপনার যাত্রা শুরু করুন",
       flights_count: "৫ হাজার+",
-      flights: "ফ্লাইট",
+      flights: "ইভেন্ট",
       successfully_arranged: "সফলভাবে সম্পন্ন",
       card_description:
         "প্রতিটি যাত্রা বহু বছরের অভিজ্ঞতা, নিখুঁততা এবং বিশ্বাসের প্রতিফলন। শেষ মুহূর্তের বুকিং থেকে শুরু করে আন্তঃমহাদেশীয় ব্যবসায়িক রুট — ইহান ট্যুরস প্রতিটি ফ্লাইটে নিরাপত্তা ও শ্রেষ্ঠত্ব নিশ্চিত করে।",

@@ -98,7 +98,7 @@ export default function PackageDetailPageClient({ pkg }: { pkg: TravelPackage })
       <PageHeader 
         title={title} 
         subtitle={location} 
-        image={pkg.image.startsWith("/") ? pkg.image : `/${pkg.image}`} 
+        image={pkg.image.startsWith("/") || pkg.image.startsWith("http") ? pkg.image : `/${pkg.image}`}
       />
       
       <div className="relative w-full flex-grow">

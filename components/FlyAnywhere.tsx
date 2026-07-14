@@ -68,7 +68,7 @@ export default function FlyAnywhere() {
       <div className="relative z-10 flex w-full items-center justify-center px-4 md:px-0">
         
         {/* Left Side */}
-        <div className="flex w-1/3 justify-end pr-4 md:w-2/5 md:pr-12">
+        <div className="flex w-1/3 justify-end pl-6 md:w-2/5 lg:pr-12">
           <h2 className="font-display text-2xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl">
             {t("flyAnywhere.title")}
           </h2>
@@ -131,7 +131,7 @@ export default function FlyAnywhere() {
       </div>
 
       {/* ── Bottom CTA ── */}
-      <div className="absolute bottom-12 z-20 flex w-full justify-center">
+      {/* <div className="absolute bottom-12 z-20 flex w-full justify-center">
         <a
           href="mailto:bookings@ihantours.com"
           className="inline-flex items-center rounded-full bg-white px-6 py-4 text-xs font-semibold text-ink shadow-sm transition-transform hover:scale-105 md:text-sm"
@@ -148,7 +148,7 @@ export default function FlyAnywhere() {
             </svg>
           </span>
         </a>
-      </div>
+      </div> */}
       </div>
     </section>
   );
