@@ -305,6 +305,15 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
       description:
         "Expand your travel horizons with our curated international holiday packages. From the turquoise waters of the Maldives to the majestic Swiss Alps, we design unforgettable experiences tailored to your desires.",
     },
+    destinationsPage: {
+      title: "Choose Your Destination",
+      subtitle: "Explore the World",
+      description:
+        "From spiritual journeys to island escapes, pick a destination below to explore what makes it worth visiting, and find the packages and plans that take you there.",
+    },
+    destinationDetailPage: {
+      eyebrow: "Destination Guide",
+    },
     umrahPage: {
       title: "Sacred Journeys",
       subtitle: "Umrah Packages",
@@ -774,6 +783,15 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
       subtitle: "ছুটির প্যাকেজসমূহ",
       description:
         "আমাদের বিশেষায়িত আন্তর্জাতিক ছুটির প্যাকেজগুলোর মাধ্যমে আপনার ভ্রমণের দিগন্ত প্রসারিত করুন। মালদ্বীপের নীল জলরাশি থেকে শুরু করে সুইজারল্যান্ডের আল্পস পর্বতমালা পর্যন্ত, আমরা আপনার ইচ্ছা অনুযায়ী অবিস্মরণীয় ভ্রমণ অভিজ্ঞতা তৈরি করি।",
+    },
+    destinationsPage: {
+      title: "আপনার গন্তব্য বেছে নিন",
+      subtitle: "বিশ্ব ভ্রমণ করুন",
+      description:
+        "আধ্যাত্মিক যাত্রা থেকে শুরু করে দ্বীপের ছুটি পর্যন্ত, নিচে থেকে একটি গন্তব্য বেছে নিন এবং জেনে নিন কেন এটি ভ্রমণের উপযুক্ত, পাশাপাশি খুঁজে নিন সেখানে যাওয়ার প্যাকেজ ও পরিকল্পনা।",
+    },
+    destinationDetailPage: {
+      eyebrow: "গন্তব্য গাইড",
     },
     umrahPage: {
       title: "পবিত্র যাত্রা",

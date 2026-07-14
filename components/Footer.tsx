@@ -72,7 +72,7 @@ export default function Footer() {
             <ul className="space-y-4">
               {[
                 { name: t("footer.links_list.about"), href: "/about-us" },
-                { name: t("footer.links_list.destinations"), href: "/#destinations" },
+                { name: t("footer.links_list.destinations"), href: "/destinations" },
                 { name: t("footer.links_list.blog"), href: "#" },
                 { name: t("footer.links_list.contact"), href: "#contact" },
                 { name: t("footer.links_list.terms"), href: "#" },

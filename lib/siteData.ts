@@ -29,6 +29,7 @@ export const FEATURED_DESTINATIONS: Array<{
     description:
       "Embark on a deeply spiritual journey. Our tailored Umrah packages ensure your focus remains entirely on your devotion and peace.",
     star_rating: 5,
+    href: "/umrah",
   },
   {
     id: 2,
