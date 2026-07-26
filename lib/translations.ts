@@ -292,6 +292,66 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
       heading: "Crafting Unforgettable Memories Since Inception",
       p1: "Ihan Tours and Travels was founded on a simple principle: travel should be transformative, seamless, and deeply personal. We recognized that modern travelers seek more than just a ticket and a hotel; they seek an experience curated to their specific desires.",
       p2: "Whether you are embarking on a sacred Umrah pilgrimage, exploring the serene landscapes of Bangladesh, or retreating to a luxury island resort, our dedicated team of travel experts is committed to handling every detail with precision and care.",
+      team: {
+        title: "Meet Our Team",
+        subtitle: "The Minds Behind Your Journeys",
+        description: "A group of passionate professionals dedicated to delivering the ultimate travel experience.",
+        categories: {
+          leadership: "Leadership",
+          management: "Management",
+          executives: "Executives & Specialists",
+        },
+        members: {
+          farhana: {
+            name: "Farhana Alam",
+            role: "Chairman, Ihan Tours and Travels"
+          },
+          ismail: {
+            name: "Md. Ismail Hossain",
+            role: "Chief Executive Officer (CEO)"
+          },
+          eshita: {
+            name: "Eshita Alam",
+            role: "Manager, Accounts & Finance"
+          },
+          iqram: {
+            name: "Md. Iqram Hossain",
+            role: "Manager, Audit Department"
+          },
+          omar: {
+            name: "Md. Omar Faruk",
+            role: "Assistant Manager, Brand and Marketing"
+          },
+          miladun: {
+            name: "Miladun Nabi",
+            role: "Executive, Brand & Marketing"
+          },
+          afrin: {
+            name: "Afrin Akter",
+            role: "Executive, Visa Process"
+          },
+          proshanto: {
+            name: "Proshanto Pal Pappu",
+            role: "Executive, Sales"
+          },
+          imran: {
+            name: "Md. Imran Hossain",
+            role: "Executive, Sales"
+          },
+          iqbal: {
+            name: "Md. Iqbal Hossain",
+            role: "Executive, Sales"
+          },
+          hasan: {
+            name: "Md. Hasan Uddin",
+            role: "Director, Immigration & Legal Administration"
+          },
+          bellal: {
+            name: "Md. Bellal Hossain",
+            role: "Operation Manager, Umrah & Hajj"
+          }
+        }
+      }
     },
     inboundPage: {
       title: "Discover Bangladesh",
@@ -771,6 +831,66 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
       heading: "যাত্রার শুরু থেকেই অবিস্মরণীয় স্মৃতি তৈরি করে চলেছি",
       p1: "ইহান ট্যুরস অ্যান্ড ট্রাভেলস একটি সাধারণ নীতির ওপর ভিত্তি করে প্রতিষ্ঠিত হয়েছিল: ভ্রমণ হওয়া উচিত রূপান্তরকারী, ঝামেলাহীন এবং গভীরভাবে ব্যক্তিগত। আমরা উপলব্ধি করেছি যে আধুনিক ভ্রমণকারীরা কেবল একটি টিকিট এবং হোটেলের চেয়ে বেশি কিছু চান; তারা চান তাদের নির্দিষ্ট আকাঙ্ক্ষা অনুযায়ী তৈরি একটি সুন্দর অভিজ্ঞতা।",
       p2: "আপনি পবিত্র ওমরাহ পালনে যাত্রা করুন, বাংলাদেশের শান্ত প্রাকৃতিক সৌন্দর্য অন্বেষণ করুন, অথবা কোনো বিলাসবহুল দ্বীপের রিসোর্টে বিশ্রাম নিন। আমাদের নিবেদিত ভ্রমণ বিশেষজ্ঞ দল প্রতিটি খুঁটিনাটি বিষয় নির্ভুলতা ও যত্নের সাথে সামলাতে প্রতিশ্রুতিবদ্ধ।",
+      team: {
+        title: "আমাদের টিম",
+        subtitle: "আপনার ভ্রমণের পেছনের কারিগর",
+        description: "আপনাকে সেরা ভ্রমণ অভিজ্ঞতা দিতে প্রতিশ্রুতিবদ্ধ আমাদের অভিজ্ঞ ও নিবেদিত টিম মেম্বারবৃন্দ।",
+        categories: {
+          leadership: "নেতৃত্ব",
+          management: "ব্যবস্থাপনা",
+          executives: "এক্সিকিউটিভ ও স্পেশালিস্ট",
+        },
+        members: {
+          farhana: {
+            name: "ফারহানা আলম",
+            role: "চেয়ারম্যান, ইহান ট্যুরস অ্যান্ড ট্রাভেলস"
+          },
+          ismail: {
+            name: "মোঃ ইসমাইল হোসেন",
+            role: "প্রধান নির্বাহী কর্মকর্তা (সিইও)"
+          },
+          eshita: {
+            name: "ইশিতা আলম",
+            role: "ম্যানেজার, অ্যাকাউন্টস অ্যান্ড ফিন্যান্স"
+          },
+          iqram: {
+            name: "মোঃ ইকরাম হোসেন",
+            role: "ম্যানেজার, অডিট ডিপার্টমেন্ট"
+          },
+          omar: {
+            name: "মোঃ ওমর ফারুক",
+            role: "অ্যাসিস্ট্যান্ট ম্যানেজার, ব্র্যান্ড অ্যান্ড মার্কেটিং"
+          },
+          miladun: {
+            name: "মিলাদুন নবী",
+            role: "এক্সিকিউটিভ, ব্র্যান্ড অ্যান্ড মার্কেটিং"
+          },
+          afrin: {
+            name: "আফরিন আক্তার",
+            role: "এক্সিকিউটিভ, ভিসা প্রসেস"
+          },
+          proshanto: {
+            name: "প্রশান্ত পাল পাপ্পু",
+            role: "এক্সিকিউটিভ, সেলস"
+          },
+          imran: {
+            name: "মোঃ ইমরান হোসেন",
+            role: "এক্সিকিউটিভ, সেলস"
+          },
+          iqbal: {
+            name: "মোঃ ইকবাল হোসেন",
+            role: "এক্সিকিউটিভ, সেলস"
+          },
+          hasan: {
+            name: "মোঃ হাসান উদ্দিন",
+            role: "ডিরেক্টর, ইমিগ্রেশন অ্যান্ড লিগ্যাল অ্যাডমিনিস্ট্রেশন"
+          },
+          bellal: {
+            name: "মোঃ বেলাল হোসেন",
+            role: "অপারেশন ম্যানেজার, ওমরাহ ও হজ"
+          }
+        }
+      }
     },
     inboundPage: {
       title: "ঘুরে দেখুন বাংলাদেশ",

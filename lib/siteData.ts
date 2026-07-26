@@ -240,7 +240,7 @@ export const TESTIMONIALS = [
       "Ihan Tours arranged our corporate retreat to Malaysia flawlessly. From flights to accommodations, every detail was handled with utmost professionalism. Highly recommended for seamless travel.",
     video_url: null,
     photo_url:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop",
+      "https://ui-avatars.com/api/?name=Rahim+Uddin&background=e8192c&color=ffffff&size=200",
   },
   {
     id: 2,
@@ -251,7 +251,7 @@ export const TESTIMONIALS = [
       "Our family's Umrah trip was spiritually uplifting and incredibly comfortable, all thanks to the meticulous planning by the Ihan Tours team. They truly care about their clients.",
     video_url: null,
     photo_url:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop",
+      "https://ui-avatars.com/api/?name=Ayesha+Rahman&background=d4af37&color=ffffff&size=200",
   },
   {
     id: 3,
@@ -262,7 +262,7 @@ export const TESTIMONIALS = [
       "We have relied on Ihan Tours for our executive business travels for years. Their visa processing and ticketing services are swift and reliable, giving us total peace of mind.",
     video_url: null,
     photo_url:
-      "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop",
+      "https://ui-avatars.com/api/?name=Kamal+Hasan&background=1e293b&color=ffffff&size=200",
   },
 ];
 
@@ -373,3 +373,67 @@ export const WHY_CHOOSE_US = [
     primary_btn_url: "/about-us",
   },
 ];
+
+export const TEAM_MEMBERS = [
+  {
+    id: "farhana",
+    category: "leadership",
+    image_url: "/team/farhana-alam.jpeg",
+  },
+  {
+    id: "ismail",
+    category: "leadership",
+    image_url: "/team/ismail-hossain.jpeg",
+  },
+  {
+    id: "hasan",
+    category: "leadership",
+    image_url: null,
+  },
+  {
+    id: "eshita",
+    category: "management",
+    image_url: "/team/eshita alam.jpeg",
+  },
+  {
+    id: "iqram",
+    category: "management",
+    image_url: "/team/iqram-hossain.jpeg",
+  },
+  {
+    id: "bellal",
+    category: "management",
+    image_url: null,
+  },
+  {
+    id: "omar",
+    category: "management",
+    image_url: "/team/omer.jpeg",
+  },
+  {
+    id: "miladun",
+    category: "executives",
+    image_url: null,
+  },
+  {
+    id: "afrin",
+    category: "executives",
+    image_url: null,
+  },
+  {
+    id: "proshanto",
+    category: "executives",
+    image_url: "/team/proshanto-pal-pappu.jpeg",
+  },
+  {
+    id: "imran",
+    category: "executives",
+    image_url: "/team/imran hossain.jpeg",
+  },
+  {
+    id: "iqbal",
+    category: "executives",
+    image_url: null,
+  },
+];
+

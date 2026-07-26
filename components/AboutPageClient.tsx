@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import TrustStats from "@/components/TrustStats";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import Testimonials from "@/components/Testimonials";
+import OurTeam from "@/components/OurTeam";
 import ScrollReveal from "@/components/ScrollReveal";
 import PlaneOverlay from "@/components/PlaneOverlay";
 import { useLanguage } from "@/components/LanguageContext";
@@ -44,6 +45,7 @@ export default function AboutPageClient() {
         </section>
 
         <div className="relative z-10">
+          <OurTeam />
           <WhyChooseUs />
           <TrustStats />
           <Testimonials />

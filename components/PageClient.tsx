@@ -116,7 +116,7 @@ export default function PageClient() {
           </div>
 
           <TrustStats />
-          <ValuedCustomers />
+          {/* <ValuedCustomers /> */}
           <WhyChooseUs />
           <ExpertSolutions />
           <div ref={destinationsSectionRef}>
