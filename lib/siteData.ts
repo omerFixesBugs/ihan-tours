@@ -4,9 +4,9 @@ export const SITE_SETTINGS = {
   email: "bookings@ihantours.com",
   phone: "+8801713224948",
   address: "Ihan Tours and Travels — Dhaka, Bangladesh",
-  facebook_url: "#",
+  facebook_url: "https://www.facebook.com/share/19URQJvfHV/",
   instagram_url: "#",
-  youtube_url: "#",
+  youtube_url: "https://youtube.com/@ihaninternational?si=h3hSmD13ED8gSKe9",
   linkedin_url: "#",
   twitter_url: "#",
 };
