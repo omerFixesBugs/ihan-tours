@@ -7,7 +7,7 @@ export default function HeroBrandMark() {
   const isBn = language === "bn";
 
   return (
-    <div className="pointer-events-none absolute left-1/2 top-1/2 z-30 -translate-x-1/2 md:-translate-x-32 lg:-translate-x-40 2xl:-translate-x-1/2 -translate-y-1/2 text-center ml-4 md:ml-3">
+    <div className="pointer-events-none absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2 text-center ml-4 md:ml-3">
       <p
         className={`font-display text-[clamp(1.25rem,3.5vw,2.05rem)] font-extrabold uppercase leading-none text-foreground ${
           isBn ? "tracking-normal" : "tracking-[0.28em]"

@@ -17,23 +17,65 @@ export default function ContactSection() {
 
   const { t, language } = useLanguage();
 
+  const getServiceLabel = (val: string) => {
+    if (val === "umrah") return t("contactSection.umrah_pkg");
+    if (val === "tour") return t("contactSection.holiday_tour");
+    if (val === "visa") return t("contactSection.visa_proc");
+    if (val === "ticket") return t("contactSection.air_ticketing");
+    return language === "bn" ? "সাধারণ জিজ্ঞাসা" : "General Inquiry";
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     setFormState({ status: "submitting" });
-    // Simulate form submission
+
+    const serviceLabel = getServiceLabel(formData.service);
+    const whatsappMsg = language === "bn"
+      ? `হ্যালো ইহান ট্যুরস অ্যান্ড ট্রাভেলস,
+
+আমি আপনাদের ওয়েবসাইট থেকে একটি যোগাযোগের অনুরোধ পাঠাচ্ছি:
+• নাম: ${formData.name}
+• হোয়াটসঅ্যাপ নম্বর: ${formData.phone}
+• ইমেইল: ${formData.email}
+• আগ্রহী সেবা: ${serviceLabel}
+• বার্তা: ${formData.message}`
+      : `Hello Ihan Tours and Travels,
+
+I am sending an inquiry from your website contact form:
+• Name: ${formData.name}
+• WhatsApp Number: ${formData.phone}
+• Email: ${formData.email}
+• Interested Service: ${serviceLabel}
+• Message: ${formData.message}`;
+
+    // Get phone number based on service context
+    let context = "visa";
+    if (formData.service === "umrah") context = "umrah";
+    else if (formData.service === "tour") context = "package";
+
+    const contact = WHATSAPP_NUMBERS.find(n => n.context === context) || WHATSAPP_NUMBERS[0];
+    const cleanNumber = contact.number.replace(/\D/g, ""); // strip all non-digits
+
+    const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(whatsappMsg)}`;
+
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, "_blank");
+
+    // Simulate successful form submission locally
     setTimeout(() => {
       setFormState({ status: "success" });
+
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        service: "",
+        message: "",
+      });
+
       setTimeout(() => setFormState({ status: "idle" }), 5000);
     }, 1000);
-
-    setFormData({
-      name: "",
-      phone: "",
-      email: "",
-      service: "",
-      message: "",
-    });
   };
 
   const getWhatsAppLabel = (context: string) => {
