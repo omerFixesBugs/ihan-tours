@@ -413,12 +413,12 @@ export const TEAM_MEMBERS = [
   {
     id: "miladun",
     category: "executives",
-    image_url: null,
+    image_url: "/team/miladun.jpeg",
   },
   {
     id: "afrin",
     category: "executives",
-    image_url: null,
+    image_url: "/team/afrin.jpeg",
   },
   {
     id: "proshanto",
