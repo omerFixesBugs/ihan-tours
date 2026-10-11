@@ -59,6 +59,7 @@ export default function GlobalNav() {
     { name: t("nav.packages"), path: "/packages" },
     { name: t("nav.inbound"), path: "/inbound" },
     { name: t("nav.visa"), path: "/visa" },
+    { name: t("nav.success"), path: "/success-stories" },
     { name: t("nav.about_us"), path: "/about-us" },
   ];
 

@@ -1,5 +1,6 @@
 import PageClient from "@/components/PageClient";
+import { getPassportImages } from "@/lib/passports";
 
 export default function Page() {
-  return <PageClient />;
+  return <PageClient passports={getPassportImages()} />;
 }

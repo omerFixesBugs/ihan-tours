@@ -73,6 +73,7 @@ export default function Footer() {
               {[
                 { name: t("footer.links_list.about"), href: "/about-us" },
                 { name: t("footer.links_list.destinations"), href: "/destinations" },
+                { name: t("footer.links_list.success"), href: "/success-stories" },
                 { name: t("footer.links_list.blog"), href: "#" },
                 { name: t("footer.links_list.contact"), href: "#contact" },
                 { name: t("footer.links_list.terms"), href: "#" },

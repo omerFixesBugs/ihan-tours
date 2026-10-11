@@ -26,6 +26,8 @@ import Testimonials from "./Testimonials";
 import ExclusiveOffers from "./ExclusiveOffers";
 import ContactSection from "./ContactSection";
 import Footer from "./Footer";
+import SuccessfulClients from "./SuccessfulClients";
+import type { PassportItem } from "@/lib/passports";
 
 const ALL_IMAGE_PATHS = [
   ...buildWindowSequencePaths(WINDOW_SEQUENCE_COUNT),
@@ -35,7 +37,7 @@ const ALL_IMAGE_PATHS = [
 /** Static images used by TourShowcase intro/outro — preloaded alongside sequences */
 const STATIC_PRELOAD = ["/try.jpg", "/out_0001.png", "/out_0118.png"];
 
-export default function PageClient() {
+export default function PageClient({ passports }: { passports: PassportItem[] }) {
   const imageUrls = useMemo(() => ALL_IMAGE_PATHS, []);
   const { images, isLoading, progress } = useImagePreloader(imageUrls);
   const ready = !isLoading;
@@ -116,6 +118,7 @@ export default function PageClient() {
           </div>
 
           <TrustStats />
+          <SuccessfulClients passports={passports} />
           {/* <ValuedCustomers /> */}
           <WhyChooseUs />
           <ExpertSolutions />

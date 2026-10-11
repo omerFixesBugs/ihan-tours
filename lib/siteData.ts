@@ -3,7 +3,7 @@ export const SITE_SETTINGS = {
   tagline: "Celebrate the Journey",
   email: "bookings@ihantours.com",
   phone: "+8801713224948",
-  address: "Ihan Tours and Travels — Dhaka, Bangladesh",
+  address: "House -31/A (Lift-1), Road-21, Nikunjo-2, Khilkhet, Dhaka-1229",
   facebook_url: "https://www.facebook.com/share/19URQJvfHV/",
   instagram_url: "#",
   youtube_url: "https://youtube.com/@ihaninternational?si=h3hSmD13ED8gSKe9",

@@ -11,6 +11,7 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
       packages: "Packages",
       inbound: "Inbound",
       visa: "Visa",
+      success: "Success Stories",
       about_us: "About Us",
       chat: "Chat",
     },
@@ -38,7 +39,7 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
       terms_of_service: "Terms of Service",
       email_us: "Email Us",
       office_address: "Office Address",
-      address_val: "Ihan Tours and Travels — Dhaka, Bangladesh",
+      address_val: "House -31/A (Lift-1), Road-21, Nikunjo-2, Khilkhet, Dhaka-1229",
       phone_val: "+8801713224948",
       about_description:
         "Celebrate the Journey. Curated experiences and local expertise for the modern explorer. Your gateway to authentic adventures.",
@@ -52,6 +53,7 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
       links_list: {
         about: "About Us",
         destinations: "Destinations",
+        success: "Success Stories",
         blog: "Travel Blog",
         contact: "Contact Us",
         terms: "Terms & Conditions",
@@ -550,6 +552,7 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
       packages: "ছুটির প্যাকেজ",
       inbound: "দেশীয় ভ্রমণ",
       visa: "ভিসা",
+      success: "সাফল্যের গল্প",
       about_us: "আমাদের সম্পর্কে",
       chat: "চ্যাট করুন",
     },
@@ -577,7 +580,7 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
       terms_of_service: "সেবার শর্তাবলী",
       email_us: "ইমেইল করুন",
       office_address: "অফিসের ঠিকানা",
-      address_val: "ইহান ট্যুরস অ্যান্ড ট্রাভেলস — ঢাকা, বাংলাদেশ",
+      address_val: "বাড়ি -৩১/এ (লিফট-১), রোড-২১, নিকুঞ্জ-২, খিলক্ষেত, ঢাকা-১২২৯",
       phone_val: "+৮৮০১৯৭৭২৪২৪০৩",
       about_description:
         "ভ্রমণের আনন্দ উদযাপন করুন। আধুনিক পর্যটকদের জন্য নিখুঁত পরিকল্পনা এবং স্থানীয় অভিজ্ঞতা। আপনার রোমাঞ্চকর অভিযানের প্রবেশদ্বার।",
@@ -591,6 +594,7 @@ export const translations: Record<"en" | "bn", TranslationMap> = {
       links_list: {
         about: "আমাদের সম্পর্কে",
         destinations: "গন্তব্যসমূহ",
+        success: "সাফল্যের গল্প",
         blog: "ভ্রমণ ব্লগ",
         contact: "যোগাযোগ করুন",
         terms: "শর্তাবলী",
