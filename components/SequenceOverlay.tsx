@@ -2,6 +2,7 @@
 
 import { motion, useTransform, type MotionValue } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { blurFilter } from "@/lib/canvasDraw";
 
 interface SequenceOverlayProps {
   scrollYProgress: MotionValue<number>;
@@ -35,7 +36,7 @@ export default function SequenceOverlay({
     hold,
   });
 
-  const filter = useTransform(blur, (b) => `blur(${b}px)`);
+  const filter = useTransform(blur, blurFilter);
 
   return (
     <motion.div

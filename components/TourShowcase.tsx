@@ -8,7 +8,7 @@ import {
   useMotionValueEvent,
   AnimatePresence,
 } from "framer-motion";
-import { drawCoverFrame } from "@/lib/canvasDraw";
+import { drawCoverFrame, CANVAS_DPR } from "@/lib/canvasDraw";
 import SequenceOverlay from "./SequenceOverlay";
 import LuxuryTransition from "./LuxuryTransition";
 import { useLanguage } from "@/components/LanguageContext";
@@ -446,8 +446,8 @@ export default function TourShowcase({ images, isLoading }: TourShowcaseProps) {
     if (!canvas) return;
 
     const handleResize = () => {
-      canvas.width = window.innerWidth * window.devicePixelRatio;
-      canvas.height = window.innerHeight * window.devicePixelRatio;
+      canvas.width = window.innerWidth * CANVAS_DPR;
+      canvas.height = window.innerHeight * CANVAS_DPR;
       canvas.style.width = `${window.innerWidth}px`;
       canvas.style.height = `${window.innerHeight}px`;
     };

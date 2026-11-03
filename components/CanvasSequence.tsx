@@ -7,6 +7,7 @@ import {
   motion,
   type MotionValue,
 } from "framer-motion";
+import { CANVAS_DPR } from "@/lib/canvasDraw";
 
 interface CanvasSequenceProps {
   images: HTMLImageElement[];
@@ -41,6 +42,7 @@ export default function CanvasSequence({
   const internalRef = useRef<HTMLDivElement>(null);
   const containerRef = externalRef ?? internalRef;
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const frameRef = useRef(0);
 
   const { scrollYProgress: internalProgress } = useScroll({
     target: containerRef,
@@ -91,13 +93,14 @@ export default function CanvasSequence({
     if (!canvas) return;
 
     const handleResize = () => {
-      canvas.width = window.innerWidth * window.devicePixelRatio;
-      canvas.height = window.innerHeight * window.devicePixelRatio;
+      canvas.width = window.innerWidth * CANVAS_DPR;
+      canvas.height = window.innerHeight * CANVAS_DPR;
       canvas.style.width = `${window.innerWidth}px`;
       canvas.style.height = `${window.innerHeight}px`;
 
+      // Redraw the current frame — mobile URL bar show/hide fires resize mid-scroll
       if (images.length > 0) {
-        renderFrame(0);
+        renderFrame(frameRef.current);
       }
     };
 
@@ -116,12 +119,14 @@ export default function CanvasSequence({
       totalFrames - 1,
       Math.max(0, Math.floor(t * (totalFrames - 1)))
     );
+    if (frameIndex === frameRef.current) return;
+    frameRef.current = frameIndex;
     requestAnimationFrame(() => renderFrame(frameIndex));
   });
 
   useEffect(() => {
     if (!isLoading && images.length > 0) {
-      renderFrame(0);
+      renderFrame(frameRef.current);
     }
   }, [isLoading, images, renderFrame]);
 

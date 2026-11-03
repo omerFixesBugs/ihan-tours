@@ -9,6 +9,7 @@ import {
   WINDOW_SEQUENCE_COUNT,
   ZET_SEQUENCE_COUNT,
 } from "@/lib/sequencePaths";
+import { IS_MOBILE } from "@/lib/canvasDraw";
 import Loader from "./Loader";
 import HeroScroll from "./HeroScroll";
 import PremiumPackages from "./PremiumPackages";
@@ -29,16 +30,20 @@ import Footer from "./Footer";
 import SuccessfulClients from "./SuccessfulClients";
 import type { PassportItem } from "@/lib/passports";
 
-const ALL_IMAGE_PATHS = [
-  ...buildWindowSequencePaths(WINDOW_SEQUENCE_COUNT),
-  ...buildZetSequencePaths(ZET_SEQUENCE_COUNT),
-];
 
 /** Static images used by TourShowcase intro/outro — preloaded alongside sequences */
 const STATIC_PRELOAD = ["/try.jpg", "/out_0001.png", "/out_0118.png"];
 
 export default function PageClient({ passports }: { passports: PassportItem[] }) {
-  const imageUrls = useMemo(() => ALL_IMAGE_PATHS, []);
+  // Mobile: every 3rd hero frame and no zet frames (TourShowcase skips its canvas below lg).
+  // Preloading all 310 1080p frames there means ~2.5GB of decoded bitmaps.
+  const { imageUrls, heroCount } = useMemo(() => {
+    const hero = buildWindowSequencePaths(WINDOW_SEQUENCE_COUNT).filter(
+      (_, i) => !IS_MOBILE || i % 3 === 0
+    );
+    const zet = IS_MOBILE ? [] : buildZetSequencePaths(ZET_SEQUENCE_COUNT);
+    return { imageUrls: [...hero, ...zet], heroCount: hero.length };
+  }, []);
   const { images, isLoading, progress } = useImagePreloader(imageUrls);
   const ready = !isLoading;
 
@@ -73,12 +78,12 @@ export default function PageClient({ passports }: { passports: PassportItem[] })
   });
 
   const heroImages = useMemo(
-    () => images.slice(0, WINDOW_SEQUENCE_COUNT),
-    [images]
+    () => images.slice(0, heroCount),
+    [images, heroCount]
   );
   const tourImages = useMemo(
-    () => images.slice(WINDOW_SEQUENCE_COUNT, WINDOW_SEQUENCE_COUNT + ZET_SEQUENCE_COUNT),
-    [images]
+    () => images.slice(heroCount),
+    [images, heroCount]
   );
 
   // Preload static TourShowcase images early

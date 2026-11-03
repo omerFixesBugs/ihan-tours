@@ -24,10 +24,6 @@ export default function SmoothScroll({
       wheelMultiplier: 1.1,
     });
 
-    lenis.on("scroll", () => {
-      window.dispatchEvent(new Event("scroll"));
-    });
-
     let rafId: number;
 
     function raf(time: number) {

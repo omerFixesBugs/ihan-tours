@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { useScroll, useTransform, motion, useMotionValueEvent } from "framer-motion";
 import CanvasSequence from "./CanvasSequence";
+import { blurFilter } from "@/lib/canvasDraw";
 import SequenceOverlay from "./SequenceOverlay";
 import HeroIntro from "./HeroIntro";
 import HeroBrandMark from "./HeroBrandMark";
@@ -68,7 +69,7 @@ export default function HeroScroll({ images, isLoading }: HeroScrollProps) {
     [WINDOW_PASS_START, WINDOW_PASS_END],
     [0, 10]
   );
-  const brandFilter = useTransform(brandBlur, (b) => `blur(${b}px)`);
+  const brandFilter = useTransform(brandBlur, blurFilter);
 
   const endCloudFade = useTransform(scrollYProgress, [0.86, 0.96], [0, 1]);
 
@@ -76,7 +77,7 @@ export default function HeroScroll({ images, isLoading }: HeroScrollProps) {
   const canvasScale = useTransform(scrollYProgress, [0.55, 0.65], [1, 1.8]);
   const canvasOpacity = useTransform(scrollYProgress, [0.55, 0.65], [1, 0]);
   const canvasBlurAmount = useTransform(scrollYProgress, [0.55, 0.65], [0, 15]);
-  const canvasFilter = useTransform(canvasBlurAmount, (b) => `blur(${b}px)`);
+  const canvasFilter = useTransform(canvasBlurAmount, blurFilter);
 
   const underCloudScale = useTransform(scrollYProgress, [0.55, 0.65], [1.1, 1]);
   const transcendColor = useTransform(scrollYProgress, [0.86, 0.96], ["#ffffff", "#171717"]);

@@ -39,3 +39,15 @@ export function progressToFrame(
   const t = (progress - startAt) / (1 - startAt);
   return Math.min(totalFrames - 1, Math.max(0, Math.floor(t * (totalFrames - 1))));
 }
+
+/** Below lg (matches TourShowcase isDesktop): fewer frames, lower canvas resolution, no blur filters. */
+export const IS_MOBILE =
+  typeof window !== "undefined" &&
+  window.matchMedia("(max-width: 1023px)").matches;
+
+/** Cap backing-store resolution; full DPR (3x on phones) makes every frame draw ~9x the pixels. */
+export const CANVAS_DPR =
+  typeof window === "undefined" ? 1 : Math.min(window.devicePixelRatio, IS_MOBILE ? 1.5 : 2);
+
+/** Blur filters are very expensive on mobile GPUs during scroll — drop them there. */
+export const blurFilter = (b: number) => (IS_MOBILE ? "none" : `blur(${b}px)`);
