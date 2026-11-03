@@ -35,11 +35,11 @@ import type { PassportItem } from "@/lib/passports";
 const STATIC_PRELOAD = ["/try.jpg", "/out_0001.png", "/out_0118.png"];
 
 export default function PageClient({ passports }: { passports: PassportItem[] }) {
-  // Mobile: every 3rd hero frame and no zet frames (TourShowcase skips its canvas below lg).
+  // Mobile: every 2nd hero frame and no zet frames (TourShowcase skips its canvas below lg).
   // Preloading all 310 1080p frames there means ~2.5GB of decoded bitmaps.
   const { imageUrls, heroCount } = useMemo(() => {
     const hero = buildWindowSequencePaths(WINDOW_SEQUENCE_COUNT).filter(
-      (_, i) => !IS_MOBILE || i % 3 === 0
+      (_, i) => !IS_MOBILE || i % 2 === 0
     );
     const zet = IS_MOBILE ? [] : buildZetSequencePaths(ZET_SEQUENCE_COUNT);
     return { imageUrls: [...hero, ...zet], heroCount: hero.length };

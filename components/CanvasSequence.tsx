@@ -14,6 +14,8 @@ interface CanvasSequenceProps {
   isLoading: boolean;
   children?: React.ReactNode;
   scrollHeight?: string;
+  /** Tailwind height classes; overrides scrollHeight (use for responsive heights — SSR-safe) */
+  heightClassName?: string;
   containerRef?: React.RefObject<HTMLDivElement>;
   scrollYProgress?: MotionValue<number>;
   /** Scroll progress (0–1) at which the sequence finishes. After this the last frame stays pinned. Default = 1 */
@@ -30,6 +32,7 @@ export default function CanvasSequence({
   isLoading,
   children,
   scrollHeight = "400vh",
+  heightClassName,
   containerRef: externalRef,
   scrollYProgress: externalProgress,
   frameEnd = 1,
@@ -133,8 +136,8 @@ export default function CanvasSequence({
   return (
     <div
       ref={containerRef}
-      className="relative w-full"
-      style={{ height: scrollHeight }}
+      className={`relative w-full ${heightClassName ?? ""}`}
+      style={heightClassName ? undefined : { height: scrollHeight }}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-background">
         {underCanvasContent && (

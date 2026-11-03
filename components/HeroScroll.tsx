@@ -97,7 +97,8 @@ export default function HeroScroll({ images, isLoading }: HeroScrollProps) {
     <CanvasSequence
       images={images}
       isLoading={isLoading}
-      scrollHeight="800vh"
+      // Shorter on phones: 800vh is ~8 swipes there and the shutter feels stuck
+      heightClassName="h-[450vh] lg:h-[800vh]"
       containerRef={containerRef}
       scrollYProgress={scrollYProgress}
       frameEnd={FRAME_END}
