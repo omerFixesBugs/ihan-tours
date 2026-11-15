@@ -107,6 +107,7 @@ export default function PageClient({ stories }: { stories: Story[] }) {
       <main className="relative bg-background text-foreground">
         <HeroScroll images={heroImages} isLoading={isLoading} />
         <div ref={lightSectionRef}>
+          <SuccessfulClients stories={stories} />
           <PremiumPackages />
           <TourShowcase images={tourImages} isLoading={isLoading} />
         </div>
@@ -123,7 +124,6 @@ export default function PageClient({ stories }: { stories: Story[] }) {
           </div>
 
           <TrustStats />
-          <SuccessfulClients stories={stories} />
           {/* <ValuedCustomers /> */}
           <WhyChooseUs />
           <ExpertSolutions />
