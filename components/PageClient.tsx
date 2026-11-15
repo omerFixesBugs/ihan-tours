@@ -28,13 +28,13 @@ import ExclusiveOffers from "./ExclusiveOffers";
 import ContactSection from "./ContactSection";
 import Footer from "./Footer";
 import SuccessfulClients from "./SuccessfulClients";
-import type { PassportItem } from "@/lib/passports";
+import type { Story } from "@/lib/storyList";
 
 
 /** Static images used by TourShowcase intro/outro — preloaded alongside sequences */
 const STATIC_PRELOAD = ["/try.jpg", "/out_0001.png", "/out_0118.png"];
 
-export default function PageClient({ passports }: { passports: PassportItem[] }) {
+export default function PageClient({ stories }: { stories: Story[] }) {
   // Mobile: every 2nd hero frame and no zet frames (TourShowcase skips its canvas below lg).
   // Preloading all 310 1080p frames there means ~2.5GB of decoded bitmaps.
   const { imageUrls, heroCount } = useMemo(() => {
@@ -123,7 +123,7 @@ export default function PageClient({ passports }: { passports: PassportItem[] })
           </div>
 
           <TrustStats />
-          <SuccessfulClients passports={passports} />
+          <SuccessfulClients stories={stories} />
           {/* <ValuedCustomers /> */}
           <WhyChooseUs />
           <ExpertSolutions />

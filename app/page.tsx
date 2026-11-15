@@ -1,6 +1,6 @@
 import PageClient from "@/components/PageClient";
-import { getPassportImages } from "@/lib/passports";
+import { getStories } from "@/lib/storyStore";
 
-export default function Page() {
-  return <PageClient passports={getPassportImages()} />;
+export default async function Page() {
+  return <PageClient stories={await getStories()} />;
 }

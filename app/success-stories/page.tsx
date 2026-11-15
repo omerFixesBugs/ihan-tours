@@ -1,5 +1,5 @@
 import SuccessStoriesPageClient from "@/components/SuccessStoriesPageClient";
-import { getPassportImages } from "@/lib/passports";
+import { getStories } from "@/lib/storyStore";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,6 +7,6 @@ export const metadata: Metadata = {
   description: "Clients we have successfully sent to Europe on work visas, now working abroad.",
 };
 
-export default function SuccessStoriesPage() {
-  return <SuccessStoriesPageClient passports={getPassportImages()} />;
+export default async function SuccessStoriesPage() {
+  return <SuccessStoriesPageClient stories={await getStories()} />;
 }

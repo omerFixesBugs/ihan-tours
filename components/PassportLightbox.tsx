@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import type { PassportItem } from "@/lib/passports";
+import type { Story } from "@/lib/storyList";
 
 interface PassportLightboxProps {
-  items: PassportItem[];
+  items: Story[];
   index: number | null;
   onChange: (index: number | null) => void;
 }
@@ -40,15 +41,21 @@ export default function PassportLightbox({ items, index, onChange }: PassportLig
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
           onClick={() => onChange(null)}
         >
-          <motion.img
-            key={item.src}
+          <motion.div
+            key={item.id}
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            src={item.src}
-            alt={item.name ?? "Passport"}
-            className="max-h-[85vh] max-w-full rounded-xl object-contain shadow-2xl"
+            className="relative h-[85vh] w-full max-w-3xl"
             onClick={(e) => e.stopPropagation()}
-          />
+          >
+            <Image
+              src={item.src}
+              alt={item.name ?? "Passport"}
+              fill
+              sizes="(min-width: 768px) 768px, 100vw"
+              className="rounded-xl object-contain drop-shadow-2xl"
+            />
+          </motion.div>
 
           <button
             aria-label="Close"

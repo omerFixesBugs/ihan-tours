@@ -1,10 +1,11 @@
 "use client";
 
-import type { PassportItem } from "@/lib/passports";
+import Image from "next/image";
+import type { Story } from "@/lib/storyList";
 import { useLanguage } from "@/components/LanguageContext";
 
 interface PassportCardProps {
-  item: PassportItem;
+  item: Story;
   index: number;
   onOpen?: () => void;
 }
@@ -22,11 +23,12 @@ export default function PassportCard({ item, index, onOpen }: PassportCardProps)
       className="group relative block w-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] text-left transition-all duration-500 hover:-translate-y-1 hover:border-brand-red/40 hover:shadow-[0_20px_50px_-20px_rgba(220,38,38,0.35)]"
     >
       <div className="relative aspect-[3/4] overflow-hidden bg-black/40">
-        <img
+        <Image
           src={item.src}
           alt={label}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          fill
+          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
 
