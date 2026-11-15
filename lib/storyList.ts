@@ -125,6 +125,13 @@ export function validatePhoto(file: { type: string; size: number }): string | nu
   return null;
 }
 
+/** File extension for a stored photo; the admin UI always sends JPEG. */
+export function photoExtension(type: string): string {
+  if (type === "image/png") return "png";
+  if (type === "image/webp") return "webp";
+  return "jpg";
+}
+
 /** Blob key prefix, separated per Vercel environment so tests never touch production data. */
 export function blobPrefix(vercelEnv: string | undefined): string {
   const env = vercelEnv === "production" || vercelEnv === "preview" ? vercelEnv : "development";

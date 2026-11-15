@@ -1,6 +1,6 @@
 // Server-only: talks to Vercel Blob with the read-write token. Never import from client components.
 import { del, list, put } from "@vercel/blob";
-import { blobPrefix, parseManifest, seedStories, type Story } from "@/lib/storyList";
+import { blobPrefix, parseManifest, photoExtension, seedStories, type Story } from "@/lib/storyList";
 import { SEED_STORY_FILES } from "@/lib/seedStories";
 
 const prefix = () => blobPrefix(process.env.VERCEL_ENV);
@@ -57,17 +57,18 @@ export async function saveStories(stories: Story[], previousManifestUrls: string
 }
 
 export async function uploadPhoto(id: string, data: Blob): Promise<string> {
-  const { url } = await put(`${prefix()}photos/${id}.jpg`, data, {
+  const type = data.type || "image/jpeg";
+  const { url } = await put(`${prefix()}photos/${id}.${photoExtension(type)}`, data, {
     access: "public",
     addRandomSuffix: true,
-    contentType: "image/jpeg",
+    contentType: type,
   });
   return url;
 }
 
 /** Deletes an uploaded photo. Repo seed photos (/passport/...) are left alone. */
 export async function deletePhoto(src: string): Promise<void> {
-  if (!src.startsWith("https://")) return;
+  if (src.startsWith("/")) return;
   try {
     await del(src);
   } catch (error) {

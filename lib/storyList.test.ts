@@ -7,6 +7,7 @@ import {
   moveStory,
   parseManifest,
   parseStoryFilename,
+  photoExtension,
   removeStory,
   seedStories,
   StoryNotFoundError,
@@ -138,4 +139,11 @@ test("blobPrefix separates environments and defaults to development", () => {
   assert.equal(blobPrefix("preview"), "success-stories/preview/");
   assert.equal(blobPrefix(undefined), "success-stories/development/");
   assert.equal(blobPrefix("weird"), "success-stories/development/");
+});
+
+test("photoExtension maps allowed image types and defaults to jpg", () => {
+  assert.equal(photoExtension("image/jpeg"), "jpg");
+  assert.equal(photoExtension("image/png"), "png");
+  assert.equal(photoExtension("image/webp"), "webp");
+  assert.equal(photoExtension("application/octet-stream"), "jpg");
 });
