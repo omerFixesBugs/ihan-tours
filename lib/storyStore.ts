@@ -1,6 +1,13 @@
 // Server-only: talks to Vercel Blob with the read-write token. Never import from client components.
 import { del, list, put } from "@vercel/blob";
-import { blobPrefix, parseManifest, photoExtension, seedStories, type Story } from "@/lib/storyList";
+import {
+  blobPrefix,
+  parseManifest,
+  photoExtension,
+  seedStories,
+  splitManifests,
+  type Story,
+} from "@/lib/storyList";
 import { SEED_STORY_FILES } from "@/lib/seedStories";
 
 const prefix = () => blobPrefix(process.env.VERCEL_ENV);
@@ -14,15 +21,15 @@ export function isBlobConfigured(): boolean {
  * Throws on any Blob or parse error — callers must never fall back to the seed
  * list once a manifest exists (deleted passport photos must not come back).
  */
-async function readManifest(): Promise<{ stories: Story[]; urls: string[] } | null> {
+async function readManifest(): Promise<{ stories: Story[]; olderUrls: string[] } | null> {
   const { blobs } = await list({ prefix: `${prefix()}manifest` });
-  if (blobs.length === 0) return null;
-  const newest = blobs.reduce((a, b) => (b.uploadedAt > a.uploadedAt ? b : a));
+  const manifests = splitManifests(blobs);
+  if (!manifests) return null;
   // Each manifest URL is unique and never rewritten, so Next's default fetch caching is safe here
-  // and keeps the public pages static.
-  const res = await fetch(newest.url);
+  // and keeps the public pages static. (Do not switch to cache: "no-store" — it makes / dynamic.)
+  const res = await fetch(manifests.newest);
   if (!res.ok) throw new Error(`Manifest fetch failed: ${res.status}`);
-  return { stories: parseManifest(await res.json()), urls: blobs.map((b) => b.url) };
+  return { stories: parseManifest(await res.json()), olderUrls: manifests.older };
 }
 
 /** Public read for the home and success-stories pages. Throws on error (see readManifest). */
@@ -32,15 +39,18 @@ export async function getStories(): Promise<Story[]> {
   return manifest ? manifest.stories : seedStories(SEED_STORY_FILES);
 }
 
-/** Admin read: the current list plus every existing manifest URL (to clean up after a save). */
+/**
+ * Admin read: the current list plus the manifests to clean up after the next save.
+ * The manifest just read is not in that list — it stays as a one-step backup (see splitManifests).
+ */
 export async function loadStoriesForEdit(): Promise<{ stories: Story[]; manifestUrls: string[] }> {
   const manifest = await readManifest();
   return manifest
-    ? { stories: manifest.stories, manifestUrls: manifest.urls }
+    ? { stories: manifest.stories, manifestUrls: manifest.olderUrls }
     : { stories: seedStories(SEED_STORY_FILES), manifestUrls: [] };
 }
 
-/** Writes a new manifest (fresh URL every time), then removes the previous ones. */
+/** Writes a new manifest (fresh URL every time), then removes the given older ones. */
 export async function saveStories(stories: Story[], previousManifestUrls: string[]): Promise<void> {
   await put(`${prefix()}manifest.json`, JSON.stringify(stories), {
     access: "public",

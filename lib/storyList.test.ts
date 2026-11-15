@@ -8,6 +8,7 @@ import {
   parseManifest,
   parseStoryFilename,
   photoExtension,
+  splitManifests,
   removeStory,
   seedStories,
   StoryNotFoundError,
@@ -146,4 +147,15 @@ test("photoExtension maps allowed image types and defaults to jpg", () => {
   assert.equal(photoExtension("image/png"), "png");
   assert.equal(photoExtension("image/webp"), "webp");
   assert.equal(photoExtension("application/octet-stream"), "jpg");
+});
+
+test("splitManifests picks the newest manifest and lists only older ones for deletion", () => {
+  const blobs = [
+    { url: "m2", uploadedAt: new Date("2026-01-02") },
+    { url: "m3", uploadedAt: new Date("2026-01-03") },
+    { url: "m1", uploadedAt: new Date("2026-01-01") },
+  ];
+  assert.deepEqual(splitManifests(blobs), { newest: "m3", older: ["m2", "m1"] });
+  assert.deepEqual(splitManifests([{ url: "only", uploadedAt: new Date() }]), { newest: "only", older: [] });
+  assert.equal(splitManifests([]), null);
 });

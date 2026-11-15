@@ -125,6 +125,20 @@ export function validatePhoto(file: { type: string; size: number }): string | nu
   return null;
 }
 
+/**
+ * From a manifest listing, returns the newest URL (the current list) and the older ones,
+ * newest first. A save deletes only the older ones, so the manifest it read survives as a
+ * backup: if Blob's list() ever lags behind a put, readers see a list one change behind,
+ * never "no manifest" (which would show the seed photos and let the next save wipe uploads).
+ */
+export function splitManifests(
+  blobs: { url: string; uploadedAt: Date }[]
+): { newest: string; older: string[] } | null {
+  if (blobs.length === 0) return null;
+  const sorted = [...blobs].sort((a, b) => b.uploadedAt.getTime() - a.uploadedAt.getTime());
+  return { newest: sorted[0].url, older: sorted.slice(1).map((b) => b.url) };
+}
+
 /** File extension for a stored photo; the admin UI always sends JPEG. */
 export function photoExtension(type: string): string {
   if (type === "image/png") return "png";
