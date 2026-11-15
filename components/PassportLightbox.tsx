@@ -1,13 +1,44 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import type { PassportItem } from "@/lib/passports";
+import type { Story } from "@/lib/storyList";
 
 interface PassportLightboxProps {
-  items: PassportItem[];
+  items: Story[];
   index: number | null;
   onChange: (index: number | null) => void;
+}
+
+/**
+ * The frame takes the photo's own shape (read once it loads), so a click on the dark
+ * space around the photo reaches the backdrop and closes the lightbox, and the rounded
+ * corners sit on the photo itself.
+ */
+function LightboxPhoto({ item }: { item: Story }) {
+  const [ratio, setRatio] = useState(4 / 3); // until the photo has loaded
+  return (
+    <motion.div
+      initial={{ scale: 0.95, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      className="relative"
+      style={{ aspectRatio: ratio, width: `min(48rem, calc(100vw - 2rem), calc(85vh * ${ratio}))` }}
+      onClick={(e) => e.stopPropagation()}
+    >
+      <Image
+        src={item.src}
+        alt={item.name ?? "Passport"}
+        fill
+        sizes="(min-width: 768px) 768px, 100vw"
+        className="rounded-xl object-contain drop-shadow-2xl"
+        onLoad={(e) => {
+          const { naturalWidth, naturalHeight } = e.currentTarget;
+          if (naturalWidth && naturalHeight) setRatio(naturalWidth / naturalHeight);
+        }}
+      />
+    </motion.div>
+  );
 }
 
 export default function PassportLightbox({ items, index, onChange }: PassportLightboxProps) {
@@ -40,15 +71,7 @@ export default function PassportLightbox({ items, index, onChange }: PassportLig
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
           onClick={() => onChange(null)}
         >
-          <motion.img
-            key={item.src}
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            src={item.src}
-            alt={item.name ?? "Passport"}
-            className="max-h-[85vh] max-w-full rounded-xl object-contain shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          />
+          <LightboxPhoto key={item.id} item={item} />
 
           <button
             aria-label="Close"

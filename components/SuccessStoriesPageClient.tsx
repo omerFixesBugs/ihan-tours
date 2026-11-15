@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { PassportItem } from "@/lib/passports";
+import type { Story } from "@/lib/storyList";
 import PageHeader from "@/components/PageHeader";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -11,14 +11,14 @@ import PassportCard from "@/components/PassportCard";
 import PassportLightbox from "@/components/PassportLightbox";
 import { useLanguage } from "@/components/LanguageContext";
 
-export default function SuccessStoriesPageClient({ passports }: { passports: PassportItem[] }) {
+export default function SuccessStoriesPageClient({ stories }: { stories: Story[] }) {
   const { language } = useLanguage();
   const [active, setActive] = useState<number | null>(null);
   const bn = language === "bn";
 
-  const countries = Array.from(new Set(passports.map((p) => p.country).filter(Boolean))) as string[];
+  const countries = Array.from(new Set(stories.map((p) => p.country).filter(Boolean))) as string[];
   const [filter, setFilter] = useState<string>("all");
-  const shown = filter === "all" ? passports : passports.filter((p) => p.country === filter);
+  const shown = filter === "all" ? stories : stories.filter((p) => p.country === filter);
 
   return (
     <main className="flex min-h-screen flex-col bg-background text-foreground">
@@ -47,7 +47,7 @@ export default function SuccessStoriesPageClient({ passports }: { passports: Pas
             </ScrollReveal>
             <ScrollReveal delay={0.2}>
               <div className="mt-6 inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-neutral-300">
-                <span className="font-display text-2xl font-bold text-white">{passports.length}</span>
+                <span className="font-display text-2xl font-bold text-white">{stories.length}</span>
                 {bn ? "জন সফল ক্লায়েন্ট" : "successful clients"}
               </div>
             </ScrollReveal>
@@ -74,8 +74,8 @@ export default function SuccessStoriesPageClient({ passports }: { passports: Pas
           {shown.length > 0 ? (
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
               {shown.map((item, i) => (
-                <ScrollReveal key={item.src} delay={0.05 * (i % 4)}>
-                  <PassportCard item={item} index={passports.indexOf(item)} onOpen={() => setActive(i)} />
+                <ScrollReveal key={item.id} delay={0.05 * (i % 4)}>
+                  <PassportCard item={item} index={stories.indexOf(item)} onOpen={() => setActive(i)} />
                 </ScrollReveal>
               ))}
             </div>

@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Unbounded, Hind_Siliguri } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
-import GlobalNav from "@/components/GlobalNav";
-import FloatingCTA from "@/components/FloatingCTA";
+import PublicChrome from "@/components/PublicChrome";
 import { LanguageProvider } from "@/components/LanguageContext";
 
 const inter = Inter({
@@ -42,8 +41,7 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased selection:bg-gold-500 selection:text-black">
         <LanguageProvider>
-          <GlobalNav />
-          <FloatingCTA />
+          <PublicChrome />
           <SmoothScroll>{children}</SmoothScroll>
         </LanguageProvider>
       </body>

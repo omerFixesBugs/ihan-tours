@@ -2,23 +2,22 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import type { PassportItem } from "@/lib/passports";
+import { HOME_STORY_LIMIT, type Story } from "@/lib/storyList";
 import { useLanguage } from "@/components/LanguageContext";
 import ScrollReveal from "@/components/ScrollReveal";
 import PassportCard from "@/components/PassportCard";
 import PassportLightbox from "@/components/PassportLightbox";
 
-const HOME_LIMIT = 8;
 
-export default function SuccessfulClients({ passports }: { passports: PassportItem[] }) {
+export default function SuccessfulClients({ stories }: { stories: Story[] }) {
   const { language } = useLanguage();
   const [active, setActive] = useState<number | null>(null);
 
-  const preview = passports.slice(0, HOME_LIMIT);
+  const preview = stories.slice(0, HOME_STORY_LIMIT);
   const bn = language === "bn";
 
   return (
-    <section className="relative z-10 border-t border-white/10 py-16 md:py-24">
+    <section className="relative z-10 bg-luxury-cream py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <div className="mb-12 flex flex-col items-center text-center md:mb-16">
           <ScrollReveal>
@@ -27,7 +26,7 @@ export default function SuccessfulClients({ passports }: { passports: PassportIt
             </span>
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
-            <h2 className="mb-4 font-display text-3xl font-bold text-white md:text-5xl">
+            <h2 className="mb-4 font-display text-3xl font-bold text-ink md:text-5xl">
               {bn ? (
                 <>ইউরোপে <span className="text-brand-red">ওয়ার্ক ভিসায়</span> কর্মরত আমাদের ক্লায়েন্ট</>
               ) : (
@@ -36,15 +35,15 @@ export default function SuccessfulClients({ passports }: { passports: PassportIt
             </h2>
           </ScrollReveal>
           <ScrollReveal delay={0.2}>
-            <p className="max-w-2xl text-base font-light leading-relaxed text-neutral-400 md:text-lg">
+            <p className="max-w-2xl text-base font-light leading-relaxed text-neutral-600 md:text-lg">
               {bn
                 ? "এরা আমাদের সেই ক্লায়েন্ট যাদের আমরা সফলভাবে ওয়ার্ক ভিসায় ইউরোপে পাঠিয়েছি এবং তারা এখন সেখানে কাজ করছেন।"
                 : "These are real clients we have successfully sent to Europe on work visas — and they are working there today."}
             </p>
           </ScrollReveal>
           <ScrollReveal delay={0.3}>
-            <div className="mt-6 inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-neutral-300">
-              <span className="font-display text-2xl font-bold text-white">{passports.length > 0 ? `${passports.length}+` : "—"}</span>
+            <div className="mt-6 inline-flex items-center gap-3 rounded-full border border-black/10 bg-black/5 px-5 py-2 text-sm text-neutral-700">
+              <span className="font-display text-2xl font-bold text-ink">{stories.length > 0 ? `${stories.length}+` : "—"}</span>
               {bn ? "সফল ভিসা" : "Successful visas"}
             </div>
           </ScrollReveal>
@@ -52,16 +51,16 @@ export default function SuccessfulClients({ passports }: { passports: PassportIt
 
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
           {preview.map((item, i) => (
-            <ScrollReveal key={item.src} delay={0.05 * (i % 4)}>
+            <ScrollReveal key={item.id} delay={0.05 * (i % 4)}>
               <PassportCard item={item} index={i} onOpen={() => setActive(i)} />
             </ScrollReveal>
           ))}
-          {/* Placeholders until images are added to /public/passport */}
+          {/* Placeholders until the first story is added in /admin */}
           {preview.length === 0 &&
             Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="flex aspect-[3/4] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-white/15 bg-white/[0.03] text-center text-xs text-neutral-500"
+                className="flex aspect-[3/4] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-black/15 bg-black/[0.03] text-center text-xs text-neutral-500"
               >
                 <svg className="h-10 w-10 text-brand-red/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <rect x="5" y="3" width="14" height="18" rx="2" strokeWidth={1.5} />
