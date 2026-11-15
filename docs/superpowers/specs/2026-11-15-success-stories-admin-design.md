@@ -91,9 +91,11 @@ type Story = {
   They are already public on the site today.
 - **Story list (manifest):** stored in Blob as `success-stories/<env>/manifest-<random>.json`.
   Each save writes a *new* manifest file with a new URL (this avoids Blob's CDN serving a
-  stale cached copy), then deletes the older manifests. To read: `list({ prefix:
-  "success-stories/manifest" })`, take the newest by `uploadedAt`, and fetch it with
-  `cache: "no-store"`.
+  stale cached copy), then deletes the older manifests, except the one it just read, which
+  stays as a one-step backup. To read: `list({ prefix: "success-stories/<env>/manifest" })`,
+  take the newest by `uploadedAt`, and fetch it with Next's default fetch caching. That's safe
+  because a manifest URL is never rewritten, and `cache: "no-store"` would make the home page
+  dynamic.
 - **Seeding (no migration step):** if Blob has no manifest yet, or Blob isn't configured,
   the site shows the 9 photos in `public/passport/`. They come from a fixed list of those
   filenames in code (`lib/seedStories.ts`), parsed with the same "Name - Country.jpg" rule.

@@ -37,7 +37,7 @@ export default function AddStoryForm({ countries }: { countries: string[] }) {
       try {
         resized = await resizeImageFile(file);
       } catch {
-        setStatus({ kind: "error", text: "Couldn't read that photo. Please try a JPEG or PNG." });
+        setStatus({ kind: "error", text: "Couldn't read that photo. Please try a JPEG, PNG or WebP photo." });
         return;
       }
       const formData = new FormData();
