@@ -8,6 +8,21 @@
 
 export const SESSION_COOKIE = "admin_session";
 export const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+/** There is no rate limiter (no extra storage service), so the password itself must resist guessing. */
+export const MIN_PASSWORD_LENGTH = 12;
+
+export function passwordLongEnough(password: string | undefined): boolean {
+  return (password ?? "").length >= MIN_PASSWORD_LENGTH;
+}
+
+/**
+ * The key sessions are signed with. It includes the admin password, so changing
+ * ADMIN_PASSWORD (or ADMIN_SESSION_SECRET) logs out every existing session.
+ */
+export function sessionKey(secret: string | undefined, password: string | undefined): string {
+  if (!secret || !password) return "";
+  return `${secret}\u0000${password}`;
+}
 
 const encoder = new TextEncoder();
 

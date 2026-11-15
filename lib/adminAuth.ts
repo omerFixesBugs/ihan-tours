@@ -5,6 +5,8 @@ import {
   SESSION_COOKIE,
   SESSION_TTL_MS,
   createSessionToken,
+  passwordLongEnough,
+  sessionKey,
   verifySessionToken,
 } from "@/lib/adminSession";
 
@@ -15,10 +17,12 @@ const COOKIE_OPTIONS = {
   path: "/admin",
 };
 
-const sessionSecret = () => process.env.ADMIN_SESSION_SECRET ?? "";
+const sessionSecret = () =>
+  sessionKey(process.env.ADMIN_SESSION_SECRET, process.env.ADMIN_PASSWORD);
 
+/** True only with a session secret and a password of at least 12 characters. */
 export function isAdminConfigured(): boolean {
-  return Boolean(process.env.ADMIN_PASSWORD && process.env.ADMIN_SESSION_SECRET);
+  return Boolean(process.env.ADMIN_SESSION_SECRET) && passwordLongEnough(process.env.ADMIN_PASSWORD);
 }
 
 export async function isAdmin(): Promise<boolean> {

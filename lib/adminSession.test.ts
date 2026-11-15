@@ -2,6 +2,9 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   createSessionToken,
+  MIN_PASSWORD_LENGTH,
+  passwordLongEnough,
+  sessionKey,
   passwordsMatch,
   SESSION_TTL_MS,
   verifySessionToken,
@@ -54,4 +57,25 @@ test("passwordsMatch only for identical non-empty passwords", async () => {
   assert.equal(await passwordsMatch("pw", "pW", SECRET), false);
   assert.equal(await passwordsMatch("", "pw", SECRET), false);
   assert.equal(await passwordsMatch("pw", "", SECRET), false);
+});
+
+test("passwordLongEnough requires at least 12 characters", () => {
+  assert.equal(MIN_PASSWORD_LENGTH, 12);
+  assert.equal(passwordLongEnough("a".repeat(12)), true);
+  assert.equal(passwordLongEnough("a".repeat(11)), false);
+  assert.equal(passwordLongEnough(""), false);
+  assert.equal(passwordLongEnough(undefined), false);
+});
+
+test("sessionKey changes when the password changes, so old sessions stop working", async () => {
+  const key = sessionKey(SECRET, "first-password-123");
+  const token = await createSessionToken(key, NOW);
+  assert.equal(await verifySessionToken(token, sessionKey(SECRET, "first-password-123"), NOW + 1000), true);
+  assert.equal(await verifySessionToken(token, sessionKey(SECRET, "second-password-456"), NOW + 1000), false);
+});
+
+test("sessionKey is empty when the secret or password is missing", () => {
+  assert.equal(sessionKey("", "first-password-123"), "");
+  assert.equal(sessionKey(SECRET, ""), "");
+  assert.equal(sessionKey(undefined, undefined), "");
 });

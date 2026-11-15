@@ -10,8 +10,9 @@ export default function SetupSteps({ title }: { title: string }) {
           that adds <code>BLOB_READ_WRITE_TOKEN</code> ticked.
         </li>
         <li>
-          Project → Settings → Environment Variables: add <code>ADMIN_PASSWORD</code> and{" "}
-          <code>ADMIN_SESSION_SECRET</code> (a long random string) for all environments.
+          Project → Settings → Environment Variables: add <code>ADMIN_PASSWORD</code> (at least
+          12 characters; changing it logs everyone out) and <code>ADMIN_SESSION_SECRET</code> (a
+          long random string) for all environments.
         </li>
         <li>Redeploy.</li>
         <li>

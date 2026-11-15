@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { SESSION_COOKIE, verifySessionToken } from "@/lib/adminSession";
+import { SESSION_COOKIE, sessionKey, verifySessionToken } from "@/lib/adminSession";
 
 /** Keeps everything under /admin (except the login page) behind the admin session. */
 export async function middleware(request: NextRequest) {
@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
 
   const valid = await verifySessionToken(
     request.cookies.get(SESSION_COOKIE)?.value,
-    process.env.ADMIN_SESSION_SECRET ?? "",
+    sessionKey(process.env.ADMIN_SESSION_SECRET, process.env.ADMIN_PASSWORD),
     Date.now()
   );
   if (valid) return NextResponse.next();
